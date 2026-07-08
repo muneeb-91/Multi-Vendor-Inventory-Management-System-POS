@@ -17,20 +17,20 @@ MongoDB is used as the primary database.
 
 ### Vendor Register
 
-![Vendor Register]([link](https://github.com/muneeb-91/Multi-Vendor-Inventory-Management-System-POS/blob/2a61dc1ec383e71b84396d8ead40bbf0975e466f/screenshots/SF-register-vendor.png))
+![Vendor Register](https://github.com/muneeb-91/Multi-Vendor-Inventory-Management-System-POS/blob/2a61dc1ec383e71b84396d8ead40bbf0975e466f/screenshots/SF-register-vendor.png)
 
 ### Home Page
 
-![Home Page]([link](https://github.com/muneeb-91/Multi-Vendor-Inventory-Management-System-POS/blob/2a61dc1ec383e71b84396d8ead40bbf0975e466f/screenshots/SF-home.png))
+![Home Page](https://github.com/muneeb-91/Multi-Vendor-Inventory-Management-System-POS/blob/2a61dc1ec383e71b84396d8ead40bbf0975e466f/screenshots/SF-home.png)
 
 ### Admin Pannel
-![Admin Pannel]([link](https://github.com/muneeb-91/Multi-Vendor-Inventory-Management-System-POS/blob/2a61dc1ec383e71b84396d8ead40bbf0975e466f/screenshots/SF-admin-pannel.png))
+![Admin Pannel](https://github.com/muneeb-91/Multi-Vendor-Inventory-Management-System-POS/blob/2a61dc1ec383e71b84396d8ead40bbf0975e466f/screenshots/SF-admin-pannel.png)
 
 ### Vendor Pannel
 ![Vendor Pannel](https://github.com/muneeb-91/Multi-Vendor-Inventory-Management-System-POS/blob/2a61dc1ec383e71b84396d8ead40bbf0975e466f/screenshots/SF-vendor-pannel.png)
 
 ### Manager Pannel
-![Manager Pannel]([link](https://github.com/muneeb-91/Multi-Vendor-Inventory-Management-System-POS/blob/2a61dc1ec383e71b84396d8ead40bbf0975e466f/screenshots/SF-manager-pannel.png))
+![Manager Pannel](https://github.com/muneeb-91/Multi-Vendor-Inventory-Management-System-POS/blob/2a61dc1ec383e71b84396d8ead40bbf0975e466f/screenshots/SF-manager-pannel.png)
 
 ---
 ## 📂 Project Structure  
