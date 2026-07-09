@@ -9,9 +9,3 @@ export const vendorRegisterationSchema = joi.object({
     confirm_password: joi.string().valid(joi.ref('password')).required(),
     businessAddress: joi.string().trim().required(),
 });
-
-export const loginSchema = joi.object({
-    email: joi.string().email().required(),
-    password: joi.string().min(6).max(12).required(),
-});
-

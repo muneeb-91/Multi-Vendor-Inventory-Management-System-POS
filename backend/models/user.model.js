@@ -19,18 +19,6 @@ const userSchema = new mongoose.Schema(
       enum: ["admin", "vendor", "manager"],
       required: true,
     },
-
-    status: {
-      type: String,
-      enum: ["active", "suspended"],
-      default: "active",
-    },
-
-    vendorId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Vendor",
-      default: null,
-    },
   },
   {
     timestamps: true,
