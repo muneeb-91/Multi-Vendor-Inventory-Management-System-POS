@@ -1,4 +1,6 @@
 import Product from "../models/product.model.js";
+import Category from "../models/category.model.js";
+import Supplier from "../models/supplier.model.js";
 
 export const addProduct = async (req, res) => {
   const {
@@ -19,6 +21,22 @@ export const addProduct = async (req, res) => {
   });
 
   if (existingProduct) throw "SKU already exists.";
+
+  // making sure category and supplier exist and active
+  const [category, supplier] = await Promise.all([
+    Category.findOne({
+      _id: categoryId,
+      vendorId: req.user.vendorId,
+      status: "active",
+    }),
+    Supplier.findOne({
+      _id: supplierId,
+      vendorId: req.user.vendorId,
+      status: "active",
+    }),
+  ]);
+  if (!category) throw "Category not found or inactive.";
+  if (!supplier) throw "Supplier not found or inactive.";
 
   const product = await Product.create({
     vendorId: req.user.vendorId,

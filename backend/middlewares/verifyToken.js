@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
-import Vendor from '../models/vendor.model.js';
+import Vendor from "../models/vendor.model.js";
+import Manager from "../models/manager.model.js";
 
 export const verifyToken = async (req, res, next) => {
   // const token = req.cookie.pos_token;
@@ -21,9 +22,21 @@ export const verifyToken = async (req, res, next) => {
     req.user = {
       ...user.toObject(),
       vendorId: vendor._id,
+      name: vendor.ownerName,
+    };
+  }
+  else if (user.role === "manager") {
+    const manager = await Manager.findOne({
+      userId: user._id,
+    });
+
+    req.user = {
+      ...user.toObject(),
+      vendorId: manager.vendorId,
+      name: manager.name,
     };
   } else {
-    req.user = user;
+    req.user = user.toObject;
   }
   next();
 };
