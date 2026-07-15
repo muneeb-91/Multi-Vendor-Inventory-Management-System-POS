@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { errorHandler } from './handlers/errorHandler.js';
 import { connectDB } from './lib/db.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 // import for routes;
 import userRoutes from './routes/user.routes.js';
@@ -20,6 +21,10 @@ const port = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+}))
 
 // routes
 app.use('/api/user', userRoutes);

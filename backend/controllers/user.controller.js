@@ -5,18 +5,23 @@ import { generateToken } from "../utils/generateToken.js";
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
-  const getUser = await User.findOne({ email: email });
-  if (!getUser) throw "Invalid Credentials";
+  const user = await User.findOne({ email: email });
+  if (!user) throw "Invalid Credentials";
 
-  const comparePassword = bcrypt.compare(password, getUser.password);
+  const comparePassword = bcrypt.compare(password, user.password);
   if (!comparePassword) throw "Invalid Credentials!";
 
-  const accessToken = generateToken(getUser._id, res);
+  const accessToken = generateToken(user._id, res);
 
   res.status(201).json({
     success: true,
     message: "Login successful",
     accessToken,
+    user:{
+        _id: user._id,
+        email: user.email,
+        role: user.role,
+    }
   });
 };
 

@@ -1,15 +1,61 @@
 import { useState } from "react";
 import { Mail, Lock, ArrowRight, Store } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { loginRequest } from "../features/auth/authAPI";
+import { useSelector } from "react-redux";
+import Loader from '../components/Loader';
+import { toast } from "react-toastify";
+import { validateLoginForm } from "../utils/validations.js";
+import {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+} from "../features/auth/authSlice";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const dispatch = useDispatch();
+const navigate = useNavigate();
+const loading = useSelector((state) => state.auth.loading);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Login submitted", { email, password });
-  };
+const [formData, setFormData] = useState({
+  email: "",
+  password: "",
+});
+
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  console.log({name, value});
+
+  setFormData((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+  if(!validateLoginForm(formData)) return;
+
+  try {
+    dispatch(loginStart());
+    const res = await loginRequest(formData);
+    toast.success(res?.message);
+    dispatch(loginSuccess({user: res.user}));
+    if (res.user.role === "super-admin") {
+      navigate("/admin");
+    } else if (res.user.role === "vendor") {
+      navigate("/vendor");
+    } else {
+      navigate("/manager");
+    }
+  } catch (error) {
+    dispatch(loginFailure());
+    console.log(error);
+    toast.error(error.response?.data?.error || "Something went wrong");
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-tertiary px-4">
@@ -40,8 +86,9 @@ const Login = () => {
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="name@company.com"
                 className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 text-sm text-primary placeholder-gray-400 outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all"
               />
@@ -60,8 +107,9 @@ const Login = () => {
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 placeholder="••••••••"
                 className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 text-sm text-primary placeholder-gray-400 outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all"
               />
@@ -70,11 +118,19 @@ const Login = () => {
 
           {/* Login Button */}
           <button
-            onClick={handleSubmit}
-            className="w-full flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/90 text-white font-semibold py-2.5 rounded-lg transition-colors duration-200 cursor-pointer"
+            onClick={handleLogin}
+            className={`w-full flex items-center justify-center gap-2 text-white font-semibold py-2.5 rounded-lg transition-colors duration-200 cursor-pointer ${loading ? "bg-secondary/30 cursor-not-allowed" : "bg-secondary hover:bg-secondary/90 cursor-pointer"}`}
           >
-            Login to Dashboard
-            <ArrowRight className="w-4 h-4" />
+            {
+              loading ? (
+                <Loader />
+              ) : (
+                <>
+                  Login to Dashboard
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )
+            }
           </button>
 
           {/* Divider */}

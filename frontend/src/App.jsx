@@ -1,8 +1,11 @@
 import {Routes, Route, Navigate} from 'react-router-dom';
+import ProtectedRoute from './components/protectedRoutes';
+
+// Login and Vendor Register Imports
 import Login from './pages/Login';
 import VendorRegister from './pages/VendorRegister';
 
-// Layouts
+// Layout Imports
 import AdminLayout from './layouts/AdminLayout';
 import VendorLayout from './layouts/VendorLayout';
 import ManagerLayout from './layouts/ManagerLayout';
@@ -58,7 +61,12 @@ function App() {
           <Route path='pricing' element={<Pricing/>}/>
         </Route>
 
-        <Route path='/admin' element={<AdminLayout />}>
+        <Route path="/admin" element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<SuperAdminDashboard />}/>
           <Route path='vendors' element={<VendorsDirectory />}/>
           <Route path='vendors/:id' element={<VendorDetails />}/>
@@ -68,7 +76,12 @@ function App() {
           <Route path='settings' element={<SystemSettings />}/>
         </Route>
 
-        <Route path="/vendor" element={<VendorLayout />}>
+        <Route path="/vendor" element={
+            <ProtectedRoute allowedRoles={["vendor"]}>
+              <VendorLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<VendorDashboard />} />
           <Route path="categories" element={<Categories />} />
           <Route path="suppliers" element={<Suppliers />} />
@@ -82,7 +95,12 @@ function App() {
           <Route path="order-receipt" element={<OrderReceipt />} />
         </Route>
 
-        <Route path='/manager' element={<ManagerLayout/>}>
+        <Route path="/manager" element={
+            <ProtectedRoute allowedRoles={["manager"]}>
+              <ManagerLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<ManagerDashboard />} />
           <Route path='products' element={<ManagerManageProducts />} />
           <Route path='products/:id' element={<ManagerProductDetails />} />
