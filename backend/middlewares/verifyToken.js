@@ -4,7 +4,7 @@ import Vendor from "../models/vendor.model.js";
 import Manager from "../models/manager.model.js";
 
 export const verifyToken = async (req, res, next) => {
-  const token = req.cookie.pos_token;
+  const token = req.cookies.pos_token;
   // const token = req.headers.authorization?.replace("Bearer ", "");
 
   if (!token) throw "Token is required.";

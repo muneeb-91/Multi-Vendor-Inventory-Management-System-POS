@@ -24,7 +24,7 @@ router.post(
     login
 );
 router.get(
-    "/checkAuth",
+    "/check-auth",
     verifyToken,
     checkAuth
 );

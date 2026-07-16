@@ -17,7 +17,7 @@ import {
 const Login = () => {
 const dispatch = useDispatch();
 const navigate = useNavigate();
-const loading = useSelector((state) => state.auth.loading);
+const loginLoading = useSelector((state) => state.auth.loginLoading);
 
 const [formData, setFormData] = useState({
   email: "",
@@ -26,7 +26,6 @@ const [formData, setFormData] = useState({
 
 const handleChange = (e) => {
   const { name, value } = e.target;
-  console.log({name, value});
 
   setFormData((prev) => ({
     ...prev,
@@ -41,7 +40,7 @@ const handleLogin = async (e) => {
   try {
     dispatch(loginStart());
     const res = await loginRequest(formData);
-    toast.success(res?.message);
+    toast.success("Login Successful");
     dispatch(loginSuccess({user: res.user}));
     if (res.user.role === "super-admin") {
       navigate("/admin");
@@ -119,11 +118,12 @@ const handleLogin = async (e) => {
           {/* Login Button */}
           <button
             onClick={handleLogin}
-            className={`w-full flex items-center justify-center gap-2 text-white font-semibold py-2.5 rounded-lg transition-colors duration-200 cursor-pointer ${loading ? "bg-secondary/30 cursor-not-allowed" : "bg-secondary hover:bg-secondary/90 cursor-pointer"}`}
+            disabled={loginLoading}
+            className={`w-full flex items-center justify-center gap-2 text-white font-semibold py-2.5 rounded-lg transition-colors duration-200 cursor-pointer bg-secondary hover:bg-secondary/90 `}
           >
             {
-              loading ? (
-                <Loader />
+              loginLoading ? (
+                <Loader className={`text-`} />
               ) : (
                 <>
                   Login to Dashboard
