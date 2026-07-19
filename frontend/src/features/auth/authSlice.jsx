@@ -7,7 +7,7 @@ const initialState = {
   checkingAuth: true,
 };
 
-// auth slice
+// creating auth slice
 const authSlice = createSlice({
   name: "auth",
 
