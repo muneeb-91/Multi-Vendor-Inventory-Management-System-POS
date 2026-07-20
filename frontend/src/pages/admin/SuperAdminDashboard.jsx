@@ -27,7 +27,19 @@ const SuperAdminDashboard = () => {
   const [openMenu, setOpenMenu] = useState(null);
   const { vendorRequests, error } = useSelector((state) => state.vendors.vendorRequests);
 
+  useEffect(()=>{
+    const getAllVendors = async () => {
+      try{
+        dispatch(fetchVendorRequestsStart());
+        const res = await getAllVendorsRequest();
+        dispatch(fetchVendorRequestsSuccess(res.vendorRequests));
+      }catch(error){
+        console.log(error);
+        dispatch(fetchVendorRequestsFailure(error.response?.data?.message));
+      }
+    }
 
+  }, []);
 
   return (
     <div className="space-y-6">
