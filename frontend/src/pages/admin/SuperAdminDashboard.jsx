@@ -35,10 +35,11 @@ const SuperAdminDashboard = () => {
         dispatch(fetchVendorRequestsSuccess(res.vendorRequests));
       }catch(error){
         console.log(error);
-        dispatch(fetchVendorRequestsFailure(error.response?.data?.message));
+        dispatch(fetchVendorRequestsFailure(error.response?.data?.message || "Something went wrong."));
       }
     }
 
+    getAllVendors();
   }, []);
 
   return (
