@@ -36,7 +36,10 @@ export const verifyToken = async (req, res, next) => {
       name: manager.name,
     };
   } else {
-    req.user = user.toObject;
+    req.user = {
+      ...user.toObject(),
+      name: "Admin"
+    }
   }
   next();
 };

@@ -11,6 +11,7 @@ import {
   Users,
   Megaphone,
 } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const recentVendors = [
   {
@@ -47,6 +48,7 @@ const statusStyle = (status) => {
 
 const SuperAdminDashboard = () => {
   const [openMenu, setOpenMenu] = useState(null);
+  const { vendors } = useSelector((state) => state.vendors.vendors);
 
   return (
     <div className="space-y-6">
