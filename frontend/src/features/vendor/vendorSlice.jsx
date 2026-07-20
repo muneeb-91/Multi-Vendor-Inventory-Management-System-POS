@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  vendors: [],
-  loading: false,
-  error: null,
+// Vendor Requests States
+  vendorRequests: [],
+  vendorRequestsLoading: false,
+  vendorRequestsError: null,
 };
 
 const vendorSlice = createSlice({
@@ -12,27 +13,29 @@ const vendorSlice = createSlice({
   initialState,
 
   reducers: {
-    fetchVendorsStart: (state) => {
-      state.loading = true;
-      state.error = null;
+    // Vendor Requests
+    fetchVendorRequestsStart: (state) => {
+      state.vendorRequestsLoading = true;
+      state.vendorRequestsError = null;
     },
 
-    fetchVendorsSuccess: (state, action) => {
-      state.loading = false;
-      state.vendors = action.payload;
+    fetchVendorRequestsSuccess: (state, action) => {
+      state.vendorRequestsLoading = false;
+      state.vendorRequests = action.payload;
     },
 
-    fetchVendorsFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
+    fetchVendorRequestsFailure: (state, action) => {
+      state.vendorRequestsLoading = false;
+      state.vendorRequests = [];
+      state.vendorRequestsError = action.payload;
     },
   },
 });
 
 export const {
-  fetchVendorsStart,
-  fetchVendorsSuccess,
-  fetchVendorsFailure,
+  fetchVendorRequestsStart,
+  fetchVendorRequestsSuccess,
+  fetchVendorRequestsFailure,
 } = vendorSlice.actions;
 
 export default vendorSlice.reducer;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Store,
   ClipboardList,
@@ -11,34 +11,10 @@ import {
   Users,
   Megaphone,
 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllVendorsRequest } from "../../features/vendor/vendorAPI";
+import { fetchVendorRequestsStart, fetchVendorRequestsSuccess, fetchVendorRequestsFailure } from "../../features/vendor/vendorSlice";
 
-const recentVendors = [
-  {
-    id: 1,
-    initials: "AC",
-    name: "Apex Components",
-    category: "Electronics",
-    date: "Oct 24, 2023",
-    status: "Active",
-  },
-  {
-    id: 2,
-    initials: "GL",
-    name: "Global Logistics Ltd",
-    category: "Shipping",
-    date: "Oct 22, 2023",
-    status: "Review",
-  },
-  {
-    id: 3,
-    initials: "SS",
-    name: "Synergy Supplies",
-    category: "Office",
-    date: "Oct 20, 2023",
-    status: "Active",
-  },
-];
 
 const statusStyle = (status) => {
   if (status === "Active") return "bg-green-100 text-green-700";
@@ -47,8 +23,11 @@ const statusStyle = (status) => {
 };
 
 const SuperAdminDashboard = () => {
+  const dispatch = useDispatch();
   const [openMenu, setOpenMenu] = useState(null);
-  const { vendors } = useSelector((state) => state.vendors.vendors);
+  const { vendorRequests, error } = useSelector((state) => state.vendors.vendorRequests);
+
+
 
   return (
     <div className="space-y-6">

@@ -63,3 +63,14 @@ export const registerVendor = async (req, res) => {
     session.endSession();
   }
 };
+
+export const getVendorRequests = async (req, res) => {
+  const vendorRequests = await Vendor.find({
+    status: "pending",
+  }).sort({ createdAt: -1 });
+
+  res.status(200).json({
+    success: true,
+    vendorRequests,
+  });
+};
