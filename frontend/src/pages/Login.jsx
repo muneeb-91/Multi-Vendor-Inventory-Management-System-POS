@@ -26,7 +26,6 @@ const [formData, setFormData] = useState({
 
 const handleChange = (e) => {
   const { name, value } = e.target;
-
   setFormData((prev) => ({
     ...prev,
     [name]: value,
@@ -35,24 +34,19 @@ const handleChange = (e) => {
 
 const handleLogin = async (e) => {
   e.preventDefault();
-  if(!validateLoginForm(formData)) return;
+  if (!validateLoginForm(formData)) return;
 
   try {
     dispatch(loginStart());
     const res = await loginRequest(formData);
+    dispatch(loginSuccess({ user: res.user }));
     toast.success("Login Successful");
-    dispatch(loginSuccess({user: res.user}));
-    if (res.user.role === "super-admin") {
-      navigate("/admin");
-    } else if (res.user.role === "vendor") {
-      navigate("/vendor");
-    } else {
-      navigate("/manager");
-    }
+    navigate("/", { replace: true });
   } catch (error) {
     dispatch(loginFailure());
-    console.log(error);
-    toast.error(error.response?.data?.error || "Something went wrong");
+    toast.error(
+      error.response?.data?.error || "Something went wrong"
+    );
   }
 };
 
