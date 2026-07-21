@@ -39,6 +39,7 @@ const handleLogin = async (e) => {
   try {
     dispatch(loginStart());
     const res = await loginRequest(formData);
+    console.log(res.user);
     dispatch(loginSuccess({ user: res.user }));
     toast.success("Login Successful");
     navigate("/", { replace: true });

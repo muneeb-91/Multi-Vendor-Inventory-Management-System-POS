@@ -31,7 +31,6 @@ const authSlice = createSlice({
       state.checkingAuth = false;
       state.user = action.payload.user;
       state.isAuthenticated = true;
-      console.log(action.payload.user);
     },
 
     checkAuthFailure: (state) => {
