@@ -54,6 +54,7 @@ import ManagerNotifications from "./pages/manager/ManagerNotifications";
 import Pricing from "./pages/home/Pricing";
 import Loader from "./components/Loader";
 import { use } from "react";
+import AccountStatus from "./pages/home/AccountStatus";
 
 function App() {
   const { checkingAuth, isAuthenticated } = useSelector((state) => state.auth);
@@ -107,6 +108,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="solutions" element={<Solutions />} />
           <Route path="pricing" element={<Pricing />} />
+          <Route path="account-status" element={<AccountStatus />} />
         </Route>
 
         <Route

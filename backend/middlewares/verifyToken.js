@@ -23,6 +23,7 @@ export const verifyToken = async (req, res, next) => {
       ...user.toObject(),
       vendorId: vendor._id,
       name: vendor.ownerName,
+      status: vendor.status,
     };
   }
   else if (user.role === "manager") {
@@ -34,6 +35,7 @@ export const verifyToken = async (req, res, next) => {
       ...user.toObject(),
       vendorId: manager.vendorId,
       name: manager.name,
+      status: manager.status,
     };
   } else {
     req.user = {

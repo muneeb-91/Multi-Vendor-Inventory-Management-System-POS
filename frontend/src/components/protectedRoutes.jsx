@@ -2,19 +2,28 @@ import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { user, isAuthenticated } = useSelector(
+    (state) => state.auth
+  );
 
-  // User is not logged in
+  // Not logged in
   if (!isAuthenticated) {
     return <Navigate to="/" replace />;
   }
 
-  // User is logged in but role is not allowed
+  // Wrong role
   if (!allowedRoles.includes(user.role)) {
     return <Navigate to="/" replace />;
   }
 
-  // Authorized
+  // Vendor / Manager not active
+  if (
+    user.role !== "admin" &&
+    user.status !== "active"
+  ) {
+    return <Navigate to="/account-status" replace />;
+  }
+
   return children;
 };
 
