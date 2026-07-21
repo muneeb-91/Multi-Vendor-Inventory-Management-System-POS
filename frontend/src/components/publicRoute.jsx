@@ -7,7 +7,7 @@ const PublicRoute = ({ children }) => {
         (state) => state.auth
     );
     if (isAuthenticated) {
-        if(user.role === "super-admin"){
+        if(user.role === "admin"){
             return <Navigate to="/admin" replace />
         }
         if(user.role === "vendor"){

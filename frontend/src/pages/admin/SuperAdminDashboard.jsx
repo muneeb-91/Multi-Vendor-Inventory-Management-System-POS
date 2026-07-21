@@ -11,21 +11,15 @@ import {
   Users,
   Megaphone,
 } from "lucide-react";
+import { formatDate } from "../../utils/formatDate";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllVendorsRequest } from "../../features/vendor/vendorAPI";
 import { fetchVendorRequestsStart, fetchVendorRequestsSuccess, fetchVendorRequestsFailure } from "../../features/vendor/vendorSlice";
 
-
-const statusStyle = (status) => {
-  if (status === "Active") return "bg-green-100 text-green-700";
-  if (status === "Review") return "bg-purple-100 text-purple-700";
-  return "bg-gray-100 text-gray-600";
-};
-
 const SuperAdminDashboard = () => {
   const dispatch = useDispatch();
   const [openMenu, setOpenMenu] = useState(null);
-  const { vendorRequests, error } = useSelector((state) => state.vendors.vendorRequests);
+  const { vendorRequests, error } = useSelector((state) => state.vendors);
 
   useEffect(()=>{
     const getAllVendors = async () => {
@@ -118,42 +112,42 @@ const SuperAdminDashboard = () => {
               <thead>
                 <tr className="text-left text-xs text-gray-400 uppercase tracking-wide border-b border-gray-100">
                   <th className="px-5 py-3 font-medium">Vendor Name</th>
-                  <th className="px-5 py-3 font-medium hidden sm:table-cell">Category</th>
+                  <th className="px-5 py-3 font-medium hidden sm:table-cell">Phone</th>
                   <th className="px-5 py-3 font-medium hidden md:table-cell">Reg. Date</th>
                   <th className="px-5 py-3 font-medium">Status</th>
                   <th className="px-5 py-3 font-medium">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {recentVendors.map((v) => (
-                  <tr key={v.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                {vendorRequests?.map((v) => (
+                  <tr key={v?._id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600 shrink-0">
-                          {v.initials}
+                          {v?.shopName[0]}
                         </div>
-                        <span className="font-medium text-primary">{v.name}</span>
+                        <span className="font-medium text-primary">{v?.shopName}</span>
                       </div>
                     </td>
-                    <td className="px-5 py-3.5 text-gray-500 hidden sm:table-cell">{v.category}</td>
-                    <td className="px-5 py-3.5 text-gray-500 hidden md:table-cell">{v.date}</td>
+                    <td className="px-5 py-3.5 text-gray-500 hidden sm:table-cell">{v?.phone}</td>
+                    <td className="px-5 py-3.5 text-gray-500 hidden md:table-cell">{formatDate(v?.createdAt)}</td>
                     <td className="px-5 py-3.5">
-                      <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusStyle(v.status)}`}>
-                        {v.status}
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600`}>
+                        {v?.status}
                       </span>
                     </td>
                     <td className="px-5 py-3.5">
                       <div className="relative">
                         <button
-                          onClick={() => setOpenMenu(openMenu === v.id ? null : v.id)}
+                          onClick={() => setOpenMenu(openMenu === v?._id ? null : v?._id)}
                           className="p-1.5 rounded-md hover:bg-gray-100 text-gray-400 cursor-pointer"
                         >
                           <MoreVertical className="w-4 h-4" />
                         </button>
-                        {openMenu === v.id && (
+                        {openMenu === v?._id && (
                           <div className="absolute right-0 mt-1 w-36 bg-white border border-gray-100 rounded-lg shadow-lg z-10 py-1">
-                            <button className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                              View Details
+                            <button className="w-full text-left px-3 py-2 text-sm text-green-700 hover:bg-gray-50">
+                              Activate
                             </button>
                             <button className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50">
                               Delete

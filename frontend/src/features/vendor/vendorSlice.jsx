@@ -22,6 +22,7 @@ const vendorSlice = createSlice({
     fetchVendorRequestsSuccess: (state, action) => {
       state.vendorRequestsLoading = false;
       state.vendorRequests = action.payload;
+      console.log(state.vendorRequests);
     },
 
     fetchVendorRequestsFailure: (state, action) => {
