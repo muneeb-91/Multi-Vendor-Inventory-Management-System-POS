@@ -9,6 +9,7 @@ const initialState = {
 
 const vendorSlice = createSlice({
   name: "vendors",
+  
   initialState,
 
   reducers: {
