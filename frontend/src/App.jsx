@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { checkAuthRequest } from "./features/auth/authAPI";
 import { checkAuthSuccess, checkAuthFailure } from "./features/auth/authSlice";
+import Loader from "./components/Loader";
 
 // Login and Vendor Register Imports
 import Login from "./pages/Login";
@@ -20,6 +21,8 @@ import HomeLayout from "./layouts/HomeLayout";
 // Home Pages Import
 import Home from "./pages/home/Home";
 import Solutions from "./pages/home/Solutions";
+import Pricing from "./pages/home/Pricing";
+import AccountStatus from "./pages/home/AccountStatus";
 
 // Admin pages imports
 import SuperAdminDashboard from "./pages/admin/SuperAdminDashboard";
@@ -51,10 +54,7 @@ import ManagerOrderHistory from "./pages/manager/ManagerOrderHistory";
 import ManagerCreateOrder from "./pages/manager/ManagerCreateOrder";
 import ManagerOrderReceipt from "./pages/manager/ManagerOrderReceipt";
 import ManagerNotifications from "./pages/manager/ManagerNotifications";
-import Pricing from "./pages/home/Pricing";
-import Loader from "./components/Loader";
-import { use } from "react";
-import AccountStatus from "./pages/home/AccountStatus";
+
 
 function App() {
   const { checkingAuth, isAuthenticated } = useSelector((state) => state.auth);

@@ -9,7 +9,6 @@ import { logout } from "../../features/auth/authSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-
 const HomeNavbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,17 +27,37 @@ const HomeNavbar = () => {
     { label: "Pricing", to: "/pricing" },
   ];
 
-  const  handleLogout = async () => {
-    try{
+  const handleLogout = async () => {
+    try {
       await logoutRequest();
       dispatch(logout());
       toast.success("Logout Successful");
       navigate("/");
-    }catch(error){
+    } catch (error) {
       console.log(error);
-      toast.error("Logout failed")
+      toast.error("Logout failed");
     }
-  }
+  };
+
+  const handleDashboard = () => {
+    // Admin
+    if (user.role === "admin") {
+      navigate("/admin");
+      return;
+    }
+    // Vendor / Manager not active
+    if (user.role !== "admin" && user.status !== "active") {
+      navigate("/account-status");
+      return;
+    }
+    // Vendor
+    if (user.role === "vendor") {
+      navigate("/vendor");
+      return;
+    }
+    // Manager
+    navigate("/manager");
+  };
 
   useEffect(() => {
     const menuHandler = (e) => {
@@ -126,7 +145,7 @@ const HomeNavbar = () => {
         )}
 
         {/* Mobile toggle */}
-        <div className="md:hidden flex items-center gap-3">
+        <div className="md:hidden flex items-center gap-1 md:gap-3">
           {isAuthenticated && user ? (
             <button
               onClick={() => setProfileMenuOpen((p) => !p)}
@@ -136,7 +155,7 @@ const HomeNavbar = () => {
               <span className="flex items-center justify-center size-8 bg-secondary text-white rounded-full text-sm font-semibold shrink-0">
                 {user?.name?.[0]?.toUpperCase()}
               </span>
-              <span className="text-sm font-medium text-gray-700 group-hover:text-primary transition-colors">
+              <span className="max-sm:hidden text-sm font-medium text-gray-700 group-hover:text-primary transition-colors">
                 {user?.name}
               </span>
               <ChevronDown
@@ -163,7 +182,6 @@ const HomeNavbar = () => {
             <NavLink
               key={to}
               to={to}
-              onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive
@@ -200,7 +218,10 @@ const HomeNavbar = () => {
 
       {/* Profile Dropdown */}
       {profileMenuOpen && (
-        <div ref={profileMenuRef} className="absolute right-0 mt-1 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden">
+        <div
+          ref={profileMenuRef}
+          className="absolute right-0 mt-1 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden"
+        >
           {/* User info */}
           <div className="px-4 py-3.5 border-b border-gray-100 bg-gray-50">
             <p className="text-sm font-semibold text-primary truncate">
@@ -212,20 +233,29 @@ const HomeNavbar = () => {
           </div>
 
           {/* Profile dropdown items */}
-          <div onClick={()=>{
-            setProfileMenuOpen(false);
-          }} className="p-1.5 space-y-0.5">
-            <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-secondary/8 hover:text-secondary transition-colors cursor-pointer">
+          <div
+            onClick={() => {
+              setProfileMenuOpen(false);
+            }}
+            className="p-1.5 space-y-0.5"
+          >
+            <button
+              onClick={handleDashboard}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-secondary/8 hover:text-secondary transition-colors cursor-pointer"
+            >
               <div className="w-7 h-7 rounded-lg bg-secondary/10 flex items-center justify-center shrink-0">
                 <LayoutDashboard className="w-3.5 h-3.5 text-secondary" />
               </div>
               Dashboard
             </button>
 
-            <button onClick={()=>{
-              handleLogout()
-              setProfileMenuOpen(false);
-            }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-600 hover:bg-red-50 transition-colors cursor-pointer">
+            <button
+              onClick={() => {
+                handleLogout();
+                setProfileMenuOpen(false);
+              }}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+            >
               <div className="w-7 h-7 rounded-lg bg-red-50 flex items-center justify-center shrink-0">
                 <LogOut className="w-3.5 h-3.5 text-red-500" />
               </div>

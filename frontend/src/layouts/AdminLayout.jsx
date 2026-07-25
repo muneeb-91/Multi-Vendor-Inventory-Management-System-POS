@@ -19,9 +19,13 @@ const AdminLayout = () => {
         )}
 
         {/* Sidebar */}
+        <div className="hidden lg:block sticky top-0 h-screen">
+          <Sidebar />
+        </div>
         <div
-          className={`fixed top-0 left-0 h-full z-30 lg:static lg:z-auto transition-transform duration-300 ${
-            sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          onClick={() => setSidebarOpen(false)}
+          className={`lg:hidden fixed top-0 left-0 z-30 transition-transform duration-300 ${
+            sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           <Sidebar />

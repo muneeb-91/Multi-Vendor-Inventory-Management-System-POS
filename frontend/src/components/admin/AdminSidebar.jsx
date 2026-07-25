@@ -21,7 +21,7 @@ const navItems = [
 
 const Sidebar = () => {
   return (
-    <aside className="w-60 h-screen bg-primary flex flex-col shrink-0">
+    <aside className="w-60 sticky min-h-screen bg-primary flex flex-col shrink-0">
       {/* Brand */}
       <div className="px-6 py-5 border-b border-white/10">
         <div className="flex items-center gap-2 mb-1">

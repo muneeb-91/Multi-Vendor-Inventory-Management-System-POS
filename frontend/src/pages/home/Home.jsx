@@ -12,8 +12,10 @@ import {
 import FeatureCard from "../../components/home/FeatureCard";
 import SectionHeading from "../../components/home/SectionHeading";
 
-const Home = () => (
-  <>
+const Home = () => {
+
+  return (
+  <div>
     {/* ── Hero ───────────────────────────────────────────────────── */}
     <section className="max-w-6xl mx-auto px-6 py-16 lg:py-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       <div>
@@ -208,7 +210,8 @@ const Home = () => (
         <p className="mt-4 text-xs text-gray-500">No credit card required. 14-day free trial.</p>
       </div>
     </section>
-  </>
-);
+  </div>
+  )
+};
 
 export default Home;
