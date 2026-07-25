@@ -2,7 +2,7 @@ import { Router } from "express";
 const router = Router();
 
 // controller imports
-import { registerVendor, getVendorRequests } from "../controllers/vendor.controller.js";
+import { registerVendor, getVendorRequests, updateVendorStatus } from "../controllers/vendor.controller.js";
 
 // validation imports
 import { vendorRegisterationSchema } from "../validations/vendor.validation.js";

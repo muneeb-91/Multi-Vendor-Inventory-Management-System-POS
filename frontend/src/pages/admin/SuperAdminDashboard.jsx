@@ -13,13 +13,25 @@ import {
 } from "lucide-react";
 import { formatDate } from "../../utils/formatDate";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllVendorsRequest } from "../../features/vendor/vendorAPI";
-import { fetchVendorRequestsStart, fetchVendorRequestsSuccess, fetchVendorRequestsFailure } from "../../features/vendor/vendorSlice";
+import { getAllVendorsRequest, updateVendorStatusRequest } from "../../features/vendor/vendorAPI";
+import { fetchVendorRequestsStart, fetchVendorRequestsSuccess, fetchVendorRequestsFailure, removeVendorRequest } from "../../features/vendor/vendorSlice";
+import { toast } from 'react-toastify';
 
 const SuperAdminDashboard = () => {
   const dispatch = useDispatch();
   const [openMenu, setOpenMenu] = useState(null);
   const { vendorRequests, error } = useSelector((state) => state.vendors);
+
+  const handleUpdateVendorStatus = async (vendorId, status) => {
+    try{
+      const res = await updateVendorStatusRequest(vendorId, status);
+      dispatch(removeVendorRequest(vendorId));
+      toast.success(`Vendor ${status} successfully`);
+    }catch(error){
+      console.log(error);
+      toast.error(error?.response?.data?.error || "Something went wrong");
+    }
+  }
 
   useEffect(()=>{
     const getAllVendors = async () => {
@@ -118,6 +130,7 @@ const SuperAdminDashboard = () => {
                   <th className="px-5 py-3 font-medium">Action</th>
                 </tr>
               </thead>
+              {vendorRequests.length===0 ? <tr className="flex items-center justify-center text-gray-500 w-full">No vendor requests</tr> : ""}
               <tbody>
                 {vendorRequests?.map((v) => (
                   <tr key={v?._id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
@@ -146,10 +159,10 @@ const SuperAdminDashboard = () => {
                         </button>
                         {openMenu === v?._id && (
                           <div className="absolute right-0 mt-1 w-36 bg-white border border-gray-100 rounded-lg shadow-lg z-10 py-1">
-                            <button className="w-full text-left px-3 py-2 text-sm text-green-700 hover:bg-gray-50">
+                            <button onClick={()=>handleUpdateVendorStatus(v?._id, "active")} className="w-full text-left px-3 py-2 text-sm text-green-700 hover:bg-gray-50">
                               Activate
                             </button>
-                            <button className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50">
+                            <button onClick={()=>handleUpdateVendorStatus(v?._id, "rejected")} className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50">
                               Reject
                             </button>
                           </div>

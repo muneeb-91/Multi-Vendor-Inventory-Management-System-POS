@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-// Vendor Requests States
+  // Vendor Requests States
   vendorRequests: [],
   vendorRequestsLoading: false,
   vendorRequestsError: null,
@@ -9,7 +9,7 @@ const initialState = {
 
 const vendorSlice = createSlice({
   name: "vendors",
-  
+
   initialState,
 
   reducers: {
@@ -30,6 +30,12 @@ const vendorSlice = createSlice({
       state.vendorRequests = [];
       state.vendorRequestsError = action.payload;
     },
+
+    removeVendorRequest: (state, action) => {
+      state.vendorRequests = state.vendorRequests.filter(
+        (vendor) => vendor._id !== action.payload,
+      );
+    },
   },
 });
 
@@ -37,6 +43,7 @@ export const {
   fetchVendorRequestsStart,
   fetchVendorRequestsSuccess,
   fetchVendorRequestsFailure,
+  removeVendorRequest,
 } = vendorSlice.actions;
 
 export default vendorSlice.reducer;

@@ -6,7 +6,7 @@ export const getAllVendorsRequest = async () => {
 };
 
 export const updateVendorStatusRequest = async (id, status) => {
-  const res = await axios.patch(`/vendors/${id}/status`, {
+  const res = await axios.patch(`/vendor/${id}/status`, {
     status,
   });
 
