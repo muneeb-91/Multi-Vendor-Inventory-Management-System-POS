@@ -5,3 +5,10 @@ export const getAllVendorsRequest = async () => {
   return response.data;
 };
 
+export const updateVendorStatusRequest = async (id, status) => {
+  const res = await axios.patch(`/vendors/${id}/status`, {
+    status,
+  });
+
+  return res.data;
+};

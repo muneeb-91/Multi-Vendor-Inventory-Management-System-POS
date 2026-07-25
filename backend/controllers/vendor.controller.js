@@ -74,3 +74,34 @@ export const getVendorRequests = async (req, res) => {
     vendorRequests,
   });
 };
+
+export const updateVendorStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  const allowedStatuses = [
+    "pending",
+    "active",
+    "suspended",
+    "rejected",
+  ];
+
+  if (!allowedStatuses.includes(status)) {
+    throw "Invalid vendor status.";
+  }
+
+  const vendor = await Vendor.findById(id);
+
+  if (!vendor) {
+    throw "Vendor not found.";
+  }
+
+  vendor.status = status;
+  await vendor.save();
+
+  res.status(200).json({
+    success: true,
+    message: `Vendor ${status} successfully.`,
+    vendor,
+  });
+};

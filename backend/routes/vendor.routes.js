@@ -26,4 +26,11 @@ router.get(
     getVendorRequests
 );
 
+router.patch(
+  "/:id/status",
+  verifyToken,
+  authorizeRoles("admin"),
+  updateVendorStatus
+);
+
 export default router;
