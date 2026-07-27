@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "../components/admin/AdminSidebar";
+import AdminSidebar from "../components/admin/AdminSidebar";
 import TopNavbar from "../components/admin/AdminTopNavbar";
 
 const AdminLayout = () => {
@@ -20,7 +20,7 @@ const AdminLayout = () => {
 
         {/* Sidebar */}
         <div className="hidden lg:block sticky top-0 h-screen">
-          <Sidebar />
+          <AdminSidebar />
         </div>
         <div
           onClick={() => setSidebarOpen(false)}
@@ -28,7 +28,7 @@ const AdminLayout = () => {
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          <Sidebar />
+          <AdminSidebar />
         </div>
       </>
 
