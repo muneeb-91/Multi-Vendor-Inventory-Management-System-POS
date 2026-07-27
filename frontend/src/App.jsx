@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { checkAuthRequest } from "./features/auth/authAPI";
-import { checkAuthSuccess, checkAuthFailure } from "./features/auth/authSlice";
+import { checkAuthSuccess, checkAuthFailure } from "./features/auth/authSlice.js";
 import Loader from "./components/Loader";
 
 // Login and Vendor Register Imports

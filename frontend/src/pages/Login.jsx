@@ -12,7 +12,7 @@ import {
   loginStart,
   loginSuccess,
   loginFailure,
-} from "../features/auth/authSlice";
+} from "../features/auth/authSlice.js";
 
 const Login = () => {
 const dispatch = useDispatch();

@@ -20,12 +20,12 @@ const VendorLayout = () => {
         )}
 
         {/* Sidebar */}
-        <div className="hidden lg:block sticky top-0 h-screen">
+        <div className="hidden no-scrollbar lg:block overflow-y-auto sticky top-0 h-screen">
           <VendorSidebar />
         </div>
         <div
           onClick={() => setSidebarOpen(false)}
-          className={`lg:hidden fixed top-0 left-0 z-30 transition-transform duration-300 ${
+          className={`lg:hidden no-scrollbar overflow-y-auto fixed top-0 left-0 z-30 transition-transform duration-300 ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >

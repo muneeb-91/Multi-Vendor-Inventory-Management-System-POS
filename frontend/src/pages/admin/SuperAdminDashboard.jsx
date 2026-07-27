@@ -13,8 +13,8 @@ import {
 } from "lucide-react";
 import { formatDate } from "../../utils/formatDate";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllVendorsRequest, updateVendorStatusRequest } from "../../features/vendor/vendorAPI";
-import { fetchVendorRequestsStart, fetchVendorRequestsSuccess, fetchVendorRequestsFailure, removeVendorRequest } from "../../features/vendor/vendorSlice";
+import { getAllVendorsRequest, updateVendorStatusRequest } from "../../features/vendor/vendorAPI.js";
+import { fetchVendorRequestsStart, fetchVendorRequestsSuccess, fetchVendorRequestsFailure, removeVendorRequest } from "../../features/vendor/vendorSlice.js";
 import { toast } from 'react-toastify';
 
 const SuperAdminDashboard = () => {
