@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Plus, Search, SlidersHorizontal, ChevronLeft, ChevronRight, Trash2 } from "lucide-react";
 
 const categoriesData = [
-  { id: 1, name: "Electronics",        description: "Consumer devices and components",  created: "Oct 24, 2023", status: "Active"   },
-  { id: 2, name: "Office Furniture",   description: "Desks, chairs, and storage solutions", created: "Nov 12, 2023", status: "Active"   },
-  { id: 3, name: "Packaging Materials",description: "Boxes, tape, and shipping supplies", created: "Jan 05, 2024", status: "Inactive" },
-  { id: 4, name: "Audio Equipment",    description: "Speakers, headphones, and mixers",  created: "Feb 18, 2024", status: "Active"   },
+  { id: 1, name: "Electronics", description: "Consumer devices and components",  created: "Oct 24, 2023", status: "Active" },
+  { id: 2, name: "Office Furniture", description: "Desks, chairs, and storage solutions", created: "Nov 12, 2023", status: "Active" },
+  { id: 3, name: "Packaging Materials", description: "Boxes, tape, and shipping supplies", created: "Jan 05, 2024", status: "Inactive" },
+  { id: 4, name: "Audio Equipment", description: "Speakers, headphones, and mixers", created: "Feb 18, 2024", status: "Active" },
 ];
 
 // Generate a consistent colour pair from the first letter
@@ -130,14 +130,14 @@ const Categories = () => {
                     </button>
                   </td>
 
-                  {/* Delete */}
+                  {/* Actions */}
                   <td className="px-5 py-4 text-right">
                     <button
-                      onClick={() => handleDelete(c.id)}
+                      
                       className="p-1.5 rounded-md hover:bg-red-50 text-gray-400 hover:text-red-500 cursor-pointer transition-colors"
                       title="Delete category"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      {c?.status === "active" ? "Inactivate" : "Active"}
                     </button>
                   </td>
 
