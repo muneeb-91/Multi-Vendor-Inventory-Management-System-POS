@@ -12,10 +12,10 @@ import {
 } from "lucide-react";
 
 const CATEGORY_ICONS = {
-  Electronics:      Laptop,
-  Furniture:        Armchair,
+  Electronics: Laptop,
+  Furniture: Armchair,
   "Office Supplies": Printer,
-  Audio:            Headphones,
+  Audio: Headphones,
 };
 
 const productsData = [
@@ -74,7 +74,7 @@ const ManageProducts = () => {
               <option key={c}>{c === "All" ? "All Categories" : c}</option>
             ))}
           </select>
-          <Link to={'/vendor/add-product'} className="flex items-center gap-2 bg-secondary hover:bg-secondary/90 text-white px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors">
+          <Link to={'/vendor/products/add'} className="flex items-center gap-2 bg-secondary hover:bg-secondary/90 text-white px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors">
             <Plus className="w-4 h-4" />
             Add Product
           </Link>

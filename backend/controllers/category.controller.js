@@ -55,7 +55,7 @@ export const toggleCategoryStatus = async (req, res) => {
   res.status(200).json({
     success: true,
     message: `Category ${category.status} successfully.`,
-    category,
+    status: category.status,
   });
 };
 

@@ -139,9 +139,13 @@ function App() {
           <Route index element={<VendorDashboard />} />
           <Route path="categories" element={<Categories />} />
           <Route path="suppliers" element={<Suppliers />} />
-          <Route path="products" element={<ManageProducts />} />
-          <Route path="products/:id" element={<ProductDetails />} />
-          <Route path="add-product" element={<AddNewProduct />} />
+          <Route path="products">
+            <Route index element={<ManageProducts />} />
+            <Route path="add" element={<AddNewProduct />} />
+            <Route path=":id" element={<ProductDetails />} />
+          </Route>
+          {/* <Route path="products/:id" element={<ProductDetails />} /> */}
+          {/* <Route path="add-product" element={<AddNewProduct />} /> */}
           <Route path="orders" element={<OrderHistory />} />
           <Route path="create-order" element={<CreateOrder />} />
           <Route path="managers" element={<ManageTeam />} />
@@ -166,7 +170,7 @@ function App() {
           <Route path="notifications" element={<ManagerNotifications />} />
         </Route>
 
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   );

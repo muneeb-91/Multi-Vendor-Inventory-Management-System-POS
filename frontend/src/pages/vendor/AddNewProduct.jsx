@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Info, Package, Bell, HelpCircle, Search } from 'lucide-react';
+import { Link } from 'react-router-dom';
 const AddNewProduct = () => {
   const [formData, setFormData] = useState({
     productName: '',
@@ -16,10 +17,10 @@ const AddNewProduct = () => {
     <div className="min-h-screen bg-tertiary font-sans text-primary">
       {/* Main Content */}
       <main className="max-w-4xl mx-auto">
-        <button className="flex items-center text-sm text-gray-500 hover:text-primary font-medium mb-6 transition-colors">
+        <Link to={`/vendor/products`} className="flex items-center text-sm text-gray-500 hover:text-primary font-medium mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-1" />
           Back to Inventory
-        </button>
+        </Link>
         <h1 className="text-3xl font-bold mb-2 text-primary tracking-tight">Add New Product</h1>
         <p className="text-gray-500 mb-8 text-sm">Enter the details for the new inventory item.</p>
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
