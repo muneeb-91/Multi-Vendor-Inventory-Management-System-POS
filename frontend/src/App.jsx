@@ -54,6 +54,8 @@ import ManagerOrderHistory from "./pages/manager/ManagerOrderHistory";
 import ManagerCreateOrder from "./pages/manager/ManagerCreateOrder";
 import ManagerOrderReceipt from "./pages/manager/ManagerOrderReceipt";
 import ManagerNotifications from "./pages/manager/ManagerNotifications";
+import AddCategory from "./pages/vendor/AddCategory.jsx";
+import AddSupplier from "./pages/vendor/AddSupplier.jsx";
 
 
 function App() {
@@ -137,15 +139,19 @@ function App() {
           }
         >
           <Route index element={<VendorDashboard />} />
-          <Route path="categories" element={<Categories />} />
-          <Route path="suppliers" element={<Suppliers />} />
+          <Route path="categories">
+            <Route index element={<Categories />} />
+            <Route path="add" element={<AddCategory />} />
+          </Route>
+          <Route path="suppliers">
+            <Route index element={<Suppliers />} />
+            <Route path="add" element={<AddSupplier />} />
+          </Route>
           <Route path="products">
             <Route index element={<ManageProducts />} />
             <Route path="add" element={<AddNewProduct />} />
             <Route path=":id" element={<ProductDetails />} />
           </Route>
-          {/* <Route path="products/:id" element={<ProductDetails />} /> */}
-          {/* <Route path="add-product" element={<AddNewProduct />} /> */}
           <Route path="orders" element={<OrderHistory />} />
           <Route path="create-order" element={<CreateOrder />} />
           <Route path="managers" element={<ManageTeam />} />

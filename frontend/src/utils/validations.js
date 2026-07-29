@@ -20,3 +20,21 @@ export const validateLoginForm = ({ email, password }) => {
   }
   return true;
 };
+
+export const validateCategory = ({formData}) => {
+    if (!formData.categoryName.trim())
+      toast.error("Category name is required.");
+    else if (formData.categoryName.trim().length < 2)
+      toast.error("Must be at least 2 characters.");
+    else if (formData.categoryName.trim().length > 25)
+      toast.error("Must be 25 characters or less.");
+
+    if (!formData.description.trim())
+      toast.error("Description is required.");
+    else if (formData.description.trim().length < 5)
+      toast.error("Must be at least 5 characters.");
+    else if (formData.description.trim().length > 45)
+      toast.error("Must be 45 characters or less.");
+
+    return true;
+  };

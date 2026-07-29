@@ -17,6 +17,7 @@ import {
   fetchCategoriesFailure,
 } from "../../features/category/categorySlice.js";
 import { getAllCategoriesRequest } from "../../features/category/categoryAPI.js";
+import { Link } from "react-router-dom";
 
 const Categories = () => {
   const [search, setSearch] = useState("");
@@ -53,7 +54,7 @@ const Categories = () => {
     getCategories();
   }, []);
 
-  if(categoriesLoading) return <Loader />;
+  if(categoriesLoading) return <Loader className={'h-screen'} />;
 
   return (
     <div className="space-y-6">
@@ -65,10 +66,10 @@ const Categories = () => {
             Manage product classifications for vendor assignments.
           </p>
         </div>
-        <button className="flex items-center gap-2 bg-secondary hover:bg-secondary/90 text-white px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors self-start sm:self-auto">
+        <Link to={`/vendor/categories/add`} className="flex items-center gap-2 bg-secondary hover:bg-secondary/90 text-white px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors self-start sm:self-auto">
           <Plus className="w-4 h-4" />
           Add Category
-        </button>
+        </Link>
       </div>
 
       {/* Table card */}
