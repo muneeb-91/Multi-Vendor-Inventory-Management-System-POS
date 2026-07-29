@@ -1,152 +1,182 @@
-import React, { useState } from 'react';
-import { ArrowLeft, Info, Package, Bell, HelpCircle, Search } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { ArrowLeft, Info, Package } from "lucide-react";
+import { Link } from "react-router-dom";
+
 const AddNewProduct = () => {
   const [formData, setFormData] = useState({
-    productName: '',
-    category: '',
-    supplier: '',
-    stockQuantity: '',
-    sellingPrice: '',
-    purchaseDate: ''
+    productName:   "",
+    category:      "",
+    supplier:      "",
+    stockQuantity: "",
+    sellingPrice:  "",
+    purchaseDate:  "",
   });
-  const handleChange = (e) => {
+
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+
+  const inputClass =
+    "w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm text-primary placeholder-gray-400 outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all";
+
+  const labelClass = "block text-sm font-medium text-primary mb-1.5";
+
   return (
-    <div className="min-h-screen bg-tertiary font-sans text-primary">
-      {/* Main Content */}
-      <main className="max-w-4xl mx-auto">
-        <Link to={`/vendor/products`} className="flex items-center text-sm text-gray-500 hover:text-primary font-medium mb-6 transition-colors">
-          <ArrowLeft className="w-4 h-4 mr-1" />
-          Back to Inventory
-        </Link>
-        <h1 className="text-3xl font-bold mb-2 text-primary tracking-tight">Add New Product</h1>
-        <p className="text-gray-500 mb-8 text-sm">Enter the details for the new inventory item.</p>
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-          
-          {/* Basic Information Section */}
-          <section className="mb-10">
-            <div className="flex items-center gap-2 mb-6">
-              <Info className="w-5 h-5 text-secondary" />
-              <h2 className="text-xl font-bold text-primary">Basic Information</h2>
+    <div className="space-y-5">
+
+      {/* Back */}
+      <Link
+        to="/vendor/products"
+        className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-primary transition-colors"
+      >
+        <ArrowLeft className="w-4 h-4" /> Back to Inventory
+      </Link>
+
+      {/* Page heading */}
+      <div>
+        <h1 className="text-2xl font-bold text-primary">Add New Product</h1>
+        <p className="text-sm text-gray-500 mt-0.5">
+          Enter the details for the new inventory item.
+        </p>
+      </div>
+
+      {/* Card */}
+      <div className="bg-white border border-gray-100 rounded-xl p-6">
+
+        {/* ── Basic Information ── */}
+        <section>
+          <div className="flex items-center gap-2 mb-5">
+            <Info className="w-4 h-4 text-secondary" />
+            <h2 className="text-base font-semibold text-primary">Basic Information</h2>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <label className={labelClass}>
+                Product Name <span className="text-red-400">*</span>
+              </label>
+              <input
+                type="text"
+                name="productName"
+                placeholder="e.g. Industrial Steel Widget"
+                value={formData.productName}
+                onChange={handleChange}
+                className={inputClass}
+              />
             </div>
-            
-            <div className="space-y-6">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-semibold text-primary mb-2">
-                  Product Name <span className="text-red-500">*</span>
+                <label className={labelClass}>
+                  Category <span className="text-red-400">*</span>
                 </label>
-                <input
-                  type="text"
-                  name="productName"
-                  placeholder="e.g. Industrial Steel Widget"
-                  value={formData.productName}
+                <select
+                  name="category"
+                  value={formData.category}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
-                />
+                  className={`${inputClass} text-gray-600 cursor-pointer`}
+                >
+                  <option value="">Select category</option>
+                  <option value="electronics">Electronics</option>
+                  <option value="furniture">Furniture</option>
+                  <option value="office-supplies">Office Supplies</option>
+                  <option value="audio">Audio</option>
+                </select>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-semibold text-primary mb-2">
-                    Category <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    name="category"
-                    value={formData.category}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary appearance-none text-gray-600 transition-all"
-                  >
-                    <option value="">Select category</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="hardware">Hardware</option>
-                    <option value="software">Software</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-primary mb-2">
-                    Supplier
-                  </label>
-                  <select
-                    name="supplier"
-                    value={formData.supplier}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary appearance-none text-gray-600 transition-all"
-                  >
-                    <option value="">Select supplier</option>
-                    <option value="techcorp">TechCorp Manufacturing Inc.</option>
-                    <option value="global">Global Supply Co.</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </section>
-          <hr className="border-gray-100 my-8" />
-          {/* Inventory & Pricing Section */}
-          <section className="mb-10">
-             <div className="flex items-center gap-2 mb-6">
-              <Package className="w-5 h-5 text-secondary" />
-              <h2 className="text-xl font-bold text-primary">Inventory & Pricing</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
               <div>
-                <label className="block text-sm font-semibold text-primary mb-2">
-                  Stock Quantity <span className="text-red-500">*</span>
-                </label>
+                <label className={labelClass}>Supplier</label>
+                <select
+                  name="supplier"
+                  value={formData.supplier}
+                  onChange={handleChange}
+                  className={`${inputClass} text-gray-600 cursor-pointer`}
+                >
+                  <option value="">Select supplier</option>
+                  <option value="techcorp">TechCorp Manufacturing Inc.</option>
+                  <option value="hermanmiller">Herman Miller Inc.</option>
+                  <option value="hp">HP Enterprise</option>
+                  <option value="sony">Sony Audio</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr className="border-gray-100 my-6" />
+
+        {/* ── Inventory & Pricing ── */}
+        <section>
+          <div className="flex items-center gap-2 mb-5">
+            <Package className="w-4 h-4 text-secondary" />
+            <h2 className="text-base font-semibold text-primary">Inventory &amp; Pricing</h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label className={labelClass}>
+                Stock Quantity <span className="text-red-400">*</span>
+              </label>
+              <input
+                type="number"
+                name="stockQuantity"
+                placeholder="0"
+                value={formData.stockQuantity}
+                onChange={handleChange}
+                className={inputClass}
+              />
+            </div>
+
+            <div>
+              <label className={labelClass}>
+                Selling Price <span className="text-red-400">*</span>
+              </label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
+                  $
+                </span>
                 <input
                   type="number"
-                  name="stockQuantity"
-                  placeholder="0"
-                  value={formData.stockQuantity}
+                  name="sellingPrice"
+                  placeholder="0.00"
+                  step="0.01"
+                  value={formData.sellingPrice}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-primary mb-2">
-                  Selling Price <span className="text-red-500">*</span>
-                </label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">$</span>
-                  <input
-                    type="number"
-                    name="sellingPrice"
-                    placeholder="0.00"
-                    step="0.01"
-                    value={formData.sellingPrice}
-                    onChange={handleChange}
-                    className="w-full pl-8 pr-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-primary mb-2">
-                  Purchase Date
-                </label>
-                <input
-                  type="date"
-                  name="purchaseDate"
-                  value={formData.purchaseDate}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary text-gray-600 transition-all"
+                  className={`${inputClass} pl-7`}
                 />
               </div>
             </div>
-          </section>
-          <hr className="border-gray-100 my-8" />
-          {/* Actions */}
-          <div className="flex justify-end gap-4">
-            <button className="px-6 py-2.5 bg-white border border-gray-200 text-primary font-medium rounded-lg hover:bg-gray-50 transition-colors">
-              Cancel
-            </button>
-            <button className="px-6 py-2.5 bg-secondary text-white font-medium rounded-lg hover:bg-secondary/90 transition-colors flex items-center gap-2 shadow-sm">
-              <Package className="w-4 h-4" />
-              Save Product
-            </button>
+
+            <div>
+              <label className={labelClass}>Purchase Date</label>
+              <input
+                type="date"
+                name="purchaseDate"
+                value={formData.purchaseDate}
+                onChange={handleChange}
+                className={`${inputClass} text-gray-600`}
+              />
+            </div>
           </div>
+        </section>
+
+        <hr className="border-gray-100 my-6" />
+
+        {/* ── Actions ── */}
+        <div className="flex items-center justify-end gap-3">
+          <Link
+            to="/vendor/products"
+            className="px-4 py-2 border border-gray-200 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
+          >
+            Cancel
+          </Link>
+          <button className="flex items-center gap-2 px-5 py-2 bg-secondary hover:bg-secondary/90 text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer">
+            <Package className="w-4 h-4" />
+            Save Product
+          </button>
         </div>
-      </main>
+      </div>
     </div>
   );
 };
+
 export default AddNewProduct;
