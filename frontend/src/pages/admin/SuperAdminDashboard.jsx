@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllVendorsRequest, updateVendorStatusRequest } from "../../features/vendor/vendorAPI.js";
 import { fetchVendorRequestsStart, fetchVendorRequestsSuccess, fetchVendorRequestsFailure, removeVendorRequest } from "../../features/vendor/vendorSlice.js";
 import { toast } from 'react-toastify';
+import { adminSystemsStatus } from "../../data/index.js";
 
 const SuperAdminDashboard = () => {
   const dispatch = useDispatch();
@@ -212,11 +213,7 @@ const SuperAdminDashboard = () => {
               System Status
             </p>
             <div className="space-y-3">
-              {[
-                { label: "Core API", status: "99.9% Uptime", color: "bg-green-500" },
-                { label: "Payment Gateway", status: "Operational", color: "bg-green-500" },
-                { label: "Email Service", status: "Delayed", color: "bg-purple-400" },
-              ].map((s) => (
+              {adminSystemsStatus.map((s) => (
                 <div key={s.label} className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className={`w-2 h-2 rounded-full ${s.color}`}></span>

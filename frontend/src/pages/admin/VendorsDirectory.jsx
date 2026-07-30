@@ -1,49 +1,6 @@
 import { useState } from "react";
 import { MoreVertical, UserPlus, Download, SlidersHorizontal } from "lucide-react";
-const vendorsData = [
-  {
-    id: 1,
-    initial: "N",
-    shopName: "Nexus Electronics",
-    ownerName: "Sarah Jenkins",
-    products: 1245,
-    orders: 8902,
-    status: "Active",
-  },
-  {
-    id: 2,
-    initial: "O",
-    shopName: "Oasis Lifestyle",
-    ownerName: "Marcus Thorne",
-    products: 432,
-    orders: 1105,
-    status: "Active",
-  },
-  {
-    id: 3,
-    initial: "V",
-    shopName: "Vanguard Gear",
-    ownerName: "Elena Rostova",
-    products: 89,
-    orders: 0,
-    status: "Suspended",
-  },
-  {
-    id: 4,
-    initial: "L",
-    shopName: "Lumina Goods",
-    ownerName: "Rachel Green",
-    products: 12,
-    orders: 45,
-    status: "Pending",
-  },
-];
-
-const statusStyle = (status) => {
-  if (status === "Active") return "bg-green-100 text-green-700";
-  if (status === "Suspended") return "bg-red-100 text-red-600";
-  return "bg-gray-100 text-gray-500";
-};
+import { vendorsData, vendorsStatusStyle } from "../../data"; 
 
 const getActions = (status) => {
   if (status === "Active") return ["Suspend", "Delete"];
@@ -160,7 +117,7 @@ const VendorsDirectory = () => {
                     {v.orders.toLocaleString()}
                   </td>
                   <td className="px-5 py-4">
-                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${statusStyle(v.status)}`}>
+                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${vendorsStatusStyle(v.status)}`}>
                       <span className={`w-1.5 h-1.5 rounded-full ${
                         v.status === "Active" ? "bg-green-500" :
                         v.status === "Suspended" ? "bg-red-500" : "bg-gray-400"

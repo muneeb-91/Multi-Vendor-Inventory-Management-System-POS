@@ -207,6 +207,13 @@ export const ordersData = [
   },
 ];
 
+// Super Admin Dashboard
+export const adminSystemsStatus = [
+  { label: "Core API", status: "99.9% Uptime", color: "bg-green-500" },
+  { label: "Payment Gateway", status: "Operational", color: "bg-green-500" },
+  { label: "Email Service", status: "Delayed", color: "bg-purple-400" },
+];
+
 // System Analytics
 export const vendorPerformanceData = [
   { name: "V1", revenue: 48000 },
@@ -295,14 +302,139 @@ export const vendor = {
 };
 
 export const topProducts = [
-  { sku: "ACM-CPU-X9", name: "Quantum Core Processor X9", cost: "$245.00", stock: 850, stockLevel: "high" },
-  { sku: "ACM-MEM-32G", name: "32GB DDR5 RAM Kit", cost: "$112.50", stock: 120, stockLevel: "low" },
-  { sku: "ACM-SSD-2T", name: "2TB NVMe Solid State Drive", cost: "$165.00", stock: 1200, stockLevel: "high" },
+  {
+    sku: "ACM-CPU-X9",
+    name: "Quantum Core Processor X9",
+    cost: "$245.00",
+    stock: 850,
+    stockLevel: "high",
+  },
+  {
+    sku: "ACM-MEM-32G",
+    name: "32GB DDR5 RAM Kit",
+    cost: "$112.50",
+    stock: 120,
+    stockLevel: "low",
+  },
+  {
+    sku: "ACM-SSD-2T",
+    name: "2TB NVMe Solid State Drive",
+    cost: "$165.00",
+    stock: 1200,
+    stockLevel: "high",
+  },
 ];
 
 export const purchaseOrders = [
-  { po: "PO-2023-8942", date: "Oct 24, 2023", status: "Delivered", amount: "$45,200.00" },
-  { po: "PO-2023-8901", date: "Oct 12, 2023", status: "In Transit", amount: "$12,850.50" },
-  { po: "PO-2023-8876", date: "Sep 28, 2023", status: "Delivered", amount: "$89,400.00" },
+  {
+    po: "PO-2023-8942",
+    date: "Oct 24, 2023",
+    status: "Delivered",
+    amount: "$45,200.00",
+  },
+  {
+    po: "PO-2023-8901",
+    date: "Oct 12, 2023",
+    status: "In Transit",
+    amount: "$12,850.50",
+  },
+  {
+    po: "PO-2023-8876",
+    date: "Sep 28, 2023",
+    status: "Delivered",
+    amount: "$89,400.00",
+  },
 ];
 
+export const vendorDetailItems = [
+  { label: "Vendor ID", value: vendor.vendorId },
+  { label: "Tax ID / EIN", value: vendor.taxId },
+  { label: "Category", value: vendor.category },
+  { label: "HQ Address", value: vendor.address },
+];
+
+export const singleVendorStatusStyle = (s) => {
+  if (s === "Delivered") return "bg-green-100 text-green-700";
+  if (s === "In Transit") return "bg-blue-100 text-blue-600";
+  return "bg-gray-100 text-gray-500";
+};
+
+// Vendor Requests
+export const requestsData = [
+  {
+    id: 1,
+    initial: "A",
+    shopName: "Apex Supplies Ltd",
+    ownerName: "Sarah Jenkins",
+    email: "sarah@apexsupplies.com",
+    phone: "+1 (555) 019-2834",
+    requestDate: "2023-10-24",
+    status: "Pending Review",
+  },
+  {
+    id: 2,
+    initial: "G",
+    shopName: "Global Tech Traders",
+    ownerName: "Marcus Chen",
+    email: "m.chen@globaltech.io",
+    phone: "+44 7700 900077",
+    requestDate: "2023-10-23",
+    status: "Pending Review",
+  },
+  {
+    id: 3,
+    initial: "B",
+    shopName: "Blue Ridge Supplies",
+    ownerName: "Amara Osei",
+    email: "amara@blueridge.co",
+    phone: "+1 (312) 456-7890",
+    requestDate: "2023-10-21",
+    status: "Pending Review",
+  },
+];
+
+// Vendors Directory
+export const vendorsData = [
+  {
+    id: 1,
+    initial: "N",
+    shopName: "Nexus Electronics",
+    ownerName: "Sarah Jenkins",
+    products: 1245,
+    orders: 8902,
+    status: "Active",
+  },
+  {
+    id: 2,
+    initial: "O",
+    shopName: "Oasis Lifestyle",
+    ownerName: "Marcus Thorne",
+    products: 432,
+    orders: 1105,
+    status: "Active",
+  },
+  {
+    id: 3,
+    initial: "V",
+    shopName: "Vanguard Gear",
+    ownerName: "Elena Rostova",
+    products: 89,
+    orders: 0,
+    status: "Suspended",
+  },
+  {
+    id: 4,
+    initial: "L",
+    shopName: "Lumina Goods",
+    ownerName: "Rachel Green",
+    products: 12,
+    orders: 45,
+    status: "Pending",
+  },
+];
+
+export const vendorsStatusStyle = (status) => {
+  if (status === "Active") return "bg-green-100 text-green-700";
+  if (status === "Suspended") return "bg-red-100 text-red-600";
+  return "bg-gray-100 text-gray-500";
+};

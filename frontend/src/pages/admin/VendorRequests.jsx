@@ -7,39 +7,7 @@ import {
   Filter,
   Download,
 } from "lucide-react";
-
-const requestsData = [
-  {
-    id: 1,
-    initial: "A",
-    shopName: "Apex Supplies Ltd",
-    ownerName: "Sarah Jenkins",
-    email: "sarah@apexsupplies.com",
-    phone: "+1 (555) 019-2834",
-    requestDate: "2023-10-24",
-    status: "Pending Review",
-  },
-  {
-    id: 2,
-    initial: "G",
-    shopName: "Global Tech Traders",
-    ownerName: "Marcus Chen",
-    email: "m.chen@globaltech.io",
-    phone: "+44 7700 900077",
-    requestDate: "2023-10-23",
-    status: "Pending Review",
-  },
-  {
-    id: 3,
-    initial: "B",
-    shopName: "Blue Ridge Supplies",
-    ownerName: "Amara Osei",
-    email: "amara@blueridge.co",
-    phone: "+1 (312) 456-7890",
-    requestDate: "2023-10-21",
-    status: "Pending Review",
-  },
-];
+import { requestsData } from "../../data";
 
 const VendorRequests = () => {
   const [requests, setRequests] = useState(requestsData);

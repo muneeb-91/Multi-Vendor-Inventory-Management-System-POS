@@ -1,12 +1,7 @@
 import { Mail, Phone, TrendingUp, Package, Truck, Pencil, MessageSquare } from "lucide-react";
-import { vendor, topProducts, purchaseOrders } from "../../data";
+import { vendor, topProducts, purchaseOrders, vendorDetailItems, singleVendorStatusStyle } from "../../data";
 import StockBar from "../../components/admin/Stockbar";
 
-const statusStyle = (s) => {
-  if (s === "Delivered") return "bg-green-100 text-green-700";
-  if (s === "In Transit") return "bg-blue-100 text-blue-600";
-  return "bg-gray-100 text-gray-500";
-};
 
 const VendorDetails = () => {
   return (
@@ -52,12 +47,7 @@ const VendorDetails = () => {
               <h2 className="font-semibold text-primary">Business Profile</h2>
             </div>
             <hr className="border-gray-100" />
-            {[
-              { label: "Vendor ID", value: vendor.vendorId },
-              { label: "Tax ID / EIN", value: vendor.taxId },
-              { label: "Category", value: vendor.category },
-              { label: "HQ Address", value: vendor.address },
-            ].map((f) => (
+            {vendorDetailItems.map((f) => (
               <div key={f.label}>
                 <p className="text-xs text-gray-400 uppercase tracking-wide">{f.label}</p>
                 <p className="text-sm text-primary mt-0.5 whitespace-pre-line">{f.value}</p>
@@ -183,7 +173,7 @@ const VendorDetails = () => {
                       <td className="px-5 py-3.5 font-mono text-xs text-gray-600">{o.po}</td>
                       <td className="px-5 py-3.5 text-gray-500 hidden sm:table-cell">{o.date}</td>
                       <td className="px-5 py-3.5">
-                        <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusStyle(o.status)}`}>
+                        <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${singleVendorStatusStyle(o.status)}`}>
                           {o.status}
                         </span>
                       </td>
@@ -194,7 +184,6 @@ const VendorDetails = () => {
               </table>
             </div>
           </div>
-
         </div>
       </div>
     </div>
