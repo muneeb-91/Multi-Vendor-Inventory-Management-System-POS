@@ -14,7 +14,6 @@ import SectionHeading from "../../components/home/SectionHeading";
 
 const Solutions = () => (
   <>
-    {w}
     <section className="bg-primary">
       <div className="max-w-6xl mx-auto px-6 py-16 lg:py-24">
         <p className="inline-flex items-center gap-2 text-xs font-semibold text-secondary bg-secondary/10 px-3 py-1 rounded-full mb-5">

@@ -1,48 +1,11 @@
 import { Mail, Phone, TrendingUp, Package, Truck, Pencil, MessageSquare } from "lucide-react";
-const vendor = {
-  name: "Acme Electronics Corp",
-  status: "Active",
-  vendorId: "VND-8834-ACE",
-  taxId: "**-***4921",
-  category: "Consumer Electronics, Components",
-  address: "1245 Innovation Pkwy, Suite 400\nSan Jose, CA 95110",
-  contact: {
-    name: "Robert Sterling",
-    title: "VP of Global Distribution",
-    email: "r.sterling@acme-corp.com",
-    phone: "+1 (408) 555-0199",
-  },
-};
-
-const topProducts = [
-  { sku: "ACM-CPU-X9", name: "Quantum Core Processor X9", cost: "$245.00", stock: 850, stockLevel: "high" },
-  { sku: "ACM-MEM-32G", name: "32GB DDR5 RAM Kit", cost: "$112.50", stock: 120, stockLevel: "low" },
-  { sku: "ACM-SSD-2T", name: "2TB NVMe Solid State Drive", cost: "$165.00", stock: 1200, stockLevel: "high" },
-];
-
-const purchaseOrders = [
-  { po: "PO-2023-8942", date: "Oct 24, 2023", status: "Delivered", amount: "$45,200.00" },
-  { po: "PO-2023-8901", date: "Oct 12, 2023", status: "In Transit", amount: "$12,850.50" },
-  { po: "PO-2023-8876", date: "Sep 28, 2023", status: "Delivered", amount: "$89,400.00" },
-];
+import { vendor, topProducts, purchaseOrders } from "../../data";
+import StockBar from "../../components/admin/Stockbar";
 
 const statusStyle = (s) => {
   if (s === "Delivered") return "bg-green-100 text-green-700";
   if (s === "In Transit") return "bg-blue-100 text-blue-600";
   return "bg-gray-100 text-gray-500";
-};
-
-const StockBar = ({ level }) => {
-  const isLow = level === "low";
-  return (
-    <div className="flex items-center gap-2">
-      <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-        <div
-          className={`h-full rounded-full ${isLow ? "bg-amber-400 w-1/4" : "bg-secondary w-3/4"}`}
-        />
-      </div>
-    </div>
-  );
 };
 
 const VendorDetails = () => {

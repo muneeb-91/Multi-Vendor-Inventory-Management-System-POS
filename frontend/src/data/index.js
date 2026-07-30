@@ -1,4 +1,14 @@
-import { Clock, XCircle, ShieldOff, Store, Package, ShoppingCart } from "lucide-react";
+import {
+  Clock,
+  XCircle,
+  ShieldOff,
+  Store,
+  Package,
+  ShoppingCart,
+  User,
+  Lock,
+  SlidersHorizontal,
+} from "lucide-react";
 
 /* ── Home Layout ────────────────────────────────────────────── */
 
@@ -243,3 +253,56 @@ export const stats = [
     iconColor: "text-red-400",
   },
 ];
+
+// System Settings
+export const settingsMenu = [
+  {
+    key: "profile",
+    label: "Profile Settings",
+    icon: User,
+  },
+  {
+    key: "password",
+    label: "Change Password",
+    icon: Lock,
+  },
+  {
+    key: "preferences",
+    label: "System Preferences",
+    icon: SlidersHorizontal,
+  },
+];
+
+export const systemStatus = [
+  { label: "Database Sync", status: "Online", ok: true },
+  { label: "API Gateway", status: "Online", ok: true },
+];
+
+// Vendor Details
+export const vendor = {
+  name: "Acme Electronics Corp",
+  status: "Active",
+  vendorId: "VND-8834-ACE",
+  taxId: "**-***4921",
+  category: "Consumer Electronics, Components",
+  address: "1245 Innovation Pkwy, Suite 400\nSan Jose, CA 95110",
+  contact: {
+    name: "Robert Sterling",
+    title: "VP of Global Distribution",
+    email: "r.sterling@acme-corp.com",
+    phone: "+1 (408) 555-0199",
+  },
+};
+
+export const topProducts = [
+  { sku: "ACM-CPU-X9", name: "Quantum Core Processor X9", cost: "$245.00", stock: 850, stockLevel: "high" },
+  { sku: "ACM-MEM-32G", name: "32GB DDR5 RAM Kit", cost: "$112.50", stock: 120, stockLevel: "low" },
+  { sku: "ACM-SSD-2T", name: "2TB NVMe Solid State Drive", cost: "$165.00", stock: 1200, stockLevel: "high" },
+];
+
+export const purchaseOrders = [
+  { po: "PO-2023-8942", date: "Oct 24, 2023", status: "Delivered", amount: "$45,200.00" },
+  { po: "PO-2023-8901", date: "Oct 12, 2023", status: "In Transit", amount: "$12,850.50" },
+  { po: "PO-2023-8876", date: "Sep 28, 2023", status: "Delivered", amount: "$89,400.00" },
+];
+

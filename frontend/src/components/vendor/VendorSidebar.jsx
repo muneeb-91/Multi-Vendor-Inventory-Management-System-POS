@@ -25,10 +25,10 @@ const VendorSidebar = () => (
   <aside className="w-60 sticky overflow-y-auto min-h-screen bg-primary flex flex-col shrink-0">
     {/* Brand */}
     <div className="px-6 py-5 border-b border-white/10">
-      <div className="flex items-center gap-2 mb-1">
+      <Link to={`/`} className="flex items-center gap-2 mb-1">
         <Store className="text-secondary size-5" />
         <h1 className="text-white text-xl font-bold tracking-tight">Stock<span className="text-secondary">Flow</span></h1>
-      </div>
+      </Link>
       <p className="text-gray-400 text-xl">Vendor Pannel</p>
     </div>
 
