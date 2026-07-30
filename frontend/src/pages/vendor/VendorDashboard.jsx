@@ -16,26 +16,7 @@ import {
   MoreVertical,
   Search,
 } from "lucide-react";
-
-const recentProducts = [
-  { id: 1, name: "Minimalist Smartwatch",      sku: "TECH-SW-01",   price: "$249.99", stock: 124, low: false },
-  { id: 2, name: "Noise-Cancelling Headphones", sku: "AUDIO-NC-02",  price: "$349.00", stock: 8,   low: true  },
-  { id: 3, name: "Mechanical Keyboard Pro",     sku: "COMP-KB-88",   price: "$129.50", stock: 45,  low: false },
-  { id: 4, name: "Ergonomic Office Chair",      sku: "FURN-CH-12",   price: "$499.00", stock: 12,  low: false },
-];
-
-const recentOrders = [
-  { id: "ORD-2023-8901", vendor: "Acme Corp",       initials: "AC", color: "bg-indigo-100 text-indigo-600", amount: "$1,250.00", time: "2h ago", highlight: true },
-  { id: "ORD-2023-8900", vendor: "Global Tech LLC",  initials: "GT", color: "bg-green-100 text-green-600",   amount: "$345.50",   time: "5h ago", highlight: false },
-  { id: "ORD-2023-8899", vendor: "Stark Industries", initials: "SI", color: "bg-amber-100 text-amber-700",   amount: "$8,900.00", time: "1d ago", highlight: false },
-  { id: "ORD-2023-8898", vendor: "Wayne Design",     initials: "WD", color: "bg-purple-100 text-purple-600", amount: "$125.00",   time: "1d ago", highlight: false },
-];
-
-const quickActions = [
-  { label: "Add Product",    icon: Plus,          to: "/vendor/products" },
-  { label: "Create Order",   icon: ClipboardList, to: "/vendor/orders"   },
-  { label: "Add Manager",    icon: UserPlus,      to: "/vendor/managers" },
-];
+import { recentProducts, recentOrders, quickActions, vendorDashboardCards } from "../../data";
 
 const VendorDashboard = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -51,12 +32,7 @@ const VendorDashboard = () => {
 
         {/* KPI Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {[
-            { label: "Total Products",  value: "1,248",   badge: "+12% this month",         badgeOk: true,  icon: Package,       iconBg: "bg-indigo-50",  iconColor: "text-indigo-500" },
-            { label: "Low Stock",       value: "24",      badge: "Needs immediate attention", badgeOk: false, icon: AlertTriangle, iconBg: "bg-red-50",     iconColor: "text-red-500"    },
-            { label: "Total Orders",    value: "8,592",   badge: "+5.4% this week",          badgeOk: true,  icon: ShoppingCart,  iconBg: "bg-indigo-50",  iconColor: "text-indigo-500" },
-            { label: "Monthly Revenue", value: "$142.5k", badge: null,                       badgeOk: true,  icon: DollarSign,    iconBg: "bg-purple-50",  iconColor: "text-purple-500" },
-          ].map((s) => (
+          {vendorDashboardCards.map((s) => (
             <div key={s.label} className="bg-white border border-gray-100 rounded-xl p-4">
               <div className="flex items-start justify-between mb-3">
                 <p className="text-xs text-gray-400 uppercase tracking-wide">{s.label}</p>

@@ -1,25 +1,8 @@
 import { useState } from "react";
 import { Plus, Trash2, Search, TrendingUp, ChevronLeft, ChevronRight, Building2, Package, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
-
-const initialSuppliers = [
-  { id: 1, supplierName: "TechCorp Manufacturing Inc.", email: "procurement@techcorp.io", phone: "+1 (408) 555-0100", address: "San Jose, CA", status: "active" },
-  { id: 2, supplierName: "Herman Miller Inc.",          email: "trade@hermanmiller.com",  phone: "+1 (616) 654-3000", address: "Zeeland, MI",  status: "active" },
-  { id: 3, supplierName: "HP Enterprise Solutions",     email: "partners@hp.com",         phone: "+1 (650) 857-1501", address: "Palo Alto, CA", status: "active" },
-  { id: 4, supplierName: "Sony Audio Systems",          email: "b2b@sony.com",            phone: "+1 (212) 833-8000", address: "New York, NY", status: "inactive" },
-];
-
-const avatarColor = (name) => {
-  const palette = [
-    { bg: "bg-indigo-100", text: "text-indigo-600" },
-    { bg: "bg-green-100",  text: "text-green-700"  },
-    { bg: "bg-amber-100",  text: "text-amber-700"  },
-    { bg: "bg-purple-100", text: "text-purple-600" },
-    { bg: "bg-red-100",    text: "text-red-600"    },
-    { bg: "bg-blue-100",   text: "text-blue-600"   },
-  ];
-  return palette[name.charCodeAt(0) % palette.length];
-};
+import { suppliers, avatarColor, supplierStats } from "../../data";
+import Pagination from "../../components/pagination";
 
 // Delete confirmation modal
 const DeleteModal = ({ supplier, onClose, onConfirm }) => (
@@ -48,7 +31,6 @@ const DeleteModal = ({ supplier, onClose, onConfirm }) => (
 );
 
 const Suppliers = () => {
-  const [suppliers, setSuppliers]       = useState(initialSuppliers);
   const [search, setSearch]             = useState("");
   const [deleteTarget, setDeleteTarget] = useState(null);
 
@@ -61,8 +43,6 @@ const Suppliers = () => {
     setSuppliers((prev) => prev.filter((s) => s.id !== deleteTarget.id));
     setDeleteTarget(null);
   };
-
-  const activeCount = suppliers.filter((s) => s.status === "active").length;
 
   return (
     <>
@@ -92,11 +72,7 @@ const Suppliers = () => {
 
         {/* Stat Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-          {[
-            { label: "Total Suppliers", value: suppliers.length, icon: Building2, bg: "bg-indigo-50", ic: "text-indigo-500" },
-            { label: "Active",          value: activeCount,      icon: TrendingUp, bg: "bg-green-50", ic: "text-secondary"  },
-            { label: "Inactive",        value: suppliers.length - activeCount, icon: Package, bg: "bg-red-50", ic: "text-red-400" },
-          ].map((s) => (
+          {supplierStats.map((s) => (
             <div key={s.label} className="bg-white border border-gray-100 rounded-xl p-4">
               <div className="flex items-center justify-between mb-2">
                 <p className="text-xs text-gray-400">{s.label}</p>
@@ -217,18 +193,7 @@ const Suppliers = () => {
           </div>
 
           {/* Pagination */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-5 py-4 border-t border-gray-100 gap-3">
-            <p className="text-xs text-gray-400">Showing 1 to {filtered.length} of {suppliers.length} suppliers</p>
-            <div className="flex items-center gap-1">
-              <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 cursor-pointer">
-                <ChevronLeft className="w-3.5 h-3.5" />
-              </button>
-              <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-secondary text-white text-xs font-semibold">1</button>
-              <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 cursor-pointer">
-                <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
+          <Pagination />
         </div>
       </div>
     </>

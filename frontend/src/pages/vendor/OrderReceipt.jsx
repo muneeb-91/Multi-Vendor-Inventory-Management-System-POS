@@ -1,32 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft, Printer, Download, CheckCircle } from "lucide-react";
-
-// ── Dummy receipt data ────────────────────────────────────────────────────────
-const receipt = {
-  invoiceNumber: "INV-2023-8472",
-  dateIssued:    "Oct 24, 2023",
-  paymentMethod: "Corporate Card ending ****4242",
-  billedTo: {
-    company: "Acme Corporation",
-    contact: "Jane Doe (Procurement)",
-    address: "99 Industry Way, Building B",
-    city:    "Manufacturing District, MD 10001",
-    email:   "jane.doe@acmecorp.com",
-  },
-  shippedTo: {
-    company: "Acme Warehouse #4",
-    attn:    "Attn: Receiving Dock",
-    address: "4500 Freight Road",
-    city:    "Logistics Hub, LH 90211",
-  },
-  items: [
-    { description: "Industrial Actuator V2",                 sku: "ACT-002-V2",   qty: 12, unitPrice: 450.00  },
-    { description: "Precision Proximity Sensor",             sku: "SEN-PROX-8M",  qty: 50, unitPrice: 24.50   },
-    { description: "Heavy Duty Conveyor Belt Segment (10m)", sku: "BELT-HD-10M",  qty: 3,  unitPrice: 1200.00 },
-  ],
-  shipping: 350.00,
-  taxRate:  0.085,
-};
+import { receipt } from '../../data'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 const fmt = (n) =>

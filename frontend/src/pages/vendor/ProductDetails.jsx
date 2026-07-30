@@ -10,48 +10,10 @@ import {
   DollarSign,
   AlertTriangle,
 } from "lucide-react";
-
-// ── Dummy data ─────────────────────────────────────────────────────────────────
-const product = {
-  name:        "Quantum Pro X1 Server Blade",
-  status:      "Active",
-  sku:         "SKU-99201-AX",
-  category:    "Enterprise Electronics / Servers",
-  basePrice:   "$2,499.00",
-  weight:      "14.2 lbs (6.4 kg)",
-  description:
-    "High-performance 1U rackmount server blade optimised for virtualisation and dense computing environments. Features dual-socket architecture supporting the latest generation processors, redundant platinum-level power supplies, and advanced thermal management.",
-  image: null, // no real image — we'll use a placeholder
-};
+import { product, stockLocations, supplier, recentActivity, stockStyle, singleProductLabels, productPriceSummary } from "../../data";
 
 const inventoryValue = 514794;
 const inventoryChange = "+2.4%";
-
-const stockLocations = [
-  { location: "Main Warehouse (NYC)",   available: 142, reserved: 12, status: "In Stock"  },
-  { location: "West Coast Dist. (LA)",  available: 8,   reserved: 2,  status: "Low Stock" },
-  { location: "European Hub (FRA)",     available: 56,  reserved: 0,  status: "In Stock"  },
-];
-
-const supplier = {
-  primaryVendor:        "TechCorp Manufacturing Inc.",
-  leadTime:             "14 – 21 Days",
-  unitCost:             "$1,850.00",
-  reorderThreshold:     50,
-  currentStock:         206, // sum of available
-};
-
-const recentActivity = [
-  { label: "Last Restocked",    value: "Oct 18, 2024",  icon: Warehouse  },
-  { label: "Last Ordered",      value: "Oct 22, 2024",  icon: Truck      },
-  { label: "Avg. Monthly Sales",value: "38 units",      icon: TrendingUp },
-];
-
-// ── Helpers ────────────────────────────────────────────────────────────────────
-const stockStyle = (s) =>
-  s === "In Stock"  ? "bg-green-100 text-green-700"  :
-  s === "Low Stock" ? "bg-red-100 text-red-600"      :
-                      "bg-gray-100 text-gray-500";
 
 const fmt = (n) =>
   "$" + n.toLocaleString("en-US", { minimumFractionDigits: 0 });
@@ -117,12 +79,7 @@ const ProductDetails = () => {
 
                 {/* Details grid */}
                 <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {[
-                    { label: "SKU",        value: product.sku        },
-                    { label: "Category",   value: product.category   },
-                    { label: "Base Price", value: product.basePrice  },
-                    { label: "Weight",     value: product.weight     },
-                  ].map((f) => (
+                  {singleProductLabels.map((f) => (
                     <div key={f.label}>
                       <p className="text-xs text-gray-400 uppercase tracking-wide mb-0.5">{f.label}</p>
                       <p className="text-sm font-medium text-primary">{f.value}</p>
@@ -272,11 +229,7 @@ const ProductDetails = () => {
           <div className="bg-white border border-gray-100 rounded-xl p-5 space-y-3">
             <h2 className="font-semibold text-primary">Price Summary</h2>
             <hr className="border-gray-100" />
-            {[
-              { label: "Base Price",   value: product.basePrice },
-              { label: "Unit Cost",    value: supplier.unitCost },
-              { label: "Gross Margin", value: "$649.00 (26%)"   },
-            ].map((r) => (
+            {productPriceSummary.map((r) => (
               <div key={r.label} className="flex items-center justify-between text-sm">
                 <span className="text-gray-500">{r.label}</span>
                 <span className="font-semibold text-primary">{r.value}</span>
