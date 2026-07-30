@@ -24,11 +24,9 @@ const AddCategory = () => {
       status: prev.status === "active" ? "inactive" : "active",
     }));
 
-  // Client-side validation matching the mongoose schema
-
 
   const handleSubmit = () => {
-    // const e = validate();
+    // validate();
 
   };
 

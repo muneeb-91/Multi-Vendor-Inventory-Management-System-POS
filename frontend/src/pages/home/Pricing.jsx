@@ -1,121 +1,20 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Check, Minus, ChevronDown } from "lucide-react";
+import { Check, Minus} from "lucide-react";
 import PricingCard from "../../components/home/PricingCard";
 import SectionHeading from "../../components/home/SectionHeading";
+import { plans, comparisonRows,FAQS } from "../../data/index.js";
+import FAQItem from "../../components/home/FAQItem.jsx";
 
-// ── Data ──────────────────────────────────────────────────────────────────────
-const PLANS = [
-  {
-    name: "Starter",
-    monthly: "$49",
-    annual: "$39",
-    period: "/mo",
-    description: "Essential tools for small vendors to manage core inventory and basic sales.",
-    features: [
-      "Unlimited Daily Transactions",
-      "Basic Receipt Customization",
-      "Mobile POS Support",
-    ],
-    ctaLabel: "Get Started",
-    ctaTo: "/register",
-    highlighted: false,
-  },
-  {
-    name: "Professional",
-    monthly: "$149",
-    annual: "$119",
-    period: "/mo",
-    description: "Powerful automation and integrations for growing medium-sized businesses.",
-    features: [
-      "Offline Mode Sync",
-      "Employee Shift Management",
-      "Customer Loyalty Program",
-      "Advanced Analytics",
-    ],
-    ctaLabel: "Get Started",
-    ctaTo: "/register",
-    highlighted: true,
-  },
-  {
-    name: "Enterprise",
-    monthly: "Custom",
-    annual: "Custom",
-    period: null,
-    description: "Tailored workflows, dedicated support, and enterprise-grade security controls.",
-    features: [
-      "Custom POS Hardware Integration",
-      "Advanced Fraud Detection",
-      "White-label Receipts",
-      "24/7 Dedicated Support",
-    ],
-    ctaLabel: "Contact Sales",
-    ctaTo: "#",
-    highlighted: false,
-  },
-];
 
-const COMPARISON_ROWS = [
-  { feature: "Offline Mode",          starter: false,        pro: true,         enterprise: true         },
-  { feature: "Barcode Scanner Support", starter: true,       pro: true,         enterprise: true         },
-  { feature: "Receipt Printing",      starter: true,         pro: true,         enterprise: true         },
-  { feature: "Split Payments",        starter: false,        pro: true,         enterprise: true         },
-  { feature: "API Access",            starter: "Restricted", pro: "Full POS API", enterprise: "Webhooks + SDKs" },
-];
+const Pricing = () => {
+  const [annual, setAnnual] = useState(false);
 
-const FAQS = [
-  {
-    q: "Can I change my plan later?",
-    a: "Absolutely. You can upgrade or downgrade your plan at any time from your billing settings. Changes take effect at the start of your next billing cycle.",
-  },
-  {
-    q: "What payment methods do you accept?",
-    a: "We accept all major credit cards (Visa, Mastercard, Amex), as well as bank transfers for annual Enterprise plans.",
-  },
-  {
-    q: "Is there a free trial?",
-    a: "Yes — all plans include a 14-day free trial with no credit card required. You'll have full access to every feature in your chosen tier.",
-  },
-  {
-    q: "Do you offer discounts for non-profits?",
-    a: "Yes, we offer a 30% discount for registered non-profit organisations. Contact our sales team with your documentation to get started.",
-  },
-];
-
-// ── Sub-components ─────────────────────────────────────────────────────────────
-const ComparisonCell = ({ value }) => {
+  const ComparisonCell = ({ value }) => {
   if (value === true)  return <Check className="w-4 h-4 text-secondary mx-auto" />;
   if (value === false) return <Minus className="w-4 h-4 text-gray-300 mx-auto" />;
   return <span className="text-xs text-gray-600">{value}</span>;
 };
-
-const FAQItem = ({ q, a }) => {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="border border-gray-100 rounded-xl overflow-hidden">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-5 py-4 text-left cursor-pointer hover:bg-gray-50 transition-colors"
-      >
-        <span className="text-sm font-medium text-primary">{q}</span>
-        <ChevronDown
-          className={`w-4 h-4 text-gray-400 shrink-0 transition-transform duration-200 ${
-            open ? "rotate-180" : ""
-          }`}
-        />
-      </button>
-      {open && (
-        <div className="px-5 pb-4">
-          <p className="text-sm text-gray-500 leading-relaxed">{a}</p>
-        </div>
-      )}
-    </div>
-  );
-};
-
-// ── Page ──────────────────────────────────────────────────────────────────────
-const Pricing = () => {
-  const [annual, setAnnual] = useState(false);
 
   return (
     <>
@@ -158,7 +57,7 @@ const Pricing = () => {
       {/* ── Pricing Cards ──────────────────────────────────────────── */}
       <section className="max-w-5xl mx-auto px-6 pb-16">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 items-stretch">
-          {PLANS.map((plan) => (
+          {plans.map((plan) => (
             <PricingCard
               key={plan.name}
               name={plan.name}
@@ -197,7 +96,7 @@ const Pricing = () => {
                 </tr>
               </thead>
               <tbody>
-                {COMPARISON_ROWS.map((row) => (
+                {comparisonRows.map((row) => (
                   <tr key={row.feature} className="border-b border-gray-50 last:border-0 hover:bg-gray-50 transition-colors">
                     <td className="px-5 py-3.5 text-gray-700">{row.feature}</td>
                     <td className="px-4 py-3.5 text-center">
@@ -222,7 +121,7 @@ const Pricing = () => {
         <SectionHeading title="Frequently Asked Questions" />
         <div className="mt-8 space-y-3">
           {FAQS.map((faq) => (
-            <FAQItem key={faq.q} q={faq.q} a={faq.a} />
+            <FAQItem key={faq.question} question={faq.question} answer={faq.answer} />
           ))}
         </div>
       </section>

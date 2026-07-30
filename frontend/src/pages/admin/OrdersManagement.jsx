@@ -9,59 +9,7 @@ import {
   ChevronRight,
   Eye,
 } from "lucide-react";
-
-const ordersData = [
-  {
-    id: "ORD-2024-0091",
-    vendor: "Nexus Electronics",
-    initials: "NE",
-    avatarColor: "bg-indigo-50 text-indigo-600",
-    items: 24,
-    total: 12450.0,
-    date: "Oct 24, 2024",
-    time: "02:14 PM",
-  },
-  {
-    id: "ORD-2024-0088",
-    vendor: "Apex Supply Co.",
-    initials: "AS",
-    avatarColor: "bg-amber-50 text-amber-700",
-    items: 8,
-    total: 3200.0,
-    date: "Oct 24, 2024",
-    time: "11:42 AM",
-  },
-  {
-    id: "ORD-2024-0085",
-    vendor: "Oasis Lifestyle",
-    initials: "OL",
-    avatarColor: "bg-green-50 text-green-700",
-    items: 41,
-    total: 28900.0,
-    date: "Oct 23, 2024",
-    time: "04:05 PM",
-  },
-  {
-    id: "ORD-2024-0079",
-    vendor: "Vanguard Gear",
-    initials: "VG",
-    avatarColor: "bg-red-50 text-red-600",
-    items: 5,
-    total: 870.5,
-    date: "Oct 22, 2024",
-    time: "09:30 AM",
-  },
-  {
-    id: "ORD-2024-0072",
-    vendor: "Lumina Goods",
-    initials: "LG",
-    avatarColor: "bg-blue-50 text-blue-600",
-    items: 13,
-    total: 5640.0,
-    date: "Oct 21, 2024",
-    time: "01:18 PM",
-  },
-];
+import { ordersData } from "../../data";
 
 const OrdersManagement = () => {
   const [search, setSearch] = useState("");

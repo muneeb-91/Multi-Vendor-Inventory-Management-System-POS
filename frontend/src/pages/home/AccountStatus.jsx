@@ -1,39 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Clock, XCircle, ShieldOff, Mail, ArrowLeft } from "lucide-react";
-
-const STATUS_CONFIG = {
-  pending: {
-    Icon:       Clock,
-    iconBg:     "bg-amber-50",
-    iconColor:  "text-amber-500",
-    ring:       "ring-amber-100",
-    bar:        "bg-amber-400",
-    badge:      "bg-amber-50 text-amber-600 border-amber-200",
-    accent:     "text-amber-500",
-    heading:    "Account Pending",
-  },
-  rejected: {
-    Icon:       XCircle,
-    iconBg:     "bg-red-50",
-    iconColor:  "text-red-500",
-    ring:       "ring-red-100",
-    bar:        "bg-red-500",
-    badge:      "bg-red-50 text-red-600 border-red-200",
-    accent:     "text-red-500",
-    heading:    "Account Rejected",
-  },
-  suspended: {
-    Icon:       ShieldOff,
-    iconBg:     "bg-orange-50",
-    iconColor:  "text-orange-500",
-    ring:       "ring-orange-100",
-    bar:        "bg-orange-500",
-    badge:      "bg-orange-50 text-orange-600 border-orange-200",
-    accent:     "text-orange-500",
-    heading:    "Account Suspended",
-  },
-};
+import { Mail, ArrowLeft } from "lucide-react";
+import {STATUS_CONFIG} from '../../data/index.js'
 
 const AccountStatus = () => {
   const { user } = useSelector((state) => state.auth);

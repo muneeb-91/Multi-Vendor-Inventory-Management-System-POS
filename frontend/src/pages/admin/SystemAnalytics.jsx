@@ -20,92 +20,11 @@ import {
   CartesianGrid,
   Cell,
 } from "recharts";
-
-const vendorPerformanceData = [
-  { name: "V1", revenue: 48000 },
-  { name: "V2", revenue: 37000 },
-  { name: "V3", revenue: 29000 },
-  { name: "V4", revenue: 41000 },
-  { name: "V5", revenue: 22000 },
-];
-
-const productDistribution = [
-  { label: "Electronics", pct: 45, color: "#10B981" },
-  { label: "Apparel", pct: 30, color: "#6366F1" },
-  { label: "Other", pct: 25, color: "#D1D5DB" },
-];
-
-const periods = ["30 Days", "Quarter", "YTD"];
-
-// Simple donut via SVG
-const Donut = ({ data }) => {
-  const r = 48;
-  const cx = 60;
-  const cy = 60;
-  const circumference = 2 * Math.PI * r;
-
-  let offset = 0;
-  const slices = data.map((d) => {
-    const slice = { ...d, offset, dash: (d.pct / 100) * circumference };
-    offset += slice.dash;
-    return slice;
-  });
-
-  return (
-    <svg width={120} height={120} viewBox="0 0 120 120">
-      {slices.map((s) => (
-        <circle
-          key={s.label}
-          cx={cx}
-          cy={cy}
-          r={r}
-          fill="none"
-          stroke={s.color}
-          strokeWidth={18}
-          strokeDasharray={`${s.dash} ${circumference - s.dash}`}
-          strokeDashoffset={-s.offset}
-          transform={`rotate(-90 ${cx} ${cy})`}
-        />
-      ))}
-      <text x={cx} y={cy + 5} textAnchor="middle" fontSize={12} fontWeight="bold" fill="#0F172A">
-        100%
-      </text>
-    </svg>
-  );
-};
+import { vendorPerformanceData, productDistribution, periods, stats } from "../../data";
+import Donut from "../../components/admin/Donut";
 
 const SystemAnalytics = () => {
   const [activePeriod, setActivePeriod] = useState("30 Days");
-
-  const stats = [
-    {
-      label: "Total Active Vendors",
-      value: "1,284",
-      change: "+12.5%",
-      up: true,
-      icon: Store,
-      iconBg: "bg-indigo-50",
-      iconColor: "text-indigo-500",
-    },
-    {
-      label: "Products Managed",
-      value: "45.2K",
-      change: "+8.2%",
-      up: true,
-      icon: Package,
-      iconBg: "bg-green-50",
-      iconColor: "text-secondary",
-    },
-    {
-      label: "Orders Processed",
-      value: "8,932",
-      change: "-2.4%",
-      up: false,
-      icon: ShoppingCart,
-      iconBg: "bg-red-50",
-      iconColor: "text-red-400",
-    },
-  ];
 
   return (
     <div className="space-y-6 my-6">

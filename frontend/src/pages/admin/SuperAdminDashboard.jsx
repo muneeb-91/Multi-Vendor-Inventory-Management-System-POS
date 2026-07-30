@@ -130,7 +130,11 @@ const SuperAdminDashboard = () => {
                   <th className="px-5 py-3 font-medium">Action</th>
                 </tr>
               </thead>
-              {vendorRequests.length===0 ? <tr className="flex items-center justify-center text-gray-500 w-full">No vendor requests</tr> : ""}
+              <tr className="border-b border-gray-50 hover:bg-gray-50 transition-colors ">
+                  <td className="px-5 py-3.5" colSpan={5}>
+                    {vendorRequests.length===0 ? <tr className="items-center text-gray-400 w-full">No vendor requests</tr> : ""}
+                  </td>
+              </tr>
               <tbody>
                 {vendorRequests?.map((v) => (
                   <tr key={v?._id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
