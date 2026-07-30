@@ -3,38 +3,11 @@ import { Link } from "react-router-dom";
 import {
   Plus,
   MoreVertical,
-  Laptop,
-  Printer,
-  Headphones,
-  Armchair,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import { CATEGORY_ICONS, productsData, stockDot, stockText } from "../../data";
 
-const CATEGORY_ICONS = {
-  Electronics: Laptop,
-  Furniture: Armchair,
-  "Office Supplies": Printer,
-  Audio: Headphones,
-};
-
-const productsData = [
-  { id: 1, name: "ThinkPad X1 Carbon Gen 10", sku: "SKU-8472-LC", category: "Electronics",     supplier: "TechData Corp",    stock: 142, stockLevel: "high", price: "$1,499.00" },
-  { id: 2, name: "Ergonomic Office Chair V2",  sku: "SKU-9921-FC", category: "Furniture",       supplier: "Herman Miller Inc", stock: 8,   stockLevel: "low",  price: "$845.00"   },
-  { id: 3, name: "LaserJet Pro MFP M428fdw",  sku: "SKU-3324-HP", category: "Office Supplies", supplier: "HP Enterprise",     stock: 24,  stockLevel: "mid",  price: "$429.99"   },
-  { id: 4, name: "Noise Cancelling Pro",       sku: "SKU-7751-S0", category: "Electronics",     supplier: "Sony Audio",        stock: 89,  stockLevel: "high", price: "$348.00"   },
-];
-
-const stockDot = (level) => {
-  if (level === "high") return "bg-green-500";
-  if (level === "low")  return "bg-red-500";
-  return "bg-amber-400";
-};
-
-const stockText = (level, count) => {
-  if (level === "low") return `text-red-600 font-semibold`;
-  return "text-gray-700";
-};
 
 const categoryPill = "bg-indigo-50 text-indigo-600 px-2.5 py-1 rounded-md text-xs font-medium";
 

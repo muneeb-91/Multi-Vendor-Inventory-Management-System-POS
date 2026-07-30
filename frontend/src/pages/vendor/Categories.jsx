@@ -54,8 +54,6 @@ const Categories = () => {
     getCategories();
   }, []);
 
-  if(categoriesLoading) return <Loader className={'h-screen'} />;
-
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -151,8 +149,21 @@ const Categories = () => {
                   </td>
                 </tr>
               ))}
+              
+              {
+                categoriesLoading && (
+                  <tr>
+                    <td
+                      colSpan={5}
+                      className="py-5"
+                    >
+                      <Loader className={`text-gray-500`}/>
+                    </td>
+                  </tr>
+                )
+              }
 
-              {filtered.length === 0 && (
+              {!categoriesLoading && filtered.length === 0 && (
                 <tr>
                   <td
                     colSpan={5}

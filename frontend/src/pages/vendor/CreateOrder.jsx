@@ -8,25 +8,12 @@ import {
   UserPlus,
   Printer,
   MoreHorizontal,
-  CheckCircle,
-  Keyboard,
-  Mouse,
-  Monitor,
-  Headphones,
-  Cpu,
   ShoppingBag,
 } from "lucide-react";
+import { catalogue, categories } from "../../data";
+import OrderSuccessful from "../../components/vendor/OrderSuccessful";
 
-const catalogue = [
-  { id: 1, name: "Mechanical Keyboard Pro",   sku: "COMP-KB-88",  price: 129.99, category: "Electronics", stock: 45, Icon: Keyboard   },
-  { id: 2, name: "Wireless Ergonomic Mouse",  sku: "COMP-MS-24",  price: 79.50,  category: "Accessories", stock: 90, Icon: Mouse      },
-  { id: 3, name: 'UltraBook Pro 15"',         sku: "TECH-LT-15",  price: 1499.0, category: "Electronics", stock: 0,  Icon: Monitor    },
-  { id: 4, name: "Noise-Cancelling Headset",  sku: "AUDIO-NC-01", price: 249.99, category: "Electronics", stock: 30, Icon: Headphones },
-  { id: 5, name: "USB-C Hub 7-in-1",          sku: "PERI-HUB-7",  price: 49.99,  category: "Peripherals", stock: 120,Icon: Cpu        },
-  { id: 6, name: 'Curved Monitor 27"',        sku: "DISP-GM-27",  price: 399.0,  category: "Electronics", stock: 12, Icon: Monitor    },
-];
 
-const CATEGORIES = ["All Items", "Electronics", "Accessories", "Peripherals"];
 const TAX_RATE   = 0.085;
 const DISCOUNT   = 10;
 
@@ -70,29 +57,7 @@ const CreateOrder = () => {
   const totalQty    = cartItems.reduce((s, i) => s + i.qty, 0);
 
   if (ordered) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 text-center">
-        <div className="w-20 h-20 rounded-full bg-green-50 flex items-center justify-center">
-          <CheckCircle className="w-10 h-10 text-secondary" />
-        </div>
-        <h2 className="text-2xl font-bold text-primary">Order Completed!</h2>
-        <p className="text-gray-500">Receipt generated for Acme Corp.</p>
-        <div className="flex gap-3 mt-2">
-          <button
-            onClick={() => { setCartItems([]); setOrdered(false); }}
-            className="px-5 py-2.5 bg-secondary text-white rounded-lg text-sm font-semibold hover:bg-secondary/90 cursor-pointer"
-          >
-            New Order
-          </button>
-          <Link
-            to="/vendor/orders"
-            className="px-5 py-2.5 border border-gray-200 text-primary rounded-lg text-sm font-medium hover:bg-gray-50"
-          >
-            View Orders
-          </Link>
-        </div>
-      </div>
-    );
+    return <OrderSuccessful />
   }
 
   return (
@@ -117,7 +82,7 @@ const CreateOrder = () => {
           <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             {/* Category pills */}
             <div className="flex items-center gap-2 flex-wrap">
-              {CATEGORIES.map((cat) => (
+              {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}

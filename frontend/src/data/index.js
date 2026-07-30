@@ -8,6 +8,14 @@ import {
   User,
   Lock,
   SlidersHorizontal,
+  Keyboard,
+  Mouse,
+  Monitor,
+  Headphones,
+  Cpu,
+  Laptop,
+  Armchair,
+  Printer,
 } from "lucide-react";
 
 /* ── Home Layout ────────────────────────────────────────────── */
@@ -438,3 +446,45 @@ export const vendorsStatusStyle = (status) => {
   if (status === "Suspended") return "bg-red-100 text-red-600";
   return "bg-gray-100 text-gray-500";
 };
+
+/* ── Vendor Layout ────────────────────────────────────────────── */
+
+// Create Order 
+export const catalogue = [
+  { id: 1, name: "Mechanical Keyboard Pro",   sku: "COMP-KB-88",  price: 129.99, category: "Electronics", stock: 45, Icon: Keyboard   },
+  { id: 2, name: "Wireless Ergonomic Mouse",  sku: "COMP-MS-24",  price: 79.50,  category: "Accessories", stock: 90, Icon: Mouse      },
+  { id: 3, name: 'UltraBook Pro 15"',         sku: "TECH-LT-15",  price: 1499.0, category: "Electronics", stock: 0,  Icon: Monitor    },
+  { id: 4, name: "Noise-Cancelling Headset",  sku: "AUDIO-NC-01", price: 249.99, category: "Electronics", stock: 30, Icon: Headphones },
+  { id: 5, name: "USB-C Hub 7-in-1",          sku: "PERI-HUB-7",  price: 49.99,  category: "Peripherals", stock: 120,Icon: Cpu        },
+  { id: 6, name: 'Curved Monitor 27"',        sku: "DISP-GM-27",  price: 399.0,  category: "Electronics", stock: 12, Icon: Monitor    },
+];
+
+export const categories = ["All Items", "Electronics", "Accessories", "Peripherals"];
+
+// Manage Products
+export const CATEGORY_ICONS = {
+  Electronics: Laptop,
+  Furniture: Armchair,
+  "Office Supplies": Printer,
+  Audio: Headphones,
+};
+
+export const productsData = [
+  { id: 1, name: "ThinkPad X1 Carbon Gen 10", sku: "SKU-8472-LC", category: "Electronics",     supplier: "TechData Corp",    stock: 142, stockLevel: "high", price: "$1,499.00" },
+  { id: 2, name: "Ergonomic Office Chair V2",  sku: "SKU-9921-FC", category: "Furniture",       supplier: "Herman Miller Inc", stock: 8,   stockLevel: "low",  price: "$845.00"   },
+  { id: 3, name: "LaserJet Pro MFP M428fdw",  sku: "SKU-3324-HP", category: "Office Supplies", supplier: "HP Enterprise",     stock: 24,  stockLevel: "mid",  price: "$429.99"   },
+  { id: 4, name: "Noise Cancelling Pro",       sku: "SKU-7751-S0", category: "Electronics",     supplier: "Sony Audio",        stock: 89,  stockLevel: "high", price: "$348.00"   },
+];
+
+export const stockDot = (level) => {
+  if (level === "high") return "bg-green-500";
+  if (level === "low")  return "bg-red-500";
+  return "bg-amber-400";
+};
+
+export const stockText = (level, count) => {
+  if (level === "low") return `text-red-600 font-semibold`;
+  return "text-gray-700";
+};
+
+/* ── Manager Layout ────────────────────────────────────────────── */
