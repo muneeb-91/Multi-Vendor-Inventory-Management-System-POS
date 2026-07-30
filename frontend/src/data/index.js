@@ -487,4 +487,26 @@ export const stockText = (level, count) => {
   return "text-gray-700";
 };
 
+// Manage Teams
+export const managersData = [
+  { id: 1, name: "Sarah Chen",      email: "schen@globaltech.io",        status: "Active",  initials: "SC", color: "bg-indigo-100 text-indigo-600" },
+  { id: 2, name: "Marcus Johnson",  email: "mjohnson@apexlogistics.com",  status: "Active",  initials: "MJ", color: "bg-green-100 text-green-700"   },
+  { id: 3, name: "Elena Rodriguez", email: "elena.r@nexussupply.net",     status: "Pending", initials: "ER", color: "bg-amber-100 text-amber-700"   },
+  { id: 4, name: "David Kim",       email: "d.kim@techcorp.io",           status: "Suspended",  initials: "DK", color: "bg-purple-100 text-purple-600" },
+];
+
+export const managerStatusStyle = (s) => {
+  if(s === "Active") return "bg-green-50 text-green-700 border-green-200";
+  if(s === "Pending") return "bg-amber-50 text-amber-700 border-amber-200";
+ return "bg-gray-50 text-gray-500 border-gray-200";
+}
+
+export const managerStatusDot = (s) => {
+  if(s === "Active") return "bg-green-500";
+  if(s === "Pending") return"bg-amber-400";
+  return "bg-gray-400";
+}
+
+
+
 /* ── Manager Layout ────────────────────────────────────────────── */

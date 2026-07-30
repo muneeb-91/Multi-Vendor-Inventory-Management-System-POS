@@ -7,22 +7,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-
-const managersData = [
-  { id: 1, name: "Sarah Chen",      email: "schen@globaltech.io",        status: "Active",  initials: "SC", color: "bg-indigo-100 text-indigo-600" },
-  { id: 2, name: "Marcus Johnson",  email: "mjohnson@apexlogistics.com",  status: "Active",  initials: "MJ", color: "bg-green-100 text-green-700"   },
-  { id: 3, name: "Elena Rodriguez", email: "elena.r@nexussupply.net",     status: "Pending", initials: "ER", color: "bg-amber-100 text-amber-700"   },
-  { id: 4, name: "David Kim",       email: "d.kim@techcorp.io",           status: "Active",  initials: "DK", color: "bg-purple-100 text-purple-600" },
-];
-
-const statusStyle = (s) =>
-  s === "Active"  ? "bg-green-50 text-green-700 border-green-200" :
-  s === "Pending" ? "bg-amber-50 text-amber-700 border-amber-200" :
-                    "bg-gray-50 text-gray-500 border-gray-200";
-
-const statusDot = (s) =>
-  s === "Active"  ? "bg-green-500" :
-  s === "Pending" ? "bg-amber-400" : "bg-gray-400";
+import { managersData, managerStatusStyle, managerStatusDot } from "../../data";
 
 const ManageTeam = () => {
   const [managers, setManagers] = useState(managersData);
@@ -145,8 +130,8 @@ const ManageTeam = () => {
 
                     {/* Status */}
                     <td className="px-5 py-4">
-                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${statusStyle(m.status)}`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${statusDot(m.status)}`} />
+                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${managerStatusStyle(m.status)}`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${managerStatusDot(m.status)}`} />
                         {m.status}
                       </span>
                     </td>
