@@ -23,6 +23,8 @@ import {
   Plus,
   UserPlus,
   ClipboardList,
+  AlertTriangle,
+  DollarSign
 } from "lucide-react";
 
 /* ── Home Layout ────────────────────────────────────────────── */
