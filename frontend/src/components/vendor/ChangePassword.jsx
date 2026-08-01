@@ -1,4 +1,5 @@
-import React from 'react'
+import { useState } from "react";
+import { Save, Eye, EyeOff } from "lucide-react";
 
 const ChangePassword = () => {
   const [form, setForm]   = useState({ current: "", newPass: "", confirm: "" });
