@@ -975,4 +975,10 @@ export const vendorDashboardCards = [
   },
 ];
 
+// Vendor Settings
+export const vendorSettingsMenu = [
+  { key: "business",  label: "Business Info",    icon: Building2 },
+  { key: "password",  label: "Change Password",  icon: Lock      },
+];
+
 /* ── Manager Layout ────────────────────────────────────────────── */

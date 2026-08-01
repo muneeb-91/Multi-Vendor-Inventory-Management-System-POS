@@ -1,13 +1,7 @@
 import { useState, useRef } from "react";
-import { Building2, Lock, Save, Eye, EyeOff } from "lucide-react";
 import BusinessInformation from "../../components/vendor/BusinessInformation";
 import ChangePassword from "../../components/vendor/ChangePassword";
-
-// ── Main Settings Page ────────────────────────────────────────────────────────
-const menuItems = [
-  { key: "business",  label: "Business Info",    icon: Building2 },
-  { key: "password",  label: "Change Password",  icon: Lock      },
-];
+import { vendorSettingsMenu } from "../../data";
 
 const VendorSettings = () => {
   const [activeTab, setActiveTab] = useState("business");
@@ -31,7 +25,7 @@ const VendorSettings = () => {
         {/* Left nav */}
         <div className="w-full lg:w-52 shrink-0 bg-white border border-gray-100 rounded-xl overflow-hidden">
           <nav className="p-2 space-y-0.5">
-            {menuItems.map(({ key, label, icon: Icon }) => (
+            {vendorSettingsMenu.map(({ key, label, icon: Icon }) => (
               <button
                 key={key}
                 onClick={() => setActiveTab(key)}
