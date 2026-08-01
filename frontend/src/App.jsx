@@ -133,9 +133,9 @@ function App() {
         <Route
           path="/vendor"
           element={
-            <ProtectedRoute allowedRoles={["vendor"]}>
+            // <ProtectedRoute allowedRoles={["vendor"]}>
               <VendorLayout />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           }
         >
           <Route index element={<VendorDashboard />} />
@@ -162,9 +162,9 @@ function App() {
         <Route
           path="/manager"
           element={
-            <ProtectedRoute allowedRoles={["manager"]}>
+            // <ProtectedRoute allowedRoles={["manager"]}>
               <ManagerLayout />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           }
         >
           <Route index element={<ManagerDashboard />} />
