@@ -1,19 +1,9 @@
 import { NavLink } from "react-router-dom";
 import {
   Store,
-  LayoutDashboard,
-  Package,
-  ShoppingCart,
-  Bell,
   LifeBuoy,
 } from "lucide-react";
-
-const navItems = [
-  { label: "Dashboard",     icon: LayoutDashboard, to: "/manager"          },
-  { label: "Products",      icon: Package,         to: "/manager/products" },
-  { label: "Orders",        icon: ShoppingCart,    to: "/manager/orders"   },
-  { label: "Notifications", icon: Bell,            to: "/manager/notifications" },
-];
+import { managerNavItems } from "../../data";
 
 const ManagerSidebar = () => (
   <aside className="w-60 min-h-screen bg-primary flex flex-col shrink-0">
@@ -42,7 +32,7 @@ const ManagerSidebar = () => (
 
     {/* Nav */}
     <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
-      {navItems.map(({ label, icon: Icon, to }) => (
+      {managerNavItems.map(({ label, icon: Icon, to }) => (
         <NavLink
           key={to}
           to={to}

@@ -30,6 +30,7 @@ import {
   BarChart2,
   Settings,
   Tag,
+  Bell,
 } from "lucide-react";
 
 /* ── Home Layout ────────────────────────────────────────────── */
@@ -1018,3 +1019,14 @@ export const vendorSettingsMenu = [
 ];
 
 /* ── Manager Layout ────────────────────────────────────────────── */
+
+// Manager Sidebar
+export const managerNavItems = [
+  { label: "Dashboard",     icon: LayoutDashboard, to: "/manager"          },
+  { label: "Products",      icon: Package,         to: "/manager/products" },
+  { label: "Orders",        icon: ShoppingCart,    to: "/manager/orders"   },
+  { label: "Notifications", icon: Bell,            to: "/manager/notifications" },
+];
+
+// Manager TopNavbar
+export const MANAGER_NO_SEARCHBAR_ROUTES = ["/manager", "/manager/notifications", "/manager/order-receipt"]

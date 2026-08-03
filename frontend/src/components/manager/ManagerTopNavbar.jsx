@@ -1,11 +1,10 @@
 import { Bell, HelpCircle, Menu } from "lucide-react";
 import { useLocation } from "react-router-dom";
-
-const NO_SEARCHBAR_ROUTES = ["/manager", "manager/notifications"]
+import { MANAGER_NO_SEARCHBAR_ROUTES } from "../../data";
 
 const ManagerTopNavbar = ({ onMenuToggle, placeholder = "Search inventory..." }) => {
   const {pathname} = useLocation();
-  const showSearchBar = !NO_SEARCHBAR_ROUTES.includes(pathname);
+  const showSearchBar = !MANAGER_NO_SEARCHBAR_ROUTES.includes(pathname);
 
   return (
   <header className="h-14 bg-white border-b border-gray-100 flex items-center px-4 gap-4 sticky top-0 z-10">
