@@ -9,15 +9,7 @@ import {
   Settings,
   LifeBuoy,
 } from "lucide-react";
-
-const navItems = [
-  { label: "Dashboard", icon: LayoutDashboard, to: "/admin" },
-  { label: "Vendors", icon: Users, to: "/admin/vendors" },
-  { label: "Vendor Requests", icon: ClipboardList, to: "/admin/vendor-requests" },
-  { label: "Orders", icon: ShoppingCart, to: "/admin/orders" },
-  { label: "Reports", icon: BarChart2, to: "/admin/reports" },
-  { label: "Settings", icon: Settings, to: "/admin/settings" },
-];
+import { adminNavItems } from "../../data";
 
 const Sidebar = () => {
   return (
@@ -33,7 +25,7 @@ const Sidebar = () => {
 
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
-        {navItems.map(({ label, icon: Icon, to }) => (
+        {adminNavItems.map(({ label, icon: Icon, to }) => (
           <NavLink
             key={to}
             to={to}

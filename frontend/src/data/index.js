@@ -24,7 +24,11 @@ import {
   UserPlus,
   ClipboardList,
   AlertTriangle,
-  DollarSign
+  DollarSign,
+  LayoutDashboard,
+  Users,
+  BarChart2,
+  Settings,
 } from "lucide-react";
 
 /* ── Home Layout ────────────────────────────────────────────── */
@@ -169,6 +173,23 @@ export const FAQS = [
 ];
 
 /* ── Admin Layout ────────────────────────────────────────────── */
+
+// Admin Sidebar
+export const adminNavItems = [
+  { label: "Dashboard", icon: LayoutDashboard, to: "/admin" },
+  { label: "Vendors", icon: Users, to: "/admin/vendors" },
+  {
+    label: "Vendor Requests",
+    icon: ClipboardList,
+    to: "/admin/vendor-requests",
+  },
+  { label: "Orders", icon: ShoppingCart, to: "/admin/orders" },
+  { label: "Reports", icon: BarChart2, to: "/admin/reports" },
+  { label: "Settings", icon: Settings, to: "/admin/settings" },
+];
+
+// Admin TopNavbar
+export const NO_SEARCHBAR_ROUTES = ['/admin', '/admin/reports', '/admin/settings'];
 
 // Orders Management
 export const ordersData = [
@@ -977,8 +998,8 @@ export const vendorDashboardCards = [
 
 // Vendor Settings
 export const vendorSettingsMenu = [
-  { key: "business",  label: "Business Info",    icon: Building2 },
-  { key: "password",  label: "Change Password",  icon: Lock      },
+  { key: "business", label: "Business Info", icon: Building2 },
+  { key: "password", label: "Change Password", icon: Lock },
 ];
 
 /* ── Manager Layout ────────────────────────────────────────────── */

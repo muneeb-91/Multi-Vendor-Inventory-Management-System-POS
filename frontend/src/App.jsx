@@ -133,9 +133,9 @@ function App() {
         <Route
           path="/vendor"
           element={
-            // <ProtectedRoute allowedRoles={["vendor"]}>
+            <ProtectedRoute allowedRoles={["vendor"]}>
               <VendorLayout />
-            // </ProtectedRoute>
+            </ProtectedRoute>
           }
         >
           <Route index element={<VendorDashboard />} />
