@@ -7,66 +7,7 @@ import {
   Trash2,
   CheckCheck,
 } from "lucide-react";
-
-const initialNotifications = [
-  {
-    id: 1,
-    type: "critical",
-    title: "Critical Stock: Intel Core i9",
-    message: "Only 2 units remaining. Minimum threshold is 10.",
-    time: "10 min ago",
-    read: false,
-    icon: AlertTriangle,
-    iconBg: "bg-red-50",
-    iconColor: "text-red-500",
-  },
-  {
-    id: 2,
-    type: "order",
-    title: "New Order Received — #ORD-9932",
-    message: "Acme Corp placed an order worth $1,240.00. Awaiting processing.",
-    time: "32 min ago",
-    read: false,
-    icon: ShoppingCart,
-    iconBg: "bg-blue-50",
-    iconColor: "text-blue-500",
-  },
-  {
-    id: 3,
-    type: "stock",
-    title: "Low Stock: Cat6 Cable 50m",
-    message: "5 units left. Minimum is 20. Consider restocking.",
-    time: "1h ago",
-    read: false,
-    icon: AlertTriangle,
-    iconBg: "bg-amber-50",
-    iconColor: "text-amber-500",
-  },
-  {
-    id: 4,
-    type: "order",
-    title: "Order #ORD-9931 Shipped",
-    message: "Globex Inc order has been marked as shipped.",
-    time: "3h ago",
-    read: true,
-    icon: CheckCircle2,
-    iconBg: "bg-green-50",
-    iconColor: "text-secondary",
-  },
-  {
-    id: 5,
-    type: "critical",
-    title: "Out of Stock: Cisco Router C",
-    message: "0 units remaining. Minimum threshold is 5. Immediate action required.",
-    time: "5h ago",
-    read: true,
-    icon: AlertTriangle,
-    iconBg: "bg-red-50",
-    iconColor: "text-red-500",
-  },
-];
-
-const FILTERS = ["All", "Unread", "Stock Alerts", "Orders"];
+import { initialNotifications, FILTERS } from "../../data";
 
 const ManagerNotifications = () => {
   const [notifications, setNotifications] = useState(initialNotifications);

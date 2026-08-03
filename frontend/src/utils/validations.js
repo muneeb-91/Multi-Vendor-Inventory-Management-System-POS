@@ -30,7 +30,7 @@ export const validateCategory = ({ formData }) => {
   if (formData.categoryName.trim().length > 25)
     toast.error("Must be 25 characters or less.");
   return false;
-
+  
   if (!formData.description.trim()) toast.error("Description is required.");
   return false;
   if (formData.description.trim().length < 5)

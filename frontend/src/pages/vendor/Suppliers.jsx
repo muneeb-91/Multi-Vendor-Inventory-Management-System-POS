@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Plus, Trash2, Search, TrendingUp, ChevronLeft, ChevronRight, Building2, Package, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { suppliers, avatarColor, supplierStats } from "../../data";
-import Pagination from "../../components/pagination";
+import Pagination from "../../components/shared/Pagination";
 
 // Delete confirmation modal
 const DeleteModal = ({ supplier, onClose, onConfirm }) => (

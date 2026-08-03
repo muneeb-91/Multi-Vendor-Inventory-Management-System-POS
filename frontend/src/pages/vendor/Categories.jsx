@@ -7,7 +7,7 @@ import {
   ChevronRight,
   Trash2,
 } from "lucide-react";
-import Loader from '../../components/Loader';
+import Loader from '../../components/shared/Loader.jsx';
 import {formatDate} from '../../utils/formatDate.js';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";

@@ -19,7 +19,7 @@ const VendorSidebar = () => (
     {/* Create Order CTA */}
     <div className="px-3 pt-4">
       <NavLink
-        to="/manager/orders/create"
+        to="/vendor/create-order"
         className="flex items-center justify-center gap-2 w-full border border-secondary hover:bg-white hover:text-primary text-white text-sm font-semibold py-2.5 rounded-lg transition-colors duration-300 cursor-pointer"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">

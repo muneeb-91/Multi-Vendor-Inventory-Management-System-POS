@@ -7,6 +7,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { CATEGORY_ICONS, productsData, stockDot, stockText } from "../../data";
+import Pagination from "../../components/shared/Pagination";
 
 
 const categoryPill = "bg-indigo-50 text-indigo-600 px-2.5 py-1 rounded-md text-xs font-medium";
@@ -154,26 +155,7 @@ const ManageProducts = () => {
         </div>
 
         {/* Pagination */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-5 py-4 border-t border-gray-100 gap-3">
-          <p className="text-xs text-gray-400">
-            Showing 1 to {filtered.length} of 1,248 results
-          </p>
-          <div className="flex items-center gap-1">
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 cursor-pointer">
-              <ChevronLeft className="w-3.5 h-3.5" />
-            </button>
-            {["1", "2", "3", "...", ].map((p, i) => (
-              <button key={i} className={`w-8 h-8 flex items-center justify-center rounded-lg text-xs font-medium cursor-pointer transition-colors ${
-                p === "1" ? "bg-secondary text-white" : p === "..." ? "text-gray-400" : "border border-gray-200 text-gray-600 hover:bg-gray-50"
-              }`}>
-                {p}
-              </button>
-            ))}
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 cursor-pointer">
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </div>
+        <Pagination />
       </div>
     </div>
   );

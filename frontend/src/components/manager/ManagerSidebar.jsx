@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   Store,
   LifeBuoy,
@@ -10,17 +10,17 @@ const ManagerSidebar = () => (
 
     {/* Brand */}
     <div className="px-6 py-5 border-b border-white/10">
-      <div className="flex items-center gap-2 mb-1">
+      <Link to={'/'} className="flex items-center gap-2 mb-1">
         <Store className="text-secondary size-5" />
         <h1 className="text-white text-xl font-bold tracking-tight">Stock<span className="text-secondary">Flow</span></h1>
-      </div>
+      </Link>
       <p className="text-gray-400 text-xl">Manager Pannel</p>
     </div>
 
     {/* Create Order CTA */}
     <div className="px-3 pt-4">
       <NavLink
-        to="/manager/orders/create"
+        to="/manager/create-order"
         className="flex items-center justify-center gap-2 w-full border border-secondary hover:bg-white hover:text-primary text-white text-sm font-semibold py-2.5 rounded-lg transition-colors duration-300 cursor-pointer"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">

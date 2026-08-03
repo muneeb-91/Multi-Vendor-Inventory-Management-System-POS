@@ -1,42 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  Plus,
-  MoreVertical,
-  Laptop,
-  Printer,
-  Headphones,
-  Armchair,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
-
-const CATEGORY_ICONS = {
-  Electronics:      Laptop,
-  Furniture:        Armchair,
-  "Office Supplies": Printer,
-  Audio:            Headphones,
-};
-
-const productsData = [
-  { id: 1, name: "ThinkPad X1 Carbon Gen 10", sku: "SKU-8472-LC", category: "Electronics",     supplier: "TechData Corp",    stock: 142, stockLevel: "high", price: "$1,499.00" },
-  { id: 2, name: "Ergonomic Office Chair V2",  sku: "SKU-9921-FC", category: "Furniture",       supplier: "Herman Miller Inc", stock: 8,   stockLevel: "low",  price: "$845.00"   },
-  { id: 3, name: "LaserJet Pro MFP M428fdw",  sku: "SKU-3324-HP", category: "Office Supplies", supplier: "HP Enterprise",     stock: 24,  stockLevel: "mid",  price: "$429.99"   },
-  { id: 4, name: "Noise Cancelling Pro",       sku: "SKU-7751-S0", category: "Electronics",     supplier: "Sony Audio",        stock: 89,  stockLevel: "high", price: "$348.00"   },
-];
-
-const stockDot = (level) => {
-  if (level === "high") return "bg-green-500";
-  if (level === "low")  return "bg-red-500";
-  return "bg-amber-400";
-};
-
-const stockText = (level, count) => {
-  if (level === "low") return `text-red-600 font-semibold`;
-  return "text-gray-700";
-};
-
-const categoryPill = "bg-indigo-50 text-indigo-600 px-2.5 py-1 rounded-md text-xs font-medium";
+import { productsData, CATEGORY_ICONS, stockDot, stockText, categoryPill } from "../../data";
+import Pagination from "../../components/shared/Pagination";
 
 const ManagerManageProducts = () => {
   const [categoryFilter, setCategoryFilter] = useState("All");
@@ -88,7 +53,6 @@ const ManagerManageProducts = () => {
                 <th className="px-5 py-3 font-medium hidden lg:table-cell">Supplier</th>
                 <th className="px-5 py-3 font-medium text-right">Stock</th>
                 <th className="px-5 py-3 font-medium text-right">Selling Price</th>
-                <th className="px-5 py-3 font-medium text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -133,34 +97,6 @@ const ManagerManageProducts = () => {
                       {p.price}
                     </td>
 
-                    {/* Actions */}
-                    <td className="px-5 py-4 text-right">
-                      <div className="relative inline-block">
-                        <button
-                          onClick={() => setOpenMenu(openMenu === p.id ? null : p.id)}
-                          className="p-1.5 rounded-md hover:bg-gray-100 text-gray-400 cursor-pointer"
-                        >
-                          <MoreVertical className="w-4 h-4" />
-                        </button>
-                        {openMenu === p.id && (
-                          <div className="absolute right-0 mt-1 w-32 bg-white border border-gray-100 rounded-lg shadow-lg z-10 py-1">
-                            <button
-                              onClick={() => setOpenMenu(null)}
-                              className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                            >
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => handleDelete(p.id)}
-                              className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </td>
-
                   </tr>
                 );
               })}
@@ -177,26 +113,7 @@ const ManagerManageProducts = () => {
         </div>
 
         {/* Pagination */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-5 py-4 border-t border-gray-100 gap-3">
-          <p className="text-xs text-gray-400">
-            Showing 1 to {filtered.length} of 1,248 results
-          </p>
-          <div className="flex items-center gap-1">
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 cursor-pointer">
-              <ChevronLeft className="w-3.5 h-3.5" />
-            </button>
-            {["1", "2", "3", "...", ].map((p, i) => (
-              <button key={i} className={`w-8 h-8 flex items-center justify-center rounded-lg text-xs font-medium cursor-pointer transition-colors ${
-                p === "1" ? "bg-secondary text-white" : p === "..." ? "text-gray-400" : "border border-gray-200 text-gray-600 hover:bg-gray-50"
-              }`}>
-                {p}
-              </button>
-            ))}
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 cursor-pointer">
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </div>
+        <Pagination />
       </div>
     </div>
   );

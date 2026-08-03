@@ -3,16 +3,16 @@ import { Mail, Lock, ArrowRight, Store } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loginRequest } from "../features/auth/authAPI";
+import { loginRequest } from "../../features/auth/authAPI.js";
 import { useSelector } from "react-redux";
-import Loader from '../components/Loader';
+import Loader from '../../components/shared/Loader.jsx';
 import { toast } from "react-toastify";
-import { validateLoginForm } from "../utils/validations.js";
+import { validateLoginForm } from "../../utils/validations.js";
 import {
   loginStart,
   loginSuccess,
   loginFailure,
-} from "../features/auth/authSlice.js";
+} from "../../features/auth/authSlice.js";
 
 const Login = () => {
 const dispatch = useDispatch();

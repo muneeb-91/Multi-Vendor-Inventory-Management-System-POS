@@ -31,6 +31,9 @@ import {
   Settings,
   Tag,
   Bell,
+  Cable,
+  Wifi,
+  CheckCircle2
 } from "lucide-react";
 
 /* ── Home Layout ────────────────────────────────────────────── */
@@ -1029,4 +1032,88 @@ export const managerNavItems = [
 ];
 
 // Manager TopNavbar
-export const MANAGER_NO_SEARCHBAR_ROUTES = ["/manager", "/manager/notifications", "/manager/order-receipt"]
+export const MANAGER_NO_SEARCHBAR_ROUTES = ["/manager", "/manager/notifications", "/manager/order-receipt"];
+
+// Manager Dashboard
+export const managerRecentOrders = [
+  { id: "#ORD-9932", customer: "Acme Corp",     date: "Oct 24, 2023", amount: "$1,240.00" },
+  { id: "#ORD-9931", customer: "Globex Inc",    date: "Oct 24, 2023", amount: "$850.50"   },
+  { id: "#ORD-9930", customer: "Initech",       date: "Oct 23, 2023", amount: "$3,420.00" },
+  { id: "#ORD-9929", customer: "Umbrella Corp", date: "Oct 23, 2023", amount: "$125.00"   },
+  { id: "#ORD-9928", customer: "Soylent Corp",  date: "Oct 22, 2023", amount: "$980.00"   },
+];
+
+export const criticalStock = [
+  { name: "Intel Core i9",    sku: "CPU-INT-09", left: 2,  min: 10, icon: Cpu,     color: "bg-blue-50 text-blue-500"   },
+  { name: "Cat6 Cable 50m",   sku: "CAB-C6-50",  left: 5,  min: 20, icon: Cable,   color: "bg-amber-50 text-amber-500" },
+  { name: "Cisco Router C",   sku: "NET-ROU-X",  left: 0,  min: 5,  icon: Wifi,    color: "bg-purple-50 text-purple-500"},
+];
+
+export const leftColor = (left) => {
+  if (left === 0) return "text-red-600";
+  if (left <= 5)  return "text-red-500";
+  return "text-amber-600";
+};
+
+export const categoryPill = "bg-indigo-50 text-indigo-600 px-2.5 py-1 rounded-md text-xs font-medium";
+
+// Notifications
+export const initialNotifications = [
+  {
+    id: 1,
+    type: "critical",
+    title: "Critical Stock: Intel Core i9",
+    message: "Only 2 units remaining. Minimum threshold is 10.",
+    time: "10 min ago",
+    read: false,
+    icon: AlertTriangle,
+    iconBg: "bg-red-50",
+    iconColor: "text-red-500",
+  },
+  {
+    id: 2,
+    type: "order",
+    title: "New Order Received — #ORD-9932",
+    message: "Acme Corp placed an order worth $1,240.00. Awaiting processing.",
+    time: "32 min ago",
+    read: false,
+    icon: ShoppingCart,
+    iconBg: "bg-blue-50",
+    iconColor: "text-blue-500",
+  },
+  {
+    id: 3,
+    type: "stock",
+    title: "Low Stock: Cat6 Cable 50m",
+    message: "5 units left. Minimum is 20. Consider restocking.",
+    time: "1h ago",
+    read: false,
+    icon: AlertTriangle,
+    iconBg: "bg-amber-50",
+    iconColor: "text-amber-500",
+  },
+  {
+    id: 4,
+    type: "order",
+    title: "Order #ORD-9931 Shipped",
+    message: "Globex Inc order has been marked as shipped.",
+    time: "3h ago",
+    read: true,
+    icon: CheckCircle2,
+    iconBg: "bg-green-50",
+    iconColor: "text-secondary",
+  },
+  {
+    id: 5,
+    type: "critical",
+    title: "Out of Stock: Cisco Router C",
+    message: "0 units remaining. Minimum threshold is 5. Immediate action required.",
+    time: "5h ago",
+    read: true,
+    icon: AlertTriangle,
+    iconBg: "bg-red-50",
+    iconColor: "text-red-500",
+  },
+];
+
+export const FILTERS = ["All", "Unread", "Stock Alerts", "Orders"];

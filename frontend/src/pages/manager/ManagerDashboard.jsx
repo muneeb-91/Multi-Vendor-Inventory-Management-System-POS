@@ -17,39 +17,9 @@ import {
   Menu,
 } from "lucide-react";
 import { useState } from "react";
+import { managerRecentOrders, criticalStock, leftColor } from "../../data";
 
-// ── Dummy data ─────────────────────────────────────────────────────────────
-const recentOrders = [
-  { id: "#ORD-9932", customer: "Acme Corp",     date: "Oct 24, 2023", status: "Processing", amount: "$1,240.00" },
-  { id: "#ORD-9931", customer: "Globex Inc",    date: "Oct 24, 2023", status: "Shipped",    amount: "$850.50"   },
-  { id: "#ORD-9930", customer: "Initech",       date: "Oct 23, 2023", status: "Delayed",    amount: "$3,420.00" },
-  { id: "#ORD-9929", customer: "Umbrella Corp", date: "Oct 23, 2023", status: "Processing", amount: "$125.00"   },
-  { id: "#ORD-9928", customer: "Soylent Corp",  date: "Oct 22, 2023", status: "Delivered",  amount: "$980.00"   },
-];
-
-const criticalStock = [
-  { name: "Intel Core i9",    sku: "CPU-INT-09", left: 2,  min: 10, icon: Cpu,     color: "bg-blue-50 text-blue-500"   },
-  { name: "Cat6 Cable 50m",   sku: "CAB-C6-50",  left: 5,  min: 20, icon: Cable,   color: "bg-amber-50 text-amber-500" },
-  { name: "Cisco Router C",   sku: "NET-ROU-X",  left: 0,  min: 5,  icon: Wifi,    color: "bg-purple-50 text-purple-500"},
-];
-
-const statusStyle = (s) => {
-  if (s === "Processing") return "bg-blue-50 text-blue-600";
-  if (s === "Shipped")    return "bg-indigo-50 text-indigo-600";
-  if (s === "Delayed")    return "bg-red-50 text-red-600";
-  if (s === "Delivered")  return "bg-green-50 text-green-700";
-  return "bg-gray-100 text-gray-500";
-};
-
-const leftColor = (left) => {
-  if (left === 0) return "text-red-600";
-  if (left <= 5)  return "text-red-500";
-  return "text-amber-600";
-};
-
-// ── Component ───────────────────────────────────────────────────────────
 const ManagerDashboard = () => {
-
   return (
     <div className="-m-6">
       {/* Page body */}
@@ -115,21 +85,15 @@ const ManagerDashboard = () => {
                     <th className="px-5 py-3 font-medium">Order ID</th>
                     <th className="px-5 py-3 font-medium hidden sm:table-cell">Customer</th>
                     <th className="px-5 py-3 font-medium hidden md:table-cell">Date</th>
-                    <th className="px-5 py-3 font-medium">Status</th>
                     <th className="px-5 py-3 font-medium text-right">Amount</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {recentOrders.map((o) => (
+                  {managerRecentOrders.map((o) => (
                     <tr key={o.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
                       <td className="px-5 py-3.5 font-mono text-xs text-gray-500">{o.id}</td>
                       <td className="px-5 py-3.5 font-medium text-primary hidden sm:table-cell">{o.customer}</td>
                       <td className="px-5 py-3.5 text-gray-500 hidden md:table-cell">{o.date}</td>
-                      <td className="px-5 py-3.5">
-                        <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusStyle(o.status)}`}>
-                          {o.status}
-                        </span>
-                      </td>
                       <td className="px-5 py-3.5 text-right font-semibold text-primary">{o.amount}</td>
                     </tr>
                   ))}
@@ -192,7 +156,6 @@ const ManagerDashboard = () => {
                       <p className={`text-sm font-bold ${leftColor(item.left)}`}>
                         {item.left} left
                       </p>
-                      <p className="text-[10px] text-gray-400">Min: {item.min}</p>
                     </div>
                   </div>
                 ))}

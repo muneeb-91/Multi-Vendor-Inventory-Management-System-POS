@@ -1,16 +1,16 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import ProtectedRoute from "./components/protectedRoutes";
-import PublicRoute from './components/publicRoute';
+import ProtectedRoute from "./components/guards/protectedRoutes.jsx";
+import PublicRoute from './components/guards/publicRoute.jsx';
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { checkAuthRequest } from "./features/auth/authAPI";
 import { checkAuthSuccess, checkAuthFailure } from "./features/auth/authSlice.js";
-import Loader from "./components/Loader";
+import Loader from "./components/shared/Loader.jsx";
 
 // Login and Vendor Register Imports
-import Login from "./pages/Login";
-import VendorRegister from "./pages/VendorRegister";
+import Login from "./pages/auth/Login.jsx";
+import VendorRegister from "./pages/auth/VendorRegister.jsx";
 
 // Layout Imports
 import AdminLayout from "./layouts/AdminLayout";
@@ -38,25 +38,22 @@ import VendorDashboard from "./pages/vendor/VendorDashboard";
 import ManageProducts from "./pages/vendor/ManageProducts";
 import Categories from "./pages/vendor/Categories";
 import AddNewProduct from "./pages/vendor/AddNewProduct";
-import OrderHistory from "./pages/vendor/OrderHistory";
-import CreateOrder from "./pages/vendor/CreateOrder";
 import ManageTeam from "./pages/vendor/ManageTeam";
 import VendorSettings from "./pages/vendor/VendorSettings";
-import ProductDetails from "./pages/vendor/ProductDetails";
 import Suppliers from "./pages/vendor/Suppliers";
-import OrderReceipt from "./pages/vendor/OrderReceipt";
 
 // Manager pages imports
 import ManagerDashboard from "./pages/manager/ManagerDashboard";
 import ManagerManageProducts from "./pages/manager/ManagerManageProducts";
-import ManagerProductDetails from "./pages/manager/ManagerProductDetails";
-import ManagerOrderHistory from "./pages/manager/ManagerOrderHistory";
-import ManagerCreateOrder from "./pages/manager/ManagerCreateOrder";
-import ManagerOrderReceipt from "./pages/manager/ManagerOrderReceipt";
 import ManagerNotifications from "./pages/manager/ManagerNotifications";
 import AddCategory from "./pages/vendor/AddCategory.jsx";
 import AddSupplier from "./pages/vendor/AddSupplier.jsx";
 
+// Shared
+import OrdersHistory from "./pages/shared/OrdersHistory.jsx";
+import ProductDetails from "./pages/shared/ProductDetails.jsx";
+import OrderReceipt from "./pages/shared/OrderReceipt.jsx";
+import CreateOrder from "./pages/shared/CreateOrder.jsx";
 
 function App() {
   const { checkingAuth, isAuthenticated } = useSelector((state) => state.auth);
@@ -152,7 +149,7 @@ function App() {
             <Route path="add" element={<AddNewProduct />} />
             <Route path=":id" element={<ProductDetails />} />
           </Route>
-          <Route path="orders" element={<OrderHistory />} />
+          <Route path="orders" element={<OrdersHistory />} />
           <Route path="create-order" element={<CreateOrder />} />
           <Route path="managers" element={<ManageTeam />} />
           <Route path="settings" element={<VendorSettings />} />
@@ -162,17 +159,17 @@ function App() {
         <Route
           path="/manager"
           element={
-            // <ProtectedRoute allowedRoles={["manager"]}>
+            <ProtectedRoute allowedRoles={["manager"]}>
               <ManagerLayout />
-            // </ProtectedRoute>
+            </ProtectedRoute>
           }
         >
           <Route index element={<ManagerDashboard />} />
           <Route path="products" element={<ManagerManageProducts />} />
-          <Route path="products/:id" element={<ManagerProductDetails />} />
-          <Route path="orders" element={<ManagerOrderHistory />} />
-          <Route path="create-order" element={<ManagerCreateOrder />} />
-          <Route path="order-receipt" element={<ManagerOrderReceipt />} />
+          <Route path="products/:id" element={<ProductDetails />} />
+          <Route path="orders" element={<OrdersHistory />} />
+          <Route path="create-order" element={<CreateOrder />} />
+          <Route path="order-receipt" element={<OrderReceipt />} />
           <Route path="notifications" element={<ManagerNotifications />} />
         </Route>
 
