@@ -33,9 +33,9 @@ const AddSupplier = () => {
   };
 
   const toggleStatus = () =>
-    setFormData((p) => ({
-      ...p,
-      status: p.status === "active" ? "inactive" : "active",
+    setFormData((prev) => ({
+      ...prev,
+      status: prev.status === "active" ? "inactive" : "active",
     }));
 
   const handleSubmit = () => {

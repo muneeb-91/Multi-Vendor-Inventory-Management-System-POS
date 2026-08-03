@@ -33,10 +33,21 @@ import {
   Bell,
   Cable,
   Wifi,
-  CheckCircle2
+  CheckCircle2,
+  Repeat,
+  ScanLine
 } from "lucide-react";
 
 /* ── Home Layout ────────────────────────────────────────────── */
+
+// Home Page
+export const heroGraph = [40, 65, 50, 80, 60, 95, 70];
+
+export const managerProperties = [
+  "Customizable organizational reporting dashboards",
+  "Role-based access control for team members",
+  "Cross-platform POS connectivity",
+];
 
 // Account Status Page
 export const STATUS_CONFIG = {
@@ -71,6 +82,15 @@ export const STATUS_CONFIG = {
     heading: "Account Suspended",
   },
 };
+
+// Solutions Page
+export const posProperties = [
+  { label: "Multi-Store", icon: Store },
+  { label: "Live Sync", icon: Repeat },
+  { label: "Smart Scanning", icon: ScanLine },
+];
+
+export const wholesaleProperties = ["Volume-Based Pricing", "Pallet-Level Tracking", "Custom EDI Support"]
 
 // Pricing Page
 export const plans = [
@@ -194,7 +214,11 @@ export const adminNavItems = [
 ];
 
 // Admin TopNavbar
-export const ADMIN_NO_SEARCHBAR_ROUTES = ['/admin', '/admin/reports', '/admin/settings'];
+export const ADMIN_NO_SEARCHBAR_ROUTES = [
+  "/admin",
+  "/admin/reports",
+  "/admin/settings",
+];
 
 // Orders Management
 export const ordersData = [
@@ -326,6 +350,32 @@ export const settingsMenu = [
 export const systemStatus = [
   { label: "Database Sync", status: "Online", ok: true },
   { label: "API Gateway", status: "Online", ok: true },
+];
+
+export const systemPreferencesItems = [
+  {
+    key: "emailNotifications",
+    label: "Email Notifications",
+    desc: "Receive system alerts via email",
+  },
+  {
+    key: "vendorAlerts",
+    label: "Vendor Alerts",
+    desc: "Get notified for new vendor requests",
+  },
+  {
+    key: "maintenanceMode",
+    label: "Maintenance Mode",
+    desc: "Put platform in read-only mode",
+  },
+];
+
+export const timeZones = [
+  "UTC",
+  "America/New_York",
+  "America/Los_Angeles",
+  "Asia/Karachi",
+  "Europe/London",
 ];
 
 // Vendor Details
@@ -482,21 +532,39 @@ export const vendorsStatusStyle = (status) => {
   return "bg-gray-100 text-gray-500";
 };
 
+export const vendorsStatusList = ["All", "Active", "Suspended", "Pending"];
+
+export const getActions = (status) => {
+  if (status === "Active") return ["Suspend", "Delete"];
+  if (status === "Suspended") return ["Activate", "Delete"];
+  if (status === "Pending") return ["Approve", "Delete"];
+  return ["Delete"];
+};
+
+export const actionStyle = (action) => {
+  if (action === "Delete") return "text-red-600 hover:bg-red-50";
+  return "text-gray-700 hover:bg-gray-50";
+};
+
 /* ── Vendor Layout ────────────────────────────────────────────── */
 
 // Vendor Sidebar
 export const vendorNavItems = [
-  { label: "Dashboard",  icon: LayoutDashboard,  to: "/vendor" },
-  { label: "Categories", icon: Tag,              to: "/vendor/categories" },
-  { label: "Suppliers",  icon: Truck,            to: "/vendor/suppliers" },
-  { label: "Products",   icon: Package,          to: "/vendor/products" },
-  { label: "Orders",     icon: ShoppingCart,     to: "/vendor/orders" },
-  { label: "Managers",   icon: Users,            to: "/vendor/managers" },
-  { label: "Settings",   icon: Settings,         to: "/vendor/settings" },
+  { label: "Dashboard", icon: LayoutDashboard, to: "/vendor" },
+  { label: "Categories", icon: Tag, to: "/vendor/categories" },
+  { label: "Suppliers", icon: Truck, to: "/vendor/suppliers" },
+  { label: "Products", icon: Package, to: "/vendor/products" },
+  { label: "Orders", icon: ShoppingCart, to: "/vendor/orders" },
+  { label: "Managers", icon: Users, to: "/vendor/managers" },
+  { label: "Settings", icon: Settings, to: "/vendor/settings" },
 ];
 
 // TopNavbar
-export const VENDOR_NO_SEARCHBAR_ROUTES = ["/vendor", "/vendor/settings", "/vendor/order-receipt"];
+export const VENDOR_NO_SEARCHBAR_ROUTES = [
+  "/vendor",
+  "/vendor/settings",
+  "/vendor/order-receipt",
+];
 
 // Create Order
 export const catalogue = [
@@ -639,7 +707,7 @@ export const managersData = [
     id: 2,
     name: "Marcus Johnson",
     email: "mjohnson@apexlogistics.com",
-    status: "Active",
+    status: "Suspended",
     initials: "MJ",
     color: "bg-green-100 text-green-700",
   },
@@ -647,7 +715,7 @@ export const managersData = [
     id: 3,
     name: "Elena Rodriguez",
     email: "elena.r@nexussupply.net",
-    status: "Pending",
+    status: "Active",
     initials: "ER",
     color: "bg-amber-100 text-amber-700",
   },
@@ -661,15 +729,15 @@ export const managersData = [
   },
 ];
 
+export const managerStatuses = ["All Status", "Active", "Suspended"];
+
 export const managerStatusStyle = (s) => {
   if (s === "Active") return "bg-green-50 text-green-700 border-green-200";
-  if (s === "Pending") return "bg-amber-50 text-amber-700 border-amber-200";
   return "bg-gray-50 text-gray-500 border-gray-200";
 };
 
 export const managerStatusDot = (s) => {
   if (s === "Active") return "bg-green-500";
-  if (s === "Pending") return "bg-amber-400";
   return "bg-gray-400";
 };
 
@@ -1021,41 +1089,94 @@ export const vendorSettingsMenu = [
   { key: "password", label: "Change Password", icon: Lock },
 ];
 
+/* ── Shared Components ────────────────────────────────────────────── */
+
 /* ── Manager Layout ────────────────────────────────────────────── */
 
 // Manager Sidebar
 export const managerNavItems = [
-  { label: "Dashboard",     icon: LayoutDashboard, to: "/manager"          },
-  { label: "Products",      icon: Package,         to: "/manager/products" },
-  { label: "Orders",        icon: ShoppingCart,    to: "/manager/orders"   },
-  { label: "Notifications", icon: Bell,            to: "/manager/notifications" },
+  { label: "Dashboard", icon: LayoutDashboard, to: "/manager" },
+  { label: "Products", icon: Package, to: "/manager/products" },
+  { label: "Orders", icon: ShoppingCart, to: "/manager/orders" },
+  { label: "Notifications", icon: Bell, to: "/manager/notifications" },
 ];
 
 // Manager TopNavbar
-export const MANAGER_NO_SEARCHBAR_ROUTES = ["/manager", "/manager/notifications", "/manager/order-receipt"];
+export const MANAGER_NO_SEARCHBAR_ROUTES = [
+  "/manager",
+  "/manager/notifications",
+  "/manager/order-receipt",
+];
 
 // Manager Dashboard
 export const managerRecentOrders = [
-  { id: "#ORD-9932", customer: "Acme Corp",     date: "Oct 24, 2023", amount: "$1,240.00" },
-  { id: "#ORD-9931", customer: "Globex Inc",    date: "Oct 24, 2023", amount: "$850.50"   },
-  { id: "#ORD-9930", customer: "Initech",       date: "Oct 23, 2023", amount: "$3,420.00" },
-  { id: "#ORD-9929", customer: "Umbrella Corp", date: "Oct 23, 2023", amount: "$125.00"   },
-  { id: "#ORD-9928", customer: "Soylent Corp",  date: "Oct 22, 2023", amount: "$980.00"   },
+  {
+    id: "#ORD-9932",
+    customer: "Acme Corp",
+    date: "Oct 24, 2023",
+    amount: "$1,240.00",
+  },
+  {
+    id: "#ORD-9931",
+    customer: "Globex Inc",
+    date: "Oct 24, 2023",
+    amount: "$850.50",
+  },
+  {
+    id: "#ORD-9930",
+    customer: "Initech",
+    date: "Oct 23, 2023",
+    amount: "$3,420.00",
+  },
+  {
+    id: "#ORD-9929",
+    customer: "Umbrella Corp",
+    date: "Oct 23, 2023",
+    amount: "$125.00",
+  },
+  {
+    id: "#ORD-9928",
+    customer: "Soylent Corp",
+    date: "Oct 22, 2023",
+    amount: "$980.00",
+  },
 ];
 
 export const criticalStock = [
-  { name: "Intel Core i9",    sku: "CPU-INT-09", left: 2,  min: 10, icon: Cpu,     color: "bg-blue-50 text-blue-500"   },
-  { name: "Cat6 Cable 50m",   sku: "CAB-C6-50",  left: 5,  min: 20, icon: Cable,   color: "bg-amber-50 text-amber-500" },
-  { name: "Cisco Router C",   sku: "NET-ROU-X",  left: 0,  min: 5,  icon: Wifi,    color: "bg-purple-50 text-purple-500"},
+  {
+    name: "Intel Core i9",
+    sku: "CPU-INT-09",
+    left: 2,
+    min: 10,
+    icon: Cpu,
+    color: "bg-blue-50 text-blue-500",
+  },
+  {
+    name: "Cat6 Cable 50m",
+    sku: "CAB-C6-50",
+    left: 5,
+    min: 20,
+    icon: Cable,
+    color: "bg-amber-50 text-amber-500",
+  },
+  {
+    name: "Cisco Router C",
+    sku: "NET-ROU-X",
+    left: 0,
+    min: 5,
+    icon: Wifi,
+    color: "bg-purple-50 text-purple-500",
+  },
 ];
 
 export const leftColor = (left) => {
   if (left === 0) return "text-red-600";
-  if (left <= 5)  return "text-red-500";
+  if (left <= 5) return "text-red-500";
   return "text-amber-600";
 };
 
-export const categoryPill = "bg-indigo-50 text-indigo-600 px-2.5 py-1 rounded-md text-xs font-medium";
+export const categoryPill =
+  "bg-indigo-50 text-indigo-600 px-2.5 py-1 rounded-md text-xs font-medium";
 
 // Notifications
 export const initialNotifications = [
@@ -1107,7 +1228,8 @@ export const initialNotifications = [
     id: 5,
     type: "critical",
     title: "Out of Stock: Cisco Router C",
-    message: "0 units remaining. Minimum threshold is 5. Immediate action required.",
+    message:
+      "0 units remaining. Minimum threshold is 5. Immediate action required.",
     time: "5h ago",
     read: true,
     icon: AlertTriangle,

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Save } from "lucide-react";
+import { systemPreferencesItems } from "../../data";
+import { timeZones } from "../../data";
 
 const SystemPreferences = () => {
   const [prefs, setPrefs] = useState({
@@ -36,11 +38,7 @@ const SystemPreferences = () => {
       <hr className="border-gray-100" />
 
       <div className="space-y-5">
-        {[
-          { key: "emailNotifications", label: "Email Notifications", desc: "Receive system alerts via email" },
-          { key: "vendorAlerts", label: "Vendor Alerts", desc: "Get notified for new vendor requests" },
-          { key: "maintenanceMode", label: "Maintenance Mode", desc: "Put platform in read-only mode" },
-        ].map(({ key, label, desc }) => (
+        {systemPreferencesItems.map(({ key, label, desc }) => (
           <div key={key} className="flex items-center justify-between py-2">
             <div>
               <p className="text-sm font-medium text-primary">{label}</p>
@@ -59,7 +57,7 @@ const SystemPreferences = () => {
             onChange={(e) => setPrefs((p) => ({ ...p, timezone: e.target.value }))}
             className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 cursor-pointer w-full sm:w-64"
           >
-            {["UTC", "America/New_York", "America/Los_Angeles", "Asia/Karachi", "Europe/London"].map((tz) => (
+            {timeZones.map((tz) => (
               <option key={tz}>{tz}</option>
             ))}
           </select>

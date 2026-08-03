@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import FeatureCard from "../../components/home/FeatureCard";
 import SectionHeading from "../../components/home/SectionHeading";
+import { posProperties, wholesaleProperties } from "../../data";
 
 const Solutions = () => (
   <>
@@ -66,11 +67,7 @@ const Solutions = () => (
           </p>
 
           <div className="mt-5 grid grid-cols-3 gap-2">
-            {[
-              { label: "Multi-Store",   icon: Store    },
-              { label: "Live Sync",     icon: Repeat   },
-              { label: "Smart Scanning", icon: ScanLine },
-            ].map(({ label, icon: Icon }) => (
+            {posProperties.map(({ label, icon: Icon }) => (
               <div key={label} className="flex flex-col items-center gap-1.5 bg-gray-50 rounded-xl py-3 px-2 text-center">
                 <Icon className="w-4 h-4 text-secondary" />
                 <span className="text-xs text-gray-600">{label}</span>
@@ -94,7 +91,7 @@ const Solutions = () => (
           </p>
 
           <ul className="mt-5 space-y-2.5">
-            {["Volume-Based Pricing", "Pallet-Level Tracking", "Custom EDI Support"].map((f) => (
+            {wholesaleProperties.map((f) => (
               <li key={f} className="flex items-center gap-2 text-sm text-gray-600">
                 <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
                 {f}

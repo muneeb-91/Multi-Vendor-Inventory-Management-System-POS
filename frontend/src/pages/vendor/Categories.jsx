@@ -18,6 +18,7 @@ import {
 } from "../../features/category/categorySlice.js";
 import { getAllCategoriesRequest } from "../../features/category/categoryAPI.js";
 import { Link } from "react-router-dom";
+import Pagination from "../../components/shared/Pagination.jsx";
 
 const Categories = () => {
   const [search, setSearch] = useState("");
@@ -34,6 +35,7 @@ const Categories = () => {
   );
 
   const toggleStatus = (id) =>{
+    
   };
 
   useEffect(() => {
@@ -177,23 +179,8 @@ const Categories = () => {
           </table>
         </div>
 
-        {/* Footer */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-5 py-4 border-t border-gray-100 gap-3">
-          <p className="text-xs text-gray-400">
-            Showing 1 to {filtered.length} of {filtered.length} entries
-          </p>
-          <div className="flex items-center gap-1">
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 cursor-pointer">
-              <ChevronLeft className="w-3.5 h-3.5" />
-            </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg text-xs font-medium bg-secondary text-white cursor-pointer">
-              1
-            </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 cursor-pointer">
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </div>
+        {/* Pagination */}
+        <Pagination />
       </div>
     </div>
   );

@@ -1,18 +1,7 @@
 import { useState } from "react";
 import { MoreVertical, UserPlus, Download, SlidersHorizontal } from "lucide-react";
-import { vendorsData, vendorsStatusStyle } from "../../data"; 
-
-const getActions = (status) => {
-  if (status === "Active") return ["Suspend", "Delete"];
-  if (status === "Suspended") return ["Activate", "Delete"];
-  if (status === "Pending") return ["Approve", "Delete"];
-  return ["Delete"];
-};
-
-const actionStyle = (action) => {
-  if (action === "Delete") return "text-red-600 hover:bg-red-50";
-  return "text-gray-700 hover:bg-gray-50";
-};
+import { vendorsData, vendorsStatusStyle, vendorsStatusList, getActions, actionStyle } from "../../data"; 
+import Pagination from "../../components/shared/Pagination";
 
 const VendorsDirectory = () => {
   const [search, setSearch] = useState("");
@@ -74,7 +63,7 @@ const VendorsDirectory = () => {
             onChange={(e) => setStatusFilter(e.target.value)}
             className="border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700 outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 cursor-pointer"
           >
-            {["All", "Active", "Suspended", "Pending"].map((s) => (
+            {vendorsStatusList.map((s) => (
               <option key={s}>{s === "All" ? "All Statuses" : s}</option>
             ))}
           </select>
@@ -162,23 +151,7 @@ const VendorsDirectory = () => {
         </div>
 
         {/* Pagination */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-5 py-4 border-t border-gray-100 gap-3">
-          <p className="text-xs text-gray-400">Showing 1 to {filtered.length} of 124 entries</p>
-          <div className="flex items-center gap-1">
-            {["‹", "1", "2", "3", "...", "25", "›"].map((p, i) => (
-              <button
-                key={i}
-                className={`w-8 h-8 rounded-lg text-xs font-medium cursor-pointer transition-colors ${
-                  p === "1"
-                    ? "bg-secondary text-white"
-                    : "border border-gray-200 text-gray-600 hover:bg-gray-50"
-                }`}
-              >
-                {p}
-              </button>
-            ))}
-          </div>
-        </div>
+        <Pagination />
       </div>
     </div>
   );

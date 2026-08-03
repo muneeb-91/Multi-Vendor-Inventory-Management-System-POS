@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import FeatureCard from "../../components/home/FeatureCard";
 import SectionHeading from "../../components/home/SectionHeading";
+import { heroGraph } from "../../data";
+import { managerProperties } from "../../data";
 
 const Home = () => {
 
@@ -46,7 +48,7 @@ const Home = () => {
         <div className="relative bg-primary rounded-2xl p-4 shadow-2xl">
           <div className="grid grid-cols-2 gap-3">
             <div className="col-span-2 h-24 bg-white/5 rounded-lg flex items-end p-3 gap-1">
-              {[40, 65, 50, 80, 60, 95, 70].map((h, i) => (
+              {heroGraph.map((h, i) => (
                 <div key={i} className="flex-1 bg-secondary rounded-sm" style={{ height: `${h}%` }} />
               ))}
             </div>
@@ -102,11 +104,7 @@ const Home = () => {
           clinical precision.
         </p>
         <ul className="mt-5 space-y-2.5">
-          {[
-            "Customizable organizational reporting dashboards",
-            "Role-based access control for team members",
-            "Cross-platform POS connectivity",
-          ].map((item) => (
+          {managerProperties.map((item) => (
             <li key={item} className="flex items-center gap-2 text-sm text-gray-600">
               <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
               {item}

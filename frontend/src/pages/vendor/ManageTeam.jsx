@@ -7,7 +7,9 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { managersData, managerStatusStyle, managerStatusDot } from "../../data";
+import { managersData, managerStatuses, managerStatusStyle, managerStatusDot } from "../../data";
+import Pagination from "../../components/shared/Pagination";
+
 
 const ManageTeam = () => {
   const [managers, setManagers] = useState(managersData);
@@ -90,7 +92,7 @@ const ManageTeam = () => {
               onChange={(e) => setStatusFilter(e.target.value)}
               className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-600 outline-none focus:border-secondary cursor-pointer bg-white"
             >
-              {["All Status", "Active", "Pending"].map((s) => (
+              {managerStatuses.map((s) => (
                 <option key={s}>{s}</option>
               ))}
             </select>
@@ -184,26 +186,7 @@ const ManageTeam = () => {
           </div>
 
           {/* Pagination */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-5 py-4 border-t border-gray-100 gap-3">
-            <p className="text-xs text-gray-400">
-              Showing 1 to {filtered.length} of 248 entries
-            </p>
-            <div className="flex items-center gap-1.5">
-              <button className="px-3 h-8 rounded-lg border border-gray-200 text-xs font-medium text-gray-600 hover:bg-gray-50 cursor-pointer flex items-center gap-1">
-                <ChevronLeft className="w-3.5 h-3.5" /> Prev
-              </button>
-              <button className="w-8 h-8 rounded-lg bg-secondary text-white text-xs font-semibold cursor-pointer">
-                1
-              </button>
-              <button className="w-8 h-8 rounded-lg border border-gray-200 text-xs font-medium text-gray-600 hover:bg-gray-50 cursor-pointer">
-                2
-              </button>
-              <button className="px-3 h-8 rounded-lg border border-gray-200 text-xs font-medium text-gray-600 hover:bg-gray-50 cursor-pointer flex items-center gap-1">
-                Next <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-
+          <Pagination />
         </div>
       </div>
     </div>
