@@ -29,6 +29,7 @@ import {
   Users,
   BarChart2,
   Settings,
+  Tag,
 } from "lucide-react";
 
 /* ── Home Layout ────────────────────────────────────────────── */
@@ -189,7 +190,7 @@ export const adminNavItems = [
 ];
 
 // Admin TopNavbar
-export const NO_SEARCHBAR_ROUTES = ['/admin', '/admin/reports', '/admin/settings'];
+export const ADMIN_NO_SEARCHBAR_ROUTES = ['/admin', '/admin/reports', '/admin/settings'];
 
 // Orders Management
 export const ordersData = [
@@ -478,6 +479,20 @@ export const vendorsStatusStyle = (status) => {
 };
 
 /* ── Vendor Layout ────────────────────────────────────────────── */
+
+// Vendor Sidebar
+export const vendorNavItems = [
+  { label: "Dashboard",  icon: LayoutDashboard,  to: "/vendor" },
+  { label: "Categories", icon: Tag,              to: "/vendor/categories" },
+  { label: "Suppliers",  icon: Truck,            to: "/vendor/suppliers" },
+  { label: "Products",   icon: Package,          to: "/vendor/products" },
+  { label: "Orders",     icon: ShoppingCart,     to: "/vendor/orders" },
+  { label: "Managers",   icon: Users,            to: "/vendor/managers" },
+  { label: "Settings",   icon: Settings,         to: "/vendor/settings" },
+];
+
+// TopNavbar
+export const VENDOR_NO_SEARCHBAR_ROUTES = ["/vendor", "/vendor/settings", "/vendor/order-receipt"];
 
 // Create Order
 export const catalogue = [

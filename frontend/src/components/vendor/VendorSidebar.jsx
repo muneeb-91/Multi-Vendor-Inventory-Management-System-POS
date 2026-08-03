@@ -1,25 +1,9 @@
 import { Link, NavLink } from "react-router-dom";
 import {
   Store,
-  LayoutDashboard,
-  Tag,
-  Truck,
-  Package,
-  ShoppingCart,
-  Users,
-  Settings,
   LifeBuoy,
 } from "lucide-react";
-
-const navItems = [
-  { label: "Dashboard",  icon: LayoutDashboard,  to: "/vendor" },
-  { label: "Categories", icon: Tag,              to: "/vendor/categories" },
-  { label: "Suppliers",  icon: Truck,            to: "/vendor/suppliers" },
-  { label: "Products",   icon: Package,          to: "/vendor/products" },
-  { label: "Orders",     icon: ShoppingCart,     to: "/vendor/orders" },
-  { label: "Managers",   icon: Users,            to: "/vendor/managers" },
-  { label: "Settings",   icon: Settings,         to: "/vendor/settings" },
-];
+import { vendorNavItems } from "../../data";
 
 const VendorSidebar = () => (
   <aside className="w-60 sticky overflow-y-auto min-h-screen bg-primary flex flex-col shrink-0">
@@ -47,7 +31,7 @@ const VendorSidebar = () => (
 
     {/* Nav */}
     <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
-      {navItems.map(({ label, icon: Icon, to }) => (
+      {vendorNavItems.map(({ label, icon: Icon, to }) => (
         <NavLink
           key={to}
           to={to}

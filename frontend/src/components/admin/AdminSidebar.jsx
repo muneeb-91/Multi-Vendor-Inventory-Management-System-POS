@@ -1,12 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import {
   Store,
-  LayoutDashboard,
-  Users,
-  ClipboardList,
-  ShoppingCart,
-  BarChart2,
-  Settings,
   LifeBuoy,
 } from "lucide-react";
 import { adminNavItems } from "../../data";
