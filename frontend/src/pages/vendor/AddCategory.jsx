@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { ArrowLeft, Tag, FileText, ToggleLeft, ToggleRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import {validateCategory} from '../../utils/validations.js';
+import { validateCategory } from "../../utils/validations";
 
 const AddCategory = () => {
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     categoryName: "",
     description:  "",
@@ -24,10 +25,16 @@ const AddCategory = () => {
       status: prev.status === "active" ? "inactive" : "active",
     }));
 
-
   const handleSubmit = () => {
-    // validate();
+     const e = validateCategory();
 
+      if (Object.keys(e).length) {
+    setErrors(e);
+    return;
+  }
+  setErrors({});
+  // dispatch(addCategory(formData))
+  console.log("Submit:", formData);
   };
 
   const inputClass = (field) =>

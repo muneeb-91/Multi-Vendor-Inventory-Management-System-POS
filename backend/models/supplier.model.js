@@ -12,12 +12,16 @@ const supplierSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      minLength: 2,
+      maxLength: 30,
     },
 
     phone: {
       type: String,
       required: true,
       trim: true,
+      minLength: 11,
+      maxLength: 15,
     },
 
     email: {
@@ -29,6 +33,8 @@ const supplierSchema = new mongoose.Schema(
     address: {
       type: String,
       trim: true,
+      required: true,
+      maxLength: 20
     },
 
     status: {
