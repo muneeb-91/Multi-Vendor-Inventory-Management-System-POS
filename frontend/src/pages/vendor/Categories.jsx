@@ -38,6 +38,7 @@ const Categories = () => {
     
   };
 
+  // fetching categories
   useEffect(() => {
     const getCategories = async () => {
       try {
