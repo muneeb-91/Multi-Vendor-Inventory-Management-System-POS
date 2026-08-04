@@ -38,7 +38,7 @@ const Categories = () => {
     
   };
 
-  // fetching categories and setting states
+  // fetching categories and setting states through redux toolkit
   useEffect(() => {
     const getCategories = async () => {
       try {
