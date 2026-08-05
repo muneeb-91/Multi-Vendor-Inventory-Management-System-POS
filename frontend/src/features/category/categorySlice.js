@@ -21,7 +21,6 @@ const categorySlice = createSlice({
     fetchCategoriesSuccess: (state, action) => {
       state.categoriesLoading = false;
       state.categories = action.payload;
-      console.log(state.categories);
     },
 
     fetchCategoriesFailure: (state, action) => {
@@ -34,6 +33,35 @@ const categorySlice = createSlice({
     addCategorySuccess: (state, action) => {
       state.categories.unshift(action.payload);
     },
+
+    // Update Category
+    updateCategorySuccess: (state, action) => {
+      const index = state.categories.findIndex(
+        (category) => category._id === action.payload._id
+      );
+
+      if (index !== -1) {
+        state.categories[index] = action.payload;
+      }
+    },
+
+    // Toggle Status
+    toggleCategoryStatusSuccess: (state, action) => {
+      const category = state.categories.find(
+        (category) => category._id === action.payload._id
+      );
+
+      if (category) {
+        category.status = action.payload.status;
+      }
+    },
+
+    // Delete Category
+    deleteCategorySuccess: (state, action) => {
+      state.categories = state.categories.filter(
+        (category) => category._id !== action.payload
+      );
+    },
   },
 });
 
@@ -42,6 +70,9 @@ export const {
   fetchCategoriesSuccess,
   fetchCategoriesFailure,
   addCategorySuccess,
+  updateCategorySuccess,
+  toggleCategoryStatusSuccess,
+  deleteCategorySuccess,
 } = categorySlice.actions;
 
 export default categorySlice.reducer;
