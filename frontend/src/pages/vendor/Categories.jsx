@@ -26,12 +26,14 @@ import {
 import { Link } from "react-router-dom";
 import Pagination from "../../components/shared/Pagination.jsx";
 import { toast } from "react-toastify";
+import EditCategoryModal from "../../modals/EditCategoryModal.jsx";
 
 const Categories = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("all");
   const [openMenu, setOpenMenu] = useState(null);
+  const [editingCategory, setEditingCategory] = useState(null);
   const dispatch = useDispatch();
 
   const { categories, pagination, fetchcategoriesLoading } = useSelector(
@@ -209,7 +211,10 @@ const Categories = () => {
                       </button>
                       {openMenu === category?._id && (
                         <div className="absolute right-0 mt-1 w-32 bg-white border border-gray-100 rounded-lg shadow-lg z-10 py-1">
-                          <button className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                          <button
+                            onClick={() => setEditingCategory(category)}
+                            className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          >
                             Edit
                           </button>
                           <button
@@ -257,6 +262,15 @@ const Categories = () => {
               )}
             </tbody>
           </table>
+          {editingCategory && (
+            <EditCategoryModal
+              onClose={() => {
+                setEditingCategory(null)
+                setOpenMenu(!openMenu)
+              }}
+              category={editingCategory}
+            />
+          )}
         </div>
 
         {/* Pagination */}

@@ -78,3 +78,19 @@ export const validateCategory = (formData) => {
 
   return e;
 };
+
+export const validateEditCategory = (fromData) => {
+    const e = {};
+    const name = formData.categoryName.trim();
+    const desc = formData.description.trim();
+
+    if (!name)           e.categoryName = "Category name is required.";
+    else if (name.length < 2)  e.categoryName = "Must be at least 2 characters.";
+    else if (name.length > 25) e.categoryName = "Must be 25 characters or less.";
+
+    if (!desc)           e.description = "Description is required.";
+    else if (desc.length < 5)  e.description = "Must be at least 5 characters.";
+    else if (desc.length > 45) e.description = "Must be 45 characters or less.";
+
+    return e;
+  };
