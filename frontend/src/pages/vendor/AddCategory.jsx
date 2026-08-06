@@ -32,6 +32,8 @@ const AddCategory = () => {
       ...prev,
       [name]: value,
     }));
+
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const toggleStatus = () =>

@@ -85,7 +85,7 @@ const Categories = () => {
         dispatch(fetchCategoriesStart());
         const res = await getAllCategoriesRequest({
           page,
-          limit: 2,
+          limit: 4,
           search,
           status,
         });
@@ -163,6 +163,9 @@ const Categories = () => {
                 <th className="px-5 py-3 font-medium hidden sm:table-cell">
                   Created Date
                 </th>
+                <th className="px-5 py-3 font-medium hidden sm:table-cell">
+                  Status
+                </th>
                 <th className="px-5 py-3 font-medium">Actions</th>
               </tr>
             </thead>
@@ -194,6 +197,17 @@ const Categories = () => {
                   {/* Date */}
                   <td className="px-5 py-4 font-mono text-xs text-gray-500 hidden sm:table-cell">
                     {formatDate(category?.createdAt)}
+                  </td>
+
+                  <td className={`px-5 py-4 text-xs hidden sm:table-cell`}>
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${
+                          category?.status === "active"
+                            ? "bg-green-50 text-green-700 border-green-200"
+                            : "bg-gray-50 text-gray-500 border-gray-200"
+                        }`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${category?.status === "active" ? "bg-green-500" : "bg-gray-400"}`} />
+                          {category?.status === "active" ? "Active" : "Inactive"}
+                        </span>
                   </td>
 
                   {/* Status — clickable to toggle */}

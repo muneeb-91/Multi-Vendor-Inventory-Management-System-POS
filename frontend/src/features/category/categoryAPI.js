@@ -2,7 +2,7 @@ import axios from "../../services/axios.js";
 
 export const getAllCategoriesRequest = async ({
   page = 1,
-  limit = 10,
+  limit = 5,
   search = "",
   status = "all",
 }) => {

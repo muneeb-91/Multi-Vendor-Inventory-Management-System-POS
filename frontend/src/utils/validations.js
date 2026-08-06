@@ -79,7 +79,7 @@ export const validateCategory = (formData) => {
   return e;
 };
 
-export const validateEditCategory = (fromData) => {
+export const validateEditCategory = (formData) => {
     const e = {};
     const name = formData.categoryName.trim();
     const desc = formData.description.trim();

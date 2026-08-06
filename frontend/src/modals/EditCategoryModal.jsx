@@ -1,25 +1,38 @@
 import { useState, useEffect } from "react";
 import { X, Tag, FileText, Save } from "lucide-react";
 import { validateEditCategory } from "../utils/validations";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+
+import {
+  updateCategoryStart,
+  updateCategorySuccess,
+  updateCategoryFailure,
+} from '../features/category/categorySlice.js';
+
+import { updateCategoryRequest } from "../features/category/categoryAPI.js";
 
 // Props:
 // category   — the category object being edited { _id, categoryName, description }
 // onClose    — function to close the modal
 // onSave     — function called with updated { categoryName, description }
 
-const EditCategoryModal = ({ category, onClose, onSave }) => {
+const EditCategoryModal = ({ category, onClose}) => {
   const [formData, setFormData] = useState({
     categoryName: "",
     description:  "",
   });
   const [errors, setErrors] = useState({});
+  const dispatch = useDispatch();
+
+  console.log(formData);
 
   // Pre-fill fields when modal opens
   useEffect(() => {
     if (category) {
       setFormData({
-        categoryName: category.categoryName || "",
-        description:  category.description  || "",
+        categoryName: category.categoryName.trim() || "",
+        description:  category.description.trim()  || "",
       });
     }
   }, [category]);
@@ -32,12 +45,27 @@ const EditCategoryModal = ({ category, onClose, onSave }) => {
   };
 
 
-  const handleSubmit = () => {
-    const err = validateEditCategory(formData);
-    if (Object.keys(err).length) { setErrors(err); return; }
-    onSave({ categoryName: formData.categoryName.trim(), description: formData.description.trim() });
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const err = validateEditCategory(formData);
+  if (Object.keys(err).length) {
+    setErrors(err);
+    return;
+  }
+  setErrors({});
+  try {
+    dispatch(updateCategoryStart());
+    const res = await updateCategoryRequest(category._id, formData);
+    dispatch(updateCategorySuccess(res.category));
+    toast.success("Category updated successfully");
     onClose();
-  };
+  } catch (error) {
+    dispatch(updateCategoryFailure());
+    toast.error(
+      error.response?.data?.error || "Something went wrong."
+    );
+  }
+};
 
   const inputClass = (field) =>
     `w-full px-3 py-2.5 border rounded-lg text-sm text-primary placeholder-gray-400 outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all ${
