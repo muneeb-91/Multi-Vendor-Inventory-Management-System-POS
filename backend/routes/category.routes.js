@@ -5,7 +5,8 @@ import {
   addCategory,
   getCategories,
   toggleCategoryStatus,
-  deleteCategory
+  deleteCategory,
+  updateCategory
 } from "../controllers/category.controller.js";
 
 // validation imports
@@ -39,6 +40,13 @@ router.patch(
     verifyToken,
     authorizeRoles("vendor"),
     toggleCategoryStatus
+);
+
+router.put(
+  "/categories/:id",
+  verifyToken,
+  authorizeRoles("vendor"),
+  updateCategory
 );
 
 router.delete(

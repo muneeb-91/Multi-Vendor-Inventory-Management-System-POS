@@ -1,41 +1,79 @@
 import { useState } from "react";
-import {
-  Plus,
-  Search,
-  SlidersHorizontal,
-  ChevronLeft,
-  ChevronRight,
-  Trash2,
-} from "lucide-react";
-import Loader from '../../components/shared/Loader.jsx';
-import {formatDate} from '../../utils/formatDate.js';
+import { Plus, Search, MoreVertical } from "lucide-react";
+import Loader from "../../components/shared/Loader.jsx";
+import { formatDate } from "../../utils/formatDate.js";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  // Fetch Categories
   fetchCategoriesStart,
   fetchCategoriesSuccess,
   fetchCategoriesFailure,
+  // Toggle Status
+  toggleCategoryStatusStart,
+  toggleCategoryStatusSuccess,
+  toggleCategoryStatusFailure,
+  // Delete Category
+  deleteCategoryStart,
+  deleteCategorySuccess,
+  deleteCategoryFailure,
 } from "../../features/category/categorySlice.js";
-import { getAllCategoriesRequest } from "../../features/category/categoryAPI.js";
+import {
+  getAllCategoriesRequest,
+  toggleCategoryStatusRequest,
+  deleteCategoryRequest,
+} from "../../features/category/categoryAPI.js";
 import { Link } from "react-router-dom";
 import Pagination from "../../components/shared/Pagination.jsx";
+import { toast } from "react-toastify";
 
 const Categories = () => {
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("all");
+  const [openMenu, setOpenMenu] = useState(null);
   const dispatch = useDispatch();
 
-  const { categories, categoriesLoading, categoriesError } = useSelector(
+  const { categories, pagination, fetchcategoriesLoading } = useSelector(
     (state) => state.categories,
   );
 
-  const filtered = categories?.filter(
-    (category) =>
-      category?.categoryName.toLowerCase().includes(search.toLowerCase()) ||
-      category?.description.toLowerCase().includes(search.toLowerCase()),
-  );
+  const handleToggleStatus = async (categoryId) => {
+    try {
+      dispatch(toggleCategoryStatusStart());
+      const res = await toggleCategoryStatusRequest(categoryId);
+      dispatch(
+        toggleCategoryStatusSuccess({
+          categoryId: res.categoryId,
+          status: res.status,
+        }),
+      );
+      toast.success(res.message);
+      setOpenMenu(null);
+    } catch (error) {
+      dispatch(toggleCategoryStatusFailure());
+      console.log(error);
+      toast.error(error.response?.data?.error || "Something went wrong.");
+    }
+  };
 
-  const toggleStatus = (id) =>{
-    
+  const handleDeleteCategory = async (categoryId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this category?",
+    );
+    if (!confirmDelete) return;
+
+    try {
+      dispatch(deleteCategoryStart());
+      const res = await deleteCategoryRequest(categoryId);
+      dispatch(deleteCategorySuccess(categoryId));
+      toast.success(res.message);
+      setOpenMenu(null);
+    } catch (error) {
+      dispatch(deleteCategoryFailure());
+      console.log(error);
+      toast.error(error.response?.data?.error || "Something went wrong.");
+    }
   };
 
   // fetching categories and setting states through redux toolkit
@@ -43,19 +81,21 @@ const Categories = () => {
     const getCategories = async () => {
       try {
         dispatch(fetchCategoriesStart());
-        const res = await getAllCategoriesRequest();
-        dispatch(fetchCategoriesSuccess(res.categories));
+        const res = await getAllCategoriesRequest({
+          page,
+          limit: 2,
+          search,
+          status,
+        });
+        dispatch(fetchCategoriesSuccess(res));
       } catch (error) {
-        dispatch(
-          fetchCategoriesFailure(
-            error.response?.data?.error || "Something went wrong.",
-          ),
-        );
+        dispatch(fetchCategoriesFailure());
+        toast.error(error.response?.data?.error || "Something went wrong.");
       }
     };
 
     getCategories();
-  }, []);
+  }, [page, search, status]);
 
   return (
     <div className="space-y-6">
@@ -67,7 +107,10 @@ const Categories = () => {
             Manage product classifications for vendor assignments.
           </p>
         </div>
-        <Link to={`/vendor/categories/add`} className="flex items-center gap-2 bg-secondary hover:bg-secondary/90 text-white px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors self-start sm:self-auto">
+        <Link
+          to={`/vendor/categories/add`}
+          className="flex items-center gap-2 bg-secondary hover:bg-secondary/90 text-white px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors self-start sm:self-auto"
+        >
           <Plus className="w-4 h-4" />
           Add Category
         </Link>
@@ -83,12 +126,26 @@ const Categories = () => {
               type="text"
               placeholder="Filter categories..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
               className="w-full pl-9 pr-4 py-2 rounded-lg border border-gray-200 text-sm text-gray-700 placeholder-gray-400 outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all"
             />
           </div>
-          <button className="ml-auto p-2 rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 cursor-pointer">
-            <SlidersHorizontal className="w-4 h-4" />
+          <button className="ml-auto p-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 cursor-pointer">
+            <select
+              value={status}
+              className="text-sm text-gray-600"
+              onChange={(e) => {
+                setStatus(e.target.value);
+                setPage(1);
+              }}
+            >
+              <option value="all">All</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
           </button>
         </div>
 
@@ -104,11 +161,11 @@ const Categories = () => {
                 <th className="px-5 py-3 font-medium hidden sm:table-cell">
                   Created Date
                 </th>
-                <th className="px-5 py-3 font-medium">Status</th>
+                <th className="px-5 py-3 font-medium">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {filtered?.map((category) => (
+              {categories?.map((category) => (
                 <tr
                   key={category?.id}
                   className="border-b border-gray-50 hover:bg-gray-50 transition-colors"
@@ -119,7 +176,7 @@ const Categories = () => {
                       <div
                         className={`w-9 h-9 rounded-lg flex items-center justify-center text-sm font-bold shrink-0 bg-secondary text-tertiary `}
                       >
-                        {category?.categoryName.charAt(0).toUpperCase()}
+                        {category?.categoryName?.charAt(0).toUpperCase()}
                       </div>
                       <span className="font-semibold text-primary">
                         {category?.categoryName}
@@ -139,34 +196,56 @@ const Categories = () => {
 
                   {/* Status — clickable to toggle */}
                   <td className="px-5 py-4">
-                    <button
-                      onClick={() => toggleStatus(category?.id)}
-                      className={`px-3 py-1 rounded-md text-xs font-semibold border cursor-pointer transition-colors ${
-                        category?.status === "active"
-                          ? "border-secondary/40 bg-green-50 text-secondary hover:bg-green-100"
-                          : "border-gray-200 bg-gray-50 text-gray-500 hover:bg-gray-100"
-                      }`}
-                    >
-                      {category?.status}
-                    </button>
+                    <div className="relative inline-block">
+                      <button
+                        onClick={() =>
+                          setOpenMenu(
+                            openMenu === category?._id ? null : category?._id,
+                          )
+                        }
+                        className="p-1.5 rounded-md hover:bg-gray-100 text-gray-400 cursor-pointer"
+                      >
+                        <MoreVertical className="w-4 h-4" />
+                      </button>
+                      {openMenu === category?._id && (
+                        <div className="absolute right-0 mt-1 w-32 bg-white border border-gray-100 rounded-lg shadow-lg z-10 py-1">
+                          <button className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleToggleStatus(category?._id)}
+                            className={`w-full text-left px-3 py-2 text-sm transition-colors ${
+                              category?.status === "active"
+                                ? "text-red-600 hover:bg-red-50"
+                                : "text-green-600 hover:bg-green-50"
+                            }`}
+                          >
+                            {category?.status === "active"
+                              ? "Inactivate"
+                              : "Activate"}
+                          </button>
+                          <button
+                            onClick={() => handleDeleteCategory(category?._id)}
+                            className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
-              
-              {
-                categoriesLoading && (
-                  <tr>
-                    <td
-                      colSpan={5}
-                      className="py-5"
-                    >
-                      <Loader className={`text-gray-500`}/>
-                    </td>
-                  </tr>
-                )
-              }
 
-              {!categoriesLoading && filtered.length === 0 && (
+              {fetchcategoriesLoading && (
+                <tr>
+                  <td colSpan={5} className="py-5">
+                    <Loader className={`text-gray-500`} />
+                  </td>
+                </tr>
+              )}
+
+              {!fetchcategoriesLoading && categories.length === 0 && (
                 <tr>
                   <td
                     colSpan={5}
@@ -181,7 +260,7 @@ const Categories = () => {
         </div>
 
         {/* Pagination */}
-        <Pagination />
+        <Pagination pagination={pagination} onPageChange={setPage} />
       </div>
     </div>
   );

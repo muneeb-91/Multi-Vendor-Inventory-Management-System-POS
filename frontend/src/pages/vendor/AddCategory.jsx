@@ -1,23 +1,38 @@
 import { useState } from "react";
-import { ArrowLeft, Tag, FileText, ToggleLeft, ToggleRight } from "lucide-react";
+import {
+  ArrowLeft,
+  Tag,
+  FileText,
+  ToggleLeft,
+  ToggleRight,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { validateCategory } from "../../utils/validations";
+import { useDispatch } from "react-redux";
+import {
+  addCategoryStart,
+  addCategorySuccess,
+  addCategoryFailure,
+} from "../../features/category/categorySlice";
+import { addCategoryRequest } from "../../features/category/categoryAPI";
+import { toast } from "react-toastify";
 
 const AddCategory = () => {
+  const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     categoryName: "",
-    description:  "",
-    status:       "active",
+    description: "",
+    status: "active",
   });
 
   const handleChange = (e) => {
-  const { name, value } = e.target;
-  setFormData((prev) => ({
-    ...prev,
-    [name]: value,
-  }));
-};
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const toggleStatus = () =>
     setFormData((prev) => ({
@@ -25,16 +40,29 @@ const AddCategory = () => {
       status: prev.status === "active" ? "inactive" : "active",
     }));
 
-  const handleSubmit = () => {
-     const e = validateCategory();
-
-      if (Object.keys(e).length) {
-    setErrors(e);
-    return;
-  }
-  setErrors({});
-  // dispatch(addCategory(formData))
-  console.log("Submit:", formData);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const err = validateCategory(formData);
+    if (Object.keys(err).length) {
+      setErrors(err);
+      return;
+    }
+    setErrors({});
+    try {
+      dispatch(addCategoryStart());
+      const res = await addCategoryRequest(formData);
+      dispatch(addCategorySuccess(res?.category));
+      toast.success("Category added successfully");
+      setFormData({
+        categoryName: "",
+        description: "",
+        status: "active",
+      });
+    } catch (error) {
+      dispatch(addCategoryFailure());
+      console.log(error);
+      toast.error(error.response?.data?.error || "Something went wrong.");
+    }
   };
 
   const inputClass = (field) =>
@@ -46,7 +74,6 @@ const AddCategory = () => {
 
   return (
     <div className="space-y-5">
-
       {/* Back */}
       <Link
         to="/vendor/categories"
@@ -65,16 +92,16 @@ const AddCategory = () => {
 
       {/* Card */}
       <div className="bg-white border border-gray-100 rounded-xl p-6">
-
         {/* ── Category Details ── */}
         <section>
           <div className="flex items-center gap-2 mb-5">
             <Tag className="w-4 h-4 text-secondary" />
-            <h2 className="text-base font-semibold text-primary">Category Details</h2>
+            <h2 className="text-base font-semibold text-primary">
+              Category Details
+            </h2>
           </div>
 
           <div className="space-y-4">
-
             {/* Category Name */}
             <div>
               <label className={labelClass}>
@@ -84,20 +111,25 @@ const AddCategory = () => {
                 type="text"
                 name="categoryName"
                 placeholder="e.g. Electronics"
-                value={formData.categoryName}
+                value={formData?.categoryName}
                 onChange={handleChange}
                 maxLength={25}
                 className={inputClass("categoryName")}
               />
               <div className="flex items-center justify-between mt-1">
-                {errors.categoryName
-                  ? <p className="text-xs text-red-500">{errors.categoryName}</p>
-                  : <span />
-                }
-                <p className={`text-xs ml-auto ${
-                  formData.categoryName.length > 22 ? "text-red-400" : "text-gray-400"
-                }`}>
-                  {formData.categoryName.length}/25
+                {errors?.categoryName ? (
+                  <p className="text-xs text-red-500">{errors?.categoryName}</p>
+                ) : (
+                  <span />
+                )}
+                <p
+                  className={`text-xs ml-auto ${
+                    formData?.categoryName?.length > 22
+                      ? "text-red-400"
+                      : "text-gray-400"
+                  }`}
+                >
+                  {formData?.categoryName?.length}/25
                 </p>
               </div>
             </div>
@@ -112,7 +144,7 @@ const AddCategory = () => {
                 <textarea
                   name="description"
                   placeholder="Short description of this category…"
-                  value={formData.description}
+                  value={formData?.description}
                   onChange={handleChange}
                   maxLength={45}
                   rows={3}
@@ -120,14 +152,21 @@ const AddCategory = () => {
                 />
               </div>
               <div className="flex items-center justify-between mt-1">
-                {errors.description
-                  ? <p className="text-xs text-red-500">{errors.description}</p>
-                  : <p className="text-xs text-gray-400">Between 5 and 45 characters.</p>
-                }
-                <p className={`text-xs ml-auto ${
-                  formData.description.length > 40 ? "text-red-400" : "text-gray-400"
-                }`}>
-                  {formData.description.length}/45
+                {errors?.description ? (
+                  <p className="text-xs text-red-500">{errors?.description}</p>
+                ) : (
+                  <p className="text-xs text-gray-400">
+                    Between 5 and 45 characters.
+                  </p>
+                )}
+                <p
+                  className={`text-xs ml-auto ${
+                    formData?.description.length > 40
+                      ? "text-red-400"
+                      : "text-gray-400"
+                  }`}
+                >
+                  {formData?.description.length}/45
                 </p>
               </div>
             </div>
@@ -139,18 +178,21 @@ const AddCategory = () => {
         {/* ── Status ── */}
         <section>
           <div className="flex items-center gap-2 mb-5">
-            {formData.status === "active"
-              ? <ToggleRight className="w-4 h-4 text-secondary" />
-              : <ToggleLeft  className="w-4 h-4 text-gray-400"   />
-            }
+            {formData?.status === "active" ? (
+              <ToggleRight className="w-4 h-4 text-secondary" />
+            ) : (
+              <ToggleLeft className="w-4 h-4 text-gray-400" />
+            )}
             <h2 className="text-base font-semibold text-primary">Status</h2>
           </div>
 
           <div className="flex items-center justify-between p-4 rounded-xl border border-gray-100 bg-gray-50">
             <div>
-              <p className="text-sm font-medium text-primary">Category Status</p>
+              <p className="text-sm font-medium text-primary">
+                Category Status
+              </p>
               <p className="text-xs text-gray-400 mt-0.5">
-                {formData.status === "active"
+                {formData?.status === "active"
                   ? "This category is visible and available for products."
                   : "This category is hidden and unavailable for products."}
               </p>
@@ -160,12 +202,14 @@ const AddCategory = () => {
             <button
               onClick={toggleStatus}
               className={`relative w-11 h-6 rounded-full transition-colors duration-200 cursor-pointer shrink-0 ${
-                formData.status === "active" ? "bg-secondary" : "bg-gray-300"
+                formData?.status === "active" ? "bg-secondary" : "bg-gray-300"
               }`}
             >
               <span
                 className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200 ${
-                  formData.status === "active" ? "translate-x-5" : "translate-x-0"
+                  formData?.status === "active"
+                    ? "translate-x-5"
+                    : "translate-x-0"
                 }`}
               />
             </button>
@@ -174,15 +218,19 @@ const AddCategory = () => {
           {/* Status badge preview */}
           <div className="mt-3 flex items-center gap-2">
             <span className="text-xs text-gray-400">Preview:</span>
-            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${
-              formData.status === "active"
-                ? "bg-green-50 text-green-700 border-green-200"
-                : "bg-gray-50 text-gray-500 border-gray-200"
-            }`}>
-              <span className={`w-1.5 h-1.5 rounded-full ${
-                formData.status === "active" ? "bg-green-500" : "bg-gray-400"
-              }`} />
-              {formData.status === "active" ? "Active" : "Inactive"}
+            <span
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${
+                formData?.status === "active"
+                  ? "bg-green-50 text-green-700 border-green-200"
+                  : "bg-gray-50 text-gray-500 border-gray-200"
+              }`}
+            >
+              <span
+                className={`w-1.5 h-1.5 rounded-full ${
+                  formData?.status === "active" ? "bg-green-500" : "bg-gray-400"
+                }`}
+              />
+              {formData?.status === "active" ? "Active" : "Inactive"}
             </span>
           </div>
         </section>

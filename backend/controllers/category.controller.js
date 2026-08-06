@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import Category from "../models/category.model.js";
-import Product from '../models/product.model.js';
+import Product from "../models/product.model.js";
 
 export const addCategory = async (req, res) => {
-  const { categoryName } = req.body;
+  const { categoryName, description, status } = req.body;
 
   const existingCategory = await Category.findOne({
     vendorId: req.user.vendorId,
@@ -17,6 +17,8 @@ export const addCategory = async (req, res) => {
   const category = await Category.create({
     vendorId: req.user.vendorId,
     categoryName,
+    description,
+    status,
   });
 
   res.status(201).json({
@@ -27,35 +29,85 @@ export const addCategory = async (req, res) => {
 };
 
 export const getCategories = async (req, res) => {
-  const categories = await Category.find({
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const search = req.query.search?.trim() || "";
+  const status = req.query.status || "all";
+
+  const filter = {
     vendorId: req.user.vendorId,
-    status: "active",
-  }).sort({ createdAt: -1 });
+  };
+
+  if (search) {
+    filter.categoryName = {
+      $regex: search,
+      $options: "i",
+    };
+  }
+
+  if (status !== "all") {
+    filter.status = status;
+  }
+
+  const skip = (page - 1) * limit;
+
+  const [categories, totalCategories] = await Promise.all([
+    Category.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),
+
+    Category.countDocuments(filter),
+  ]);
 
   res.status(200).json({
     success: true,
     categories,
+    pagination: {
+      currentPage: page,
+      totalPages: Math.ceil(totalCategories / limit),
+      totalItems: totalCategories,
+      limit
+    },
   });
 };
 
 export const toggleCategoryStatus = async (req, res) => {
   const { id } = req.params;
+  const category = await Category.findOne({
+    _id: id,
+    vendorId: req.user.vendorId,
+  });
+  if (!category) throw "Category not found.";
+  category.status = category.status === "active" ? "inactive" : "active";
+  await category.save();
+  res.status(200).json({
+    success: true,
+    message: `Category ${category.status} successfully.`,
+    categoryId: category._id,
+    status: category.status,
+  });
+};
+
+export const updateCategory = async (req, res) => {
+  const { id } = req.params;
+  const { name, description } = req.body;
 
   const category = await Category.findOne({
     _id: id,
     vendorId: req.user.vendorId,
   });
 
-  if (!category) throw "Category not found.";
+  if (!category) {
+    throw "Category not found.";
+  }
 
-  category.status = category.status === "active" ? "inactive" : "active";
+  category.name = name;
+  category.description = description;
 
   await category.save();
 
   res.status(200).json({
     success: true,
-    message: `Category ${category.status} successfully.`,
-    status: category.status,
+    message: "Category updated successfully.",
+    category,
   });
 };
 
@@ -63,9 +115,10 @@ export const deleteCategory = async (req, res) => {
   const { id } = req.params;
 
   const session = await mongoose.startSession();
-  session.startTransaction();
 
   try {
+    session.startTransaction();
+
     const category = await Category.findOneAndDelete(
       {
         _id: id,
@@ -75,11 +128,6 @@ export const deleteCategory = async (req, res) => {
     );
 
     if (!category) throw "Category not found.";
-
-    const deletedProducts = await Product.countDocuments({
-      vendorId: req.user.vendorId,
-      categoryId: id,
-    });
 
     await Product.deleteMany(
       {
@@ -94,12 +142,12 @@ export const deleteCategory = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Category deleted successfully.",
-      deletedProducts: totalProducts,
+      categoryId: category._id,
     });
   } catch (error) {
     await session.abortTransaction();
     throw error;
   } finally {
-    session.endSession();
+    await session.endSession();
   }
 };

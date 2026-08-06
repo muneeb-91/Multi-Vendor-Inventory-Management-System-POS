@@ -2,8 +2,28 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   categories: [],
-  categoriesLoading: false,
-  categoriesError: null,
+
+  pagination: {
+    currentPage: 1,
+    totalPages: 1,
+    totalItems: 0,
+    limit: 10,
+  },
+
+  // Fetch Categories
+  fetchCategoriesLoading: false,
+
+  // Add Category
+  addCategoryLoading: false,
+
+  // Update Category
+  updateCategoryLoading: false,
+
+  // Toggle Category Status
+  toggleCategoryStatusLoading: false,
+
+  // Delete Category
+  deleteCategoryLoading: false,
 };
 
 const categorySlice = createSlice({
@@ -14,30 +34,45 @@ const categorySlice = createSlice({
   reducers: {
     // Fetch Categories
     fetchCategoriesStart: (state) => {
-      state.categoriesLoading = true;
-      state.categoriesError = null;
+      state.fetchCategoriesLoading = true;
     },
 
     fetchCategoriesSuccess: (state, action) => {
-      state.categoriesLoading = false;
-      state.categories = action.payload;
+      state.fetchCategoriesLoading = false;
+
+      state.categories = action.payload.categories;
+      state.pagination = action.payload.pagination;
     },
 
-    fetchCategoriesFailure: (state, action) => {
-      state.categoriesLoading = false;
+    fetchCategoriesFailure: (state) => {
+      state.fetchCategoriesLoading = false;
       state.categories = [];
-      state.categoriesError = action.payload;
     },
 
     // Add Category
+    addCategoryStart: (state) => {
+      state.addCategoryLoading = true;
+    },
+
     addCategorySuccess: (state, action) => {
+      state.addCategoryLoading = false;
       state.categories.unshift(action.payload);
     },
 
+    addCategoryFailure: (state) => {
+      state.addCategoryLoading = false;
+    },
+
     // Update Category
+    updateCategoryStart: (state) => {
+      state.updateCategoryLoading = true;
+    },
+
     updateCategorySuccess: (state, action) => {
+      state.updateCategoryLoading = false;
+
       const index = state.categories.findIndex(
-        (category) => category._id === action.payload._id
+        (category) => category._id === action.payload._id,
       );
 
       if (index !== -1) {
@@ -45,10 +80,20 @@ const categorySlice = createSlice({
       }
     },
 
+    updateCategoryFailure: (state) => {
+      state.updateCategoryLoading = false;
+    },
+
     // Toggle Status
+    toggleCategoryStatusStart: (state) => {
+      state.toggleCategoryStatusLoading = true;
+    },
+
     toggleCategoryStatusSuccess: (state, action) => {
+      state.toggleCategoryStatusLoading = false;
+
       const category = state.categories.find(
-        (category) => category._id === action.payload._id
+        (category) => category._id === action.payload.categoryId,
       );
 
       if (category) {
@@ -56,11 +101,25 @@ const categorySlice = createSlice({
       }
     },
 
+    toggleCategoryStatusFailure: (state) => {
+      state.toggleCategoryStatusLoading = false;
+    },
+
     // Delete Category
+    deleteCategoryStart: (state) => {
+      state.deleteCategoryLoading = true;
+    },
+
     deleteCategorySuccess: (state, action) => {
+      state.deleteCategoryLoading = false;
+
       state.categories = state.categories.filter(
-        (category) => category._id !== action.payload
+        (category) => category._id !== action.payload,
       );
+    },
+
+    deleteCategoryFailure: (state) => {
+      state.deleteCategoryLoading = false;
     },
   },
 });
@@ -69,10 +128,22 @@ export const {
   fetchCategoriesStart,
   fetchCategoriesSuccess,
   fetchCategoriesFailure,
+
+  addCategoryStart,
   addCategorySuccess,
+  addCategoryFailure,
+
+  updateCategoryStart,
   updateCategorySuccess,
+  updateCategoryFailure,
+
+  toggleCategoryStatusStart,
   toggleCategoryStatusSuccess,
+  toggleCategoryStatusFailure,
+
+  deleteCategoryStart,
   deleteCategorySuccess,
+  deleteCategoryFailure,
 } = categorySlice.actions;
 
 export default categorySlice.reducer;
