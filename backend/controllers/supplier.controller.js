@@ -43,14 +43,11 @@ export const getSuppliers = async (req, res) => {
 
 export const toggleSupplierStatus = async (req, res) => {
   const { id } = req.params;
-
   const supplier = await Supplier.findOne({
     _id: id,
     vendorId: req.user.vendorId,
   });
-
   if (!supplier) throw "Supplier not found.";
-
   supplier.status = supplier.status === "active" ? "inactive" : "active";
 
   await supplier.save();
