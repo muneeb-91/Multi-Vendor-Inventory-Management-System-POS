@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 import Supplier from "../models/supplier.model.js";
-import Product from '../models/product.model.js';
+import Product from "../models/product.model.js";
 
 export const addSupplier = async (req, res) => {
   const { supplierName, phone, email, address } = req.body;
+
   const existingSupplier = await Supplier.findOne({
     vendorId: req.user.vendorId,
     supplierName: {
