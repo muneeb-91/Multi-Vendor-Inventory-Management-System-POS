@@ -21,7 +21,6 @@ export const login = async (req, res) => {
     accessToken,
     user: userResponse,
 });
-
 };
 
 export const checkAuth = async (req, res) => {
