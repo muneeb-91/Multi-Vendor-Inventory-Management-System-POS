@@ -85,7 +85,7 @@ const Categories = () => {
         dispatch(fetchCategoriesStart());
         const res = await getAllCategoriesRequest({
           page,
-          limit: 4,
+          limit: 5,
           search,
           status,
         });

@@ -32,10 +32,7 @@ const supplierSlice = createSlice({
   initialState,
 
   reducers: {
-    // ==========================
     // Fetch Suppliers
-    // ==========================
-
     fetchSuppliersStart: (state) => {
       state.fetchSuppliersLoading = true;
     },
@@ -52,10 +49,7 @@ const supplierSlice = createSlice({
       state.suppliers = [];
     },
 
-    // ==========================
     // Add Supplier
-    // ==========================
-
     addSupplierStart: (state) => {
       state.addSupplierLoading = true;
     },
@@ -69,10 +63,7 @@ const supplierSlice = createSlice({
       state.addSupplierLoading = false;
     },
 
-    // ==========================
     // Update Supplier
-    // ==========================
-
     updateSupplierStart: (state) => {
       state.updateSupplierLoading = true;
     },
@@ -93,10 +84,7 @@ const supplierSlice = createSlice({
       state.updateSupplierLoading = false;
     },
 
-    // ==========================
     // Toggle Status
-    // ==========================
-
     toggleSupplierStatusStart: (state) => {
       state.toggleSupplierStatusLoading = true;
     },
@@ -117,10 +105,7 @@ const supplierSlice = createSlice({
       state.toggleSupplierStatusLoading = false;
     },
 
-    // ==========================
     // Delete Supplier
-    // ==========================
-
     deleteSupplierStart: (state) => {
       state.deleteSupplierLoading = true;
     },
