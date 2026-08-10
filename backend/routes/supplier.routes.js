@@ -32,7 +32,14 @@ router.get(
     verifyToken,
     authorizeRoles("vendor"),
     getSuppliers
-)
+);
+
+router.put(
+  "/suppliers/:id",
+  verifyToken,
+  authorizeRoles("vendor"),
+  updateSupplier
+);
 
 router.patch(
     "/suppliers/:id/toggle-status",

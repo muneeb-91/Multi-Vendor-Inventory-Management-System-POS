@@ -118,6 +118,52 @@ export const toggleSupplierStatus = async (req, res) => {
   });
 };
 
+export const updateSupplier = async (req, res) => {
+  const { id } = req.params;
+
+  const {
+    supplierName,
+    phone,
+    email,
+    address,
+  } = req.body;
+
+  const supplier = await Supplier.findOne({
+    _id: id,
+    vendorId: req.user.vendorId,
+  });
+
+  if (!supplier) {
+    throw "Supplier not found.";
+  }
+
+  // Check duplicate supplier name
+  const existingSupplier = await Supplier.findOne({
+    _id: { $ne: id },
+    vendorId: req.user.vendorId,
+    supplierName: {
+      $regex: new RegExp(`^${supplierName}$`, "i"),
+    },
+  });
+
+  if (existingSupplier) {
+    throw "Supplier with this name already exists.";
+  }
+
+  supplier.supplierName = supplierName;
+  supplier.phone = phone;
+  supplier.email = email;
+  supplier.address = address;
+
+  await supplier.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Supplier updated successfully.",
+    supplier,
+  });
+};
+
 export const deleteSupplier = async (req, res) => {
   const { id } = req.params;
 
