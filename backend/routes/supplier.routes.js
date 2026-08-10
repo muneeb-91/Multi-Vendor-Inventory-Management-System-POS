@@ -5,7 +5,8 @@ import {
   addSupplier,
   getSuppliers,
   toggleSupplierStatus,
-  deleteSupplier
+  deleteSupplier,
+  updateSupplier,
 } from "../controllers/supplier.controller.js";
 
 // validation imports
