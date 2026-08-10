@@ -29,15 +29,74 @@ export const addSupplier = async (req, res) => {
   });
 };
 
+// Get Suppliers with pagination
 export const getSuppliers = async (req, res) => {
-  const suppliers = await Supplier.find({
+  const {
+    page = 1,
+    limit = 5,
+    search = "",
+    status = "all",
+  } = req.query;
+
+  const currentPage = Number(page);
+  const itemsPerPage = Number(limit);
+
+  const skip = (currentPage - 1) * itemsPerPage;
+
+  // Base filter
+  const filter = {
     vendorId: req.user.vendorId,
-    status: "active",
-  }).sort({ createdAt: -1 });
+  };
+
+  // Search
+  if (search.trim()) {
+    filter.$or = [
+      {
+        supplierName: {
+          $regex: search.trim(),
+          $options: "i",
+        },
+      },
+      {
+        phone: {
+          $regex: search.trim(),
+          $options: "i",
+        },
+      },
+      {
+        email: {
+          $regex: search.trim(),
+          $options: "i",
+        },
+      },
+    ];
+  }
+
+  // Status filter
+  if (status !== "all") {
+    filter.status = status;
+  }
+
+  const [suppliers, totalSuppliers] = await Promise.all([
+    Supplier.find(filter)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(itemsPerPage),
+
+    Supplier.countDocuments(filter),
+  ]);
+
+  const totalPages = Math.ceil(totalSuppliers / itemsPerPage);
 
   res.status(200).json({
     success: true,
     suppliers,
+    pagination: {
+      currentPage,
+      totalPages,
+      totalItems: totalSuppliers,
+      limit: itemsPerPage,
+    },
   });
 };
 
