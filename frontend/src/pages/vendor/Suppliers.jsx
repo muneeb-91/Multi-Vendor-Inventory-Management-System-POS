@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Plus, Trash2, Search, Building2, MapPin } from "lucide-react";
+import { Plus, Trash2, Search, Building2, MapPin, MoreVertical } from "lucide-react";
 import { Link } from "react-router-dom";
 import { suppliers, avatarColor, supplierStats } from "../../data";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +20,8 @@ const Suppliers = () => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const [status, setStatus] = useState("all");
+  const [openMenu, setOpenMenu] = useState(null);
+  const [editingSupplier, setEditingSupplier] = useState(null);
 
   const { suppliers, pagination, fetchSuppliersLoading } = useSelector(
     (state) => state.suppliers,
@@ -201,14 +203,48 @@ const Suppliers = () => {
                         </span>
                       </td>
 
-                      {/* Delete */}
+                      {/* Actions */}
                       <td className="px-5 py-4 text-right">
-                        <button
-                          onClick={() => setDeleteTarget(s)}
-                          className="p-1.5 rounded-md hover:bg-red-50 text-gray-300 hover:text-red-500 cursor-pointer transition-colors"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+<div className="relative inline-block">
+                      <button
+                        onClick={() =>
+                          setOpenMenu(
+                            openMenu === supplier?._id ? null : supplier?._id,
+                          )
+                        }
+                        className="p-1.5 rounded-md hover:bg-gray-100 text-gray-400 cursor-pointer"
+                      >
+                        <MoreVertical className="w-4 h-4" />
+                      </button>
+                      {openMenu === supplier?._id && (
+                        <div className="absolute right-0 mt-1 w-32 bg-white border border-gray-100 rounded-lg shadow-lg z-10 py-1">
+                          <button
+                            onClick={() => setEditingSupplier(supplier)}
+                            className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleToggleStatus(supplier?._id)}
+                            className={`w-full text-left px-3 py-2 text-sm transition-colors ${
+                              supplier?.status === "active"
+                                ? "text-red-600 hover:bg-red-50"
+                                : "text-green-600 hover:bg-green-50"
+                            }`}
+                          >
+                            {supplier?.status === "active"
+                              ? "Inactivate"
+                              : "Activate"}
+                          </button>
+                          <button
+                            onClick={() => handleDeleteSupplier(supplier?._id)}
+                            className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </div>
                       </td>
                     </tr>
                   );
