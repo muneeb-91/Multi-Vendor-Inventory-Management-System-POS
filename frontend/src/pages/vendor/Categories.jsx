@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, Search, MoreVertical } from "lucide-react";
+import { Plus, Search, MoreVertical, Tag } from "lucide-react";
 import Loader from "../../components/shared/Loader.jsx";
 import { formatDate } from "../../utils/formatDate.js";
 import { useEffect } from "react";
@@ -264,16 +264,22 @@ const Categories = () => {
                 </tr>
               )}
 
-              {!fetchcategoriesLoading && categories.length === 0 && (
-                <tr>
-                  <td
-                    colSpan={5}
-                    className="px-5 py-12 text-center text-sm text-gray-400"
-                  >
-                    No categories found.
-                  </td>
-                </tr>
-              )}
+                {!fetchcategoriesLoading && categories?.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="px-5 py-14 text-center">
+                      <div className="flex flex-col items-center gap-2 text-gray-400">
+                        <Tag className="w-8 h-8 text-gray-200" />
+                        <p className="text-sm">No Categories found.</p>
+                        <Link
+                          to="/vendor/categories/add"
+                          className="text-xs text-secondary hover:underline"
+                        >
+                          + Add Category
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                )}
             </tbody>
           </table>
           {editingCategory && (

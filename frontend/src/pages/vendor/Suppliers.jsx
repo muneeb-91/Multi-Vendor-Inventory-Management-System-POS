@@ -78,20 +78,20 @@ const Suppliers = () => {
 
         {/* Stat Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-          {supplierStats.map((s) => (
+          {supplierStats.map((card) => (
             <div
-              key={s.label}
+              key={card.label}
               className="bg-white border border-gray-100 rounded-xl p-4"
             >
               <div className="flex items-center justify-between mb-2">
-                <p className="text-xs text-gray-400">{s.label}</p>
+                <p className="text-xs text-gray-400">{card.label}</p>
                 <div
-                  className={`w-8 h-8 rounded-lg ${s.bg} flex items-center justify-center`}
+                  className={`w-8 h-8 rounded-lg ${card.bg} flex items-center justify-center`}
                 >
-                  <s.icon className={`w-4 h-4 ${s.ic}`} />
+                  <card.icon className={`w-4 h-4 ${card.ic}`} />
                 </div>
               </div>
-              <p className="text-2xl font-bold text-primary">{s.value}</p>
+              <p className="text-2xl font-bold text-primary">{card.value}</p>
             </div>
           ))}
         </div>
@@ -110,9 +110,20 @@ const Suppliers = () => {
                 className="w-full pl-9 pr-4 py-2 rounded-lg border border-gray-200 text-sm text-gray-700 placeholder-gray-400 outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all"
               />
             </div>
-            <span className="ml-auto text-xs text-gray-400 whitespace-nowrap hidden sm:block">
-              {suppliers?.length} of {suppliers?.length} suppliers
-            </span>
+          <button className="ml-auto p-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 cursor-pointer">
+            <select
+              value={status}
+              className="text-sm text-gray-600"
+              onChange={(e) => {
+                setStatus(e.target.value);
+                setPage(1);
+              }}
+            >
+              <option value="all">All</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </button>
           </div>
 
           {/* Table */}
@@ -132,11 +143,11 @@ const Suppliers = () => {
                 </tr>
               </thead>
               <tbody>
-                {suppliers.map((s) => {
-                  const { bg, text } = avatarColor(s.supplierName);
+                {suppliers.map((supplier) => {
+                  const { bg, text } = avatarColor(supplier?.supplierName);
                   return (
                     <tr
-                      key={s.id}
+                      key={supplier?.id}
                       className="border-b border-gray-50 hover:bg-gray-50/70 transition-colors"
                     >
                       {/* Name + avatar */}
@@ -145,14 +156,14 @@ const Suppliers = () => {
                           <div
                             className={`w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 ${bg} ${text}`}
                           >
-                            {s.supplierName.charAt(0).toUpperCase()}
+                            {supplier?.supplierName.charAt(0).toUpperCase()}
                           </div>
                           <div>
                             <p className="font-semibold text-primary leading-tight">
-                              {s.supplierName}
+                              {supplier?.supplierName}
                             </p>
                             <p className="text-xs text-gray-400 mt-0.5 hidden sm:block">
-                              {s.email}
+                              {supplier?.email}
                             </p>
                           </div>
                         </div>
@@ -160,9 +171,9 @@ const Suppliers = () => {
 
                       {/* Contact */}
                       <td className="px-5 py-4 hidden md:table-cell">
-                        <p className="text-xs text-gray-600">{s.email}</p>
+                        {/* <p className="text-xs text-gray-600">{supplier?.email}</p> */}
                         <p className="text-xs text-gray-400 mt-0.5">
-                          {s.phone}
+                          {supplier?.phone}
                         </p>
                       </td>
 
@@ -170,7 +181,7 @@ const Suppliers = () => {
                       <td className="px-5 py-4 hidden lg:table-cell">
                         <div className="flex items-center gap-1.5 text-xs text-gray-600">
                           <MapPin className="w-3 h-3 text-gray-400 shrink-0" />
-                          {s.address}
+                          {supplier?.address}
                         </div>
                       </td>
 
@@ -178,15 +189,15 @@ const Suppliers = () => {
                       <td className="px-5 py-4">
                         <span
                           className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${
-                            s.status === "active"
+                            supplier?.status === "active"
                               ? "bg-green-50 text-green-700 border-green-200"
                               : "bg-gray-50 text-gray-500 border-gray-200"
                           }`}
                         >
                           <span
-                            className={`w-1.5 h-1.5 rounded-full ${s.status === "active" ? "bg-green-500" : "bg-gray-400"}`}
+                            className={`w-1.5 h-1.5 rounded-full ${supplier?.status === "active" ? "bg-green-500" : "bg-gray-400"}`}
                           />
-                          {s.status === "active" ? "Active" : "Inactive"}
+                          {supplier?.status === "active" ? "Active" : "Inactive"}
                         </span>
                       </td>
 
@@ -213,7 +224,7 @@ const Suppliers = () => {
                           to="/vendor/suppliers/add"
                           className="text-xs text-secondary hover:underline"
                         >
-                          + Add your first supplier
+                          + Add supplier
                         </Link>
                       </div>
                     </td>
