@@ -9,46 +9,92 @@ import {
   ToggleRight,
   Save,
 } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import {
+  addSupplierStart,
+  addSupplierSuccess,
+  addSupplierFailure,
+} from "../../features/supplier/supplierSlice";
+import { addSupplierRequest } from "../../features/supplier/supplierAPI";
 import { Link } from "react-router-dom";
 import SupplierInputField from "../../components/vendor/SupplierInputField";
 import { validateSupplier } from "../../utils/validations";
 
 const AddSupplier = () => {
-  const [errors, setErrors] = useState({});
-  const [formData, setFormData] = useState({
-    supplierName: "",
-    phone: "",
-    email: "",
-    address: "",
-    status: "active",
-  });
-  console.log(formData);
+const dispatch = useDispatch();
+const { addSupplierLoading } = useSelector(
+  (state) => state.suppliers
+);
+const [errors, setErrors] = useState({});
+const [formData, setFormData] = useState({
+  supplierName: "",
+  phone: "",
+  email: "",
+  address: "",
+  status: "active",
+});
+console.log("formData:", formData);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
+const handleChange = (e) => {
+  const { name, value } = e.target;
+
+  setFormData((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+
+  // Clear field error while typing
+  if (errors[name]) {
+    setErrors((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: "",
     }));
-  };
+  }
+};
 
-  const toggleStatus = () =>
-    setFormData((prev) => ({
-      ...prev,
-      status: prev.status === "active" ? "inactive" : "active",
-    }));
+const toggleStatus = () => {
+  setFormData((prev) => ({
+    ...prev,
+    status:
+      prev.status === "active"
+        ? "inactive"
+        : "active",
+  }));
+};
 
-  const handleSubmit = () => {
-    const e = validateSupplier(formData);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const validationErrors = validateSupplier(formData);
+  if (Object.keys(validationErrors).length) {
+    setErrors(validationErrors);
+    return;
+  }
+  setErrors({});
 
-    if (Object.keys(e).length) {
-      setErrors(e);
-      return;
-    }
-
-    setErrors({});
-    console.log("Submit:", formData);
-  };
+  try {
+    dispatch(addSupplierStart());
+    const res = await addSupplierRequest(formData);
+    dispatch(addSupplierSuccess(res.supplier));
+    toast.success(
+      res.message || "Supplier added successfully."
+    );
+    // Reset form
+    setFormData({
+      supplierName: "",
+      phone: "",
+      email: "",
+      address: "",
+      status: "active",
+    });
+  } catch (error) {
+    dispatch(addSupplierFailure());
+    toast.error(
+      error.response?.data?.error ||
+        "Something went wrong."
+    );
+  }
+};
 
   const inputClass = (field) =>
     `w-full pl-9 pr-3 py-2.5 border rounded-lg text-sm text-primary placeholder-gray-400 outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all ${
@@ -139,7 +185,7 @@ const AddSupplier = () => {
                   value={formData.address}
                   onChange={handleChange}
                   maxLength={20}
-                  placeholder="Street address, city, state..."
+                  placeholder="city, state"
                   rows={3}
                   className={`w-full pl-9 pr-3 py-2.5 border rounded-lg text-sm text-primary placeholder-gray-400 outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all resize-none ${
                     errors.address
@@ -240,11 +286,13 @@ const AddSupplier = () => {
             Cancel
           </Link>
           <button
+            type="submit"
+  disabled={addSupplierLoading}
             onClick={handleSubmit}
             className="flex items-center gap-2 px-5 py-2 bg-secondary hover:bg-secondary/90 text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
           >
             <Save className="w-4 h-4" />
-            Save Supplier
+            {addSupplierLoading ? "Adding..." : "Add Supplier"}
           </button>
         </div>
       </div>

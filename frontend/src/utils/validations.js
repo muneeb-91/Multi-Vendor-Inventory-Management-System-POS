@@ -94,3 +94,27 @@ export const validateEditCategory = (formData) => {
 
     return e;
   };
+
+  export const validateEditSupplier = (formData) => {
+  const e = {};
+  const supplierName = formData.supplierName.trim();
+  const phone        = formData.phone.trim();
+  const email        = formData.email.trim();
+  const address      = formData.address.trim();
+
+  if (!supplierName)              e.supplierName = "Supplier name is required.";
+  else if (supplierName.length < 2)  e.supplierName = "Must be at least 2 characters.";
+  else if (supplierName.length > 30) e.supplierName = "Must be 30 characters or less.";
+
+  if (!phone)                e.phone = "Phone number is required.";
+  else if (phone.length < 11)    e.phone = "Must be at least 11 digits.";
+  else if (phone.length > 15)    e.phone = "Must be 15 digits or less.";
+
+  if (email && !/^\S+@\S+\.\S+$/.test(email))
+    e.email = "Enter a valid email address.";
+
+  if (!address)              e.address = "Address is required.";
+  else if (address.length > 20)  e.address = "Must be 20 characters or less.";
+
+  return e;
+};
