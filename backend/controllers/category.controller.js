@@ -113,11 +113,10 @@ export const updateCategory = async (req, res) => {
 
 export const deleteCategory = async (req, res) => {
   const { id } = req.params;
-  
+
   const session = await mongoose.startSession();
   try {
     session.startTransaction();
-
     const category = await Category.findOneAndDelete(
       {
         _id: id,
