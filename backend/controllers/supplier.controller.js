@@ -115,6 +115,7 @@ export const toggleSupplierStatus = async (req, res) => {
     success: true,
     message: `Supplier ${supplier.status} successfully.`,
     supplier,
+    status: supplier.status,
   });
 };
 

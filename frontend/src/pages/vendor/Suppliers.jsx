@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { Plus, Trash2, Search, Building2, MapPin, MoreVertical } from "lucide-react";
+import {
+  Plus,
+  Trash2,
+  Search,
+  Building2,
+  MapPin,
+  MoreVertical,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { suppliers, avatarColor, supplierStats } from "../../data";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,9 +15,16 @@ import {
   fetchSuppliersStart,
   fetchSuppliersSuccess,
   fetchSuppliersFailure,
+
+  toggleSupplierStatusStart,
+  toggleSupplierStatusSuccess,
+  toggleSupplierStatusFailure,
 } from "../../features/supplier/supplierSlice";
 
-import { getAllSuppliersRequest } from "../../features/supplier/supplierAPI";
+import {
+  getAllSuppliersRequest,
+  toggleSupplierStatusRequest,
+} from "../../features/supplier/supplierAPI";
 
 import Pagination from "../../components/shared/Pagination";
 import Loader from "../../components/shared/Loader";
@@ -29,6 +43,25 @@ const Suppliers = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+  };
+
+  const handleToggleStatus = async (supplierId) => {
+    try {
+      dispatch(toggleSupplierStatusStart());
+      const res = await toggleSupplierStatusRequest(supplierId);
+      dispatch(
+        toggleSupplierStatusSuccess({
+          supplierId: res.supplierId,
+          status: res.status,
+        }),
+      );
+      toast.success(res.message);
+      setOpenMenu(null);
+    } catch (error) {
+      dispatch(toggleSupplierStatusFailure());
+      console.log(error);
+      toast.error(error.response?.data?.error || "Something went wrong.");
+    }
   };
 
   useEffect(() => {
@@ -112,20 +145,20 @@ const Suppliers = () => {
                 className="w-full pl-9 pr-4 py-2 rounded-lg border border-gray-200 text-sm text-gray-700 placeholder-gray-400 outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all"
               />
             </div>
-          <button className="ml-auto p-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 cursor-pointer">
-            <select
-              value={status}
-              className="text-sm text-gray-600"
-              onChange={(e) => {
-                setStatus(e.target.value);
-                setPage(1);
-              }}
-            >
-              <option value="all">All</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
-          </button>
+            <button className="ml-auto p-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 cursor-pointer">
+              <select
+                value={status}
+                className="text-sm text-gray-600"
+                onChange={(e) => {
+                  setStatus(e.target.value);
+                  setPage(1);
+                }}
+              >
+                <option value="all">All</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </button>
           </div>
 
           {/* Table */}
@@ -149,7 +182,7 @@ const Suppliers = () => {
                   const { bg, text } = avatarColor(supplier?.supplierName);
                   return (
                     <tr
-                      key={supplier?.id}
+                      key={supplier?._id}
                       className="border-b border-gray-50 hover:bg-gray-50/70 transition-colors"
                     >
                       {/* Name + avatar */}
@@ -199,52 +232,60 @@ const Suppliers = () => {
                           <span
                             className={`w-1.5 h-1.5 rounded-full ${supplier?.status === "active" ? "bg-green-500" : "bg-gray-400"}`}
                           />
-                          {supplier?.status === "active" ? "Active" : "Inactive"}
+                          {supplier?.status === "active"
+                            ? "Active"
+                            : "Inactive"}
                         </span>
                       </td>
 
                       {/* Actions */}
                       <td className="px-5 py-4 text-right">
-<div className="relative inline-block">
-                      <button
-                        onClick={() =>
-                          setOpenMenu(
-                            openMenu === supplier?._id ? null : supplier?._id,
-                          )
-                        }
-                        className="p-1.5 rounded-md hover:bg-gray-100 text-gray-400 cursor-pointer"
-                      >
-                        <MoreVertical className="w-4 h-4" />
-                      </button>
-                      {openMenu === supplier?._id && (
-                        <div className="absolute right-0 mt-1 w-32 bg-white border border-gray-100 rounded-lg shadow-lg z-10 py-1">
+                        <div className="relative inline-block">
                           <button
-                            onClick={() => setEditingSupplier(supplier)}
-                            className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                            onClick={() =>
+                              setOpenMenu(
+                                openMenu === supplier?._id
+                                  ? null
+                                  : supplier?._id,
+                              )
+                            }
+                            className="p-1.5 rounded-md hover:bg-gray-100 text-gray-400 cursor-pointer"
                           >
-                            Edit
+                            <MoreVertical className="w-4 h-4" />
                           </button>
-                          <button
-                            onClick={() => handleToggleStatus(supplier?._id)}
-                            className={`w-full text-left px-3 py-2 text-sm transition-colors ${
-                              supplier?.status === "active"
-                                ? "text-red-600 hover:bg-red-50"
-                                : "text-green-600 hover:bg-green-50"
-                            }`}
-                          >
-                            {supplier?.status === "active"
-                              ? "Inactivate"
-                              : "Activate"}
-                          </button>
-                          <button
-                            onClick={() => handleDeleteSupplier(supplier?._id)}
-                            className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
-                          >
-                            Delete
-                          </button>
+                          {openMenu === supplier?._id && (
+                            <div className="absolute right-0 mt-1 w-32 bg-white border border-gray-100 rounded-lg shadow-lg z-10 py-1">
+                              <button
+                                onClick={() => setEditingSupplier(supplier)}
+                                className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                onClick={() =>
+                                  handleToggleStatus(supplier?._id)
+                                }
+                                className={`w-full text-left px-3 py-2 text-sm transition-colors ${
+                                  supplier?.status === "active"
+                                    ? "text-red-600 hover:bg-red-50"
+                                    : "text-green-600 hover:bg-green-50"
+                                }`}
+                              >
+                                {supplier?.status === "active"
+                                  ? "Inactivate"
+                                  : "Activate"}
+                              </button>
+                              <button
+                                onClick={() =>
+                                  handleDeleteSupplier(supplier?._id)
+                                }
+                                className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
                       </td>
                     </tr>
                   );
