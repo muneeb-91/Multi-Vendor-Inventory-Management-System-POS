@@ -122,7 +122,18 @@ const Suppliers = () => {
         {/* Stat Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {supplierStats.map((card) => {
+            let value = 0;
 
+            if (card.label === "Total Suppliers") {
+              value = totalSuppliers;
+            }
+            if (card.label === "Active") {
+              value = activeSuppliers;
+            }
+            if (card.label === "Inactive") {
+              value = inactiveSuppliers;
+            }
+            
             return (
               <div
                 key={card.label}
