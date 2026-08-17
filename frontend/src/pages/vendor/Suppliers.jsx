@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import EditSupplierModal from "../../modals/EditSupplierModal";
 import { toast } from "react-toastify";
 import {
   fetchSuppliersStart,
@@ -133,7 +134,7 @@ const Suppliers = () => {
             if (card.label === "Inactive") {
               value = inactiveSuppliers;
             }
-            
+
             return (
               <div
                 key={card.label}
@@ -330,6 +331,15 @@ const Suppliers = () => {
                 )}
               </tbody>
             </table>
+                      {editingSupplier && (
+            <EditSupplierModal
+              onClose={() => {
+                setEditingSupplier(null)
+                setOpenMenu(!openMenu)
+              }}
+              supplier={editingSupplier}
+            />
+          )}
           </div>
 
           {/* Pagination */}
