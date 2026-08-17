@@ -890,73 +890,21 @@ export const productPriceSummary = [
 ];
 
 // Suppliers
-export const suppliers = [
-  {
-    id: 1,
-    supplierName: "TechCorp Manufacturing Inc.",
-    email: "procurement@techcorp.io",
-    phone: "+1 (408) 555-0100",
-    address: "San Jose, CA",
-    status: "active",
-  },
-  {
-    id: 2,
-    supplierName: "Herman Miller Inc.",
-    email: "trade@hermanmiller.com",
-    phone: "+1 (616) 654-3000",
-    address: "Zeeland, MI",
-    status: "active",
-  },
-  {
-    id: 3,
-    supplierName: "HP Enterprise Solutions",
-    email: "partners@hp.com",
-    phone: "+1 (650) 857-1501",
-    address: "Palo Alto, CA",
-    status: "active",
-  },
-  {
-    id: 4,
-    supplierName: "Sony Audio Systems",
-    email: "b2b@sony.com",
-    phone: "+1 (212) 833-8000",
-    address: "New York, NY",
-    status: "inactive",
-  },
-];
-
-export const avatarColor = (name) => {
-  const palette = [
-    { bg: "bg-indigo-100", text: "text-indigo-600" },
-    { bg: "bg-green-100", text: "text-green-700" },
-    { bg: "bg-amber-100", text: "text-amber-700" },
-    { bg: "bg-purple-100", text: "text-purple-600" },
-    { bg: "bg-red-100", text: "text-red-600" },
-    { bg: "bg-blue-100", text: "text-blue-600" },
-  ];
-  return palette[name.charCodeAt(0) % palette.length];
-};
-
-const activeCount = suppliers.filter((s) => s.status === "active").length;
-
 export const supplierStats = [
   {
     label: "Total Suppliers",
-    value: suppliers.length,
     icon: Building2,
     bg: "bg-indigo-50",
     ic: "text-indigo-500",
   },
   {
     label: "Active",
-    value: activeCount,
     icon: TrendingUp,
     bg: "bg-green-50",
     ic: "text-secondary",
   },
   {
     label: "Inactive",
-    value: suppliers.length - activeCount,
     icon: Package,
     bg: "bg-red-50",
     ic: "text-red-400",

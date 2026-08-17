@@ -8,19 +8,17 @@ import {
   MoreVertical,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { suppliers, avatarColor, supplierStats } from "../../data";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import {
   fetchSuppliersStart,
   fetchSuppliersSuccess,
   fetchSuppliersFailure,
-
   toggleSupplierStatusStart,
   toggleSupplierStatusSuccess,
   toggleSupplierStatusFailure,
 } from "../../features/supplier/supplierSlice";
-
+import { supplierStats } from "../../data/index.js";
 import {
   getAllSuppliersRequest,
   toggleSupplierStatusRequest,
@@ -40,6 +38,16 @@ const Suppliers = () => {
   const { suppliers, pagination, fetchSuppliersLoading } = useSelector(
     (state) => state.suppliers,
   );
+
+  const totalSuppliers = suppliers.length;
+
+  const activeSuppliers = suppliers.filter(
+    (supplier) => supplier.status === "active",
+  ).length;
+
+  const inactiveSuppliers = suppliers.filter(
+    (supplier) => supplier.status === "inactive",
+  ).length;
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -113,22 +121,25 @@ const Suppliers = () => {
 
         {/* Stat Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-          {supplierStats.map((card) => (
-            <div
-              key={card.label}
-              className="bg-white border border-gray-100 rounded-xl p-4"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-xs text-gray-400">{card.label}</p>
-                <div
-                  className={`w-8 h-8 rounded-lg ${card.bg} flex items-center justify-center`}
-                >
-                  <card.icon className={`w-4 h-4 ${card.ic}`} />
+          {supplierStats.map((card) => {
+
+            return (
+              <div
+                key={card.label}
+                className="bg-white border border-gray-100 rounded-xl p-4"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-xs text-gray-400">{card.label}</p>
+                  <div
+                    className={`w-8 h-8 rounded-lg ${card.bg} flex items-center justify-center`}
+                  >
+                    <card.icon className={`w-4 h-4 ${card.ic}`} />
+                  </div>
                 </div>
+                <p className="text-2xl font-bold text-primary">{value}</p>
               </div>
-              <p className="text-2xl font-bold text-primary">{card.value}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Table Card */}
@@ -179,7 +190,6 @@ const Suppliers = () => {
               </thead>
               <tbody>
                 {suppliers.map((supplier) => {
-                  const { bg, text } = avatarColor(supplier?.supplierName);
                   return (
                     <tr
                       key={supplier?._id}
@@ -189,7 +199,7 @@ const Suppliers = () => {
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-3">
                           <div
-                            className={`w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 ${bg} ${text}`}
+                            className={`w-9 h-9 rounded-lg flex items-center justify-center text-sm font-bold shrink-0 bg-secondary/80 text-tertiary `}
                           >
                             {supplier?.supplierName.charAt(0).toUpperCase()}
                           </div>

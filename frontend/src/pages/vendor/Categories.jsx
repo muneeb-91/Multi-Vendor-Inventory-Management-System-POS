@@ -111,7 +111,7 @@ const Categories = () => {
         </div>
         <Link
           to={`/vendor/categories/add`}
-          className="flex items-center gap-2 bg-secondary hover:bg-secondary/90 text-white px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors self-start sm:self-auto"
+          className="flex items-center gap-2 bg-secondary hover:bg-secondary/90 text-white px-3.5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-colors self-start sm:self-auto"
         >
           <Plus className="w-4 h-4" />
           Add Category
@@ -179,7 +179,7 @@ const Categories = () => {
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
                       <div
-                        className={`w-9 h-9 rounded-lg flex items-center justify-center text-sm font-bold shrink-0 bg-secondary text-tertiary `}
+                        className={`w-9 h-9 rounded-lg flex items-center justify-center text-sm font-bold shrink-0 bg-secondary/80 text-tertiary `}
                       >
                         {category?.categoryName?.charAt(0).toUpperCase()}
                       </div>
