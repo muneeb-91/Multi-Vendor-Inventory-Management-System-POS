@@ -257,7 +257,7 @@ const AddNewProduct = () => {
               )}
             </div>
 
-            {/* Purchase Date */}
+            
             <div>
               <label className={labelClass}>Purchase Date</label>
 
