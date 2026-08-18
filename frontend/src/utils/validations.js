@@ -118,3 +118,50 @@ export const validateEditCategory = (formData) => {
 
   return e;
 };
+
+export const validateProduct = (formData) => {
+  const errors = {};
+
+  if (!formData.productName.trim()) {
+    errors.productName = "Product name is required.";
+  } else if (formData.productName.trim().length < 2) {
+    errors.productName = "Product name must be at least 2 characters.";
+  } else if (formData.productName.trim().length > 40) {
+    errors.productName = "Product name cannot exceed 40 characters.";
+  }
+
+  if (!formData.category) {
+    errors.category = "Please select a category.";
+  }
+  if (!formData.supplier) {
+    errors.supplier = "Please select a supplier.";
+  }
+
+  if (
+    formData.stockQuantity === "" ||
+    formData.stockQuantity === null
+  ) {
+    errors.stockQuantity = "Stock quantity is required.";
+  } else if (Number(formData.stockQuantity) < 0) {
+    errors.stockQuantity = "Negative values are not allowed.";
+  }
+
+  if (
+    formData.sellingPrice === "" ||
+    formData.sellingPrice === null
+  ) {
+    errors.sellingPrice = "Selling price is required.";
+  } else if (Number(formData.sellingPrice) < 0) {
+    errors.sellingPrice = "Negative values are not allowed.";
+  }
+
+    if (formData.purchaseDate) {
+    const today = new Date().toISOString().split("T")[0];
+
+    if (formData.purchaseDate > today) {
+      errors.purchaseDate = "Purchase date cannot be in the future.";
+    }
+  }
+
+  return errors;
+};
