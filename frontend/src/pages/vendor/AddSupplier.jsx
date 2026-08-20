@@ -71,7 +71,7 @@ const handleSubmit = async (e) => {
     return;
   }
   setErrors({});
-  
+
   try {
     dispatch(addSupplierStart());
     const res = await addSupplierRequest(formData);
@@ -287,7 +287,7 @@ const handleSubmit = async (e) => {
           </Link>
           <button
             type="submit"
-  disabled={addSupplierLoading}
+            disabled={addSupplierLoading}
             onClick={handleSubmit}
             className="flex items-center gap-2 px-5 py-2 bg-secondary hover:bg-secondary/90 text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
           >
