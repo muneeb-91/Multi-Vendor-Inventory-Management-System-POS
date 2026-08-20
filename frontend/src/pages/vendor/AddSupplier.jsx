@@ -71,6 +71,7 @@ const handleSubmit = async (e) => {
     return;
   }
   setErrors({});
+  
   try {
     dispatch(addSupplierStart());
     const res = await addSupplierRequest(formData);
