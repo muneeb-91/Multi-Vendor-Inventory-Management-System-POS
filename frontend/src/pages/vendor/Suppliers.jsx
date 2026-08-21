@@ -331,15 +331,15 @@ const Suppliers = () => {
                 )}
               </tbody>
             </table>
-                      {editingSupplier && (
-            <EditSupplierModal
-              onClose={() => {
-                setEditingSupplier(null)
-                setOpenMenu(!openMenu)
-              }}
-              supplier={editingSupplier}
-            />
-          )}
+            {editingSupplier && (
+              <EditSupplierModal
+                onClose={() => {
+                  setEditingSupplier(null);
+                  setOpenMenu(!openMenu);
+                }}
+                supplier={editingSupplier}
+              />
+            )}
           </div>
 
           {/* Pagination */}
