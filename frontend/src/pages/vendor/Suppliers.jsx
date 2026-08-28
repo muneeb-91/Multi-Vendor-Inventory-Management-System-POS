@@ -134,7 +134,7 @@ const Suppliers = () => {
             if (card.label === "Inactive") {
               value = inactiveSuppliers;
             }
-
+            
             return (
               <div
                 key={card.label}
@@ -183,7 +183,7 @@ const Suppliers = () => {
               </select>
             </button>
           </div> 
-          
+
           {/* Table */}
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
