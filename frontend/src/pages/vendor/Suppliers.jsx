@@ -182,8 +182,8 @@ const Suppliers = () => {
                 <option value="inactive">Inactive</option>
               </select>
             </button>
-          </div>
-
+          </div> 
+          
           {/* Table */}
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
