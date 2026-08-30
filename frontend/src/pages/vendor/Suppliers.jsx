@@ -337,7 +337,7 @@ const Suppliers = () => {
                   setEditingSupplier(null);
                   setOpenMenu(!openMenu);
                 }}
-                
+                supplier={editingSupplier}
               />
             )}
           </div>
