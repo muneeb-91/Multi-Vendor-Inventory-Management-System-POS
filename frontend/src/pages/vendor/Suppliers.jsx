@@ -333,10 +333,7 @@ const Suppliers = () => {
             </table>
             {editingSupplier && (
               <EditSupplierModal
-                onClose={() => {
-                  setEditingSupplier(null);
-                  setOpenMenu(!openMenu);
-                }}
+
                 supplier={editingSupplier}
               />
             )}
