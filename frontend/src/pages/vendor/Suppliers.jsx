@@ -342,7 +342,7 @@ const Suppliers = () => {
             )}
           </div>
 
-          {/* Pagination */}
+          
           
         </div>
       </div>
