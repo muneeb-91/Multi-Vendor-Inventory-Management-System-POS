@@ -343,7 +343,7 @@ const Suppliers = () => {
           </div>
 
           {/* Pagination */}
-          <Pagination pagination={pagination} onPageChange={handlePageChange} />
+          
         </div>
       </div>
     </>
