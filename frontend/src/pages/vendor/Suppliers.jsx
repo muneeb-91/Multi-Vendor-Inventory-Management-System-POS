@@ -313,7 +313,7 @@ const Suppliers = () => {
                   );
                 })}
 
-                {suppliers?.length === 0 && (
+                {suppliers.length === 0 && (
                   <tr>
                     <td colSpan={5} className="px-5 py-14 text-center">
                       <div className="flex flex-col items-center gap-2 text-gray-400">
