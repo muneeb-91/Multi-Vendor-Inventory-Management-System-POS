@@ -201,7 +201,7 @@ const Suppliers = () => {
                 </tr>
               </thead>
               <tbody>
-                {suppliers.map((supplier) => {
+                {suppliers?.map((supplier) => {
                   return (
                     <tr
                       key={supplier?._id}
